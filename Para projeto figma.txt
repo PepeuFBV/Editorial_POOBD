@@ -1,0 +1,5 @@
+Para projeto figma:
+
+- Destaque no adicionar novo
+- Melhorar posição do gerar relatório para adm e avaliador (ao lado do adicionar novo)
+- remover cadastrar (aka sistema de cadastro por pedir permissão ao adm)
