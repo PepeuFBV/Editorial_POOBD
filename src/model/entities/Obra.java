@@ -6,18 +6,16 @@ public class Obra implements Identify {
 	private String gender;
 	private int year;
 	private Autor author;
-	private String StatusObra;
 	
 	public Obra() {
 	}
 
-	public Obra(int id, String title, String gender, int year, Autor author, String status) {
+	public Obra(int id, String title, String gender, int year, Autor author) {
 		this.id = id;
 		this.title = title;
 		this.gender = gender;
 		this.year = year;
 		this.author = author;
-		StatusObra = status;
 	}
 
 
@@ -65,16 +63,5 @@ public class Obra implements Identify {
 	public void setAuthor(Autor author) {
 		this.author = author;
 	}
-
-
-	public String getStatus() {
-		return StatusObra;
-	}
-
-
-	public void setStatus(String status) {
-		StatusObra = status;
-	}
-	
 	
 }
