@@ -91,7 +91,10 @@ public class Avaliador {
 		return;
 	}
 
-	public boolean logar(String login, String senha) {
-		return true;
+	public boolean logar(String login, String senha, Avaliador avaliador) {
+		if (login.equals(avaliador.login) && senha.equals(avaliador.senha))
+			return true;
+		else
+			return false;
 	}
 }

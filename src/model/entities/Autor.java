@@ -106,8 +106,10 @@ public class Autor {
 		return;
 	}
 
-	public boolean logar(String login, String senha) {
-		//como se é feito esse processo?
-		return true;
+	public boolean logar(String login, String senha, Autor autor) {
+		if (login.equals(autor.login) && senha.equals(autor.senha))
+			return true;
+		else
+			return false;
 	}
 }

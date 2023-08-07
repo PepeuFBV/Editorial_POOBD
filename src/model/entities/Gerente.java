@@ -54,7 +54,10 @@ public class Gerente {
     }
 
     //alterar metódos depois
-    public boolean logar(String login, String senha) {
-        return true;
+    public boolean logar(String login, String senha, Gerente gerente) {
+        if (login.equals(gerente.login) && senha.equals(gerente.senha))
+            return true;
+        else
+            return false;
     }
 }
