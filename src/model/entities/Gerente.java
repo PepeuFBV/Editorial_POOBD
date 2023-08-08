@@ -9,10 +9,10 @@ public class Gerente {
     public Gerente() { }
 
     public Gerente(String nome, boolean isGerente, String login, String senha) {
-        this.nome = nome;
-        this.isGerente = isGerente;
-        this.login = login;
-        this.senha = senha;    
+        setNome(nome);
+        setIsGerente(isGerente);
+        setLogin(login);
+        setSenha(senha);
     }
 
     public String getNome() {

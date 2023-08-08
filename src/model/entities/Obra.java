@@ -13,12 +13,12 @@ public class Obra {
 	public Obra() { }
 	
 	public Obra(String titulo, String genero, LocalDate ano, Autor autor, StatusObra status, Avaliador avaliador) {
-		this.titulo = titulo;
-		this.genero = genero;
-		this.ano = ano;
-		this.autor = autor;
-		this.status = status;
-		this.avaliador = avaliador;
+		setTitulo(titulo);
+		setGenero(genero);
+		setAno(ano);
+		setAutor(autor);
+		setStatus(status);
+		setAvaliador(avaliador);
 	}
 
 	public Obra(String titulo, String genero, LocalDate ano, StatusObra status) {

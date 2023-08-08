@@ -11,12 +11,12 @@ public class Autor {
 	public Autor() { }
 
 	public Autor(String nome, String endereco, String cpf, Obra[] obras, String login, String senha) {
-		this.nome = nome;
-		this.endereco = endereco;
-		this.cpf = cpf;
-		this.obras = obras;
-		this.login = login;
-		this.senha = senha;
+		setNome(nome);
+		setEndereco(endereco);
+		setCpf(cpf);
+		setObras(obras);
+		setLogin(login);
+		setSenha(senha);
 	}
 
 	public Autor(String nome, String endereco, String cpf) {
@@ -77,7 +77,7 @@ public class Autor {
 		return senha;
 	}
 
-	public void getSenha(String senha) {
+	public void setSenha(String senha) {
 		if (senha != null && senha != "") {
 			this.senha = senha;
 		}

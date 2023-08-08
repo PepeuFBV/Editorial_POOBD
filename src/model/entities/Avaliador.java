@@ -10,11 +10,11 @@ public class Avaliador {
 	public Avaliador() { }
 	
 	public Avaliador(String nome, String endereco, String cpf, String login, String senha) {
-		this.nome = nome;
-		this.endereco = endereco;
-		this.cpf = cpf;
-		this.login = login;
-		this.senha = senha;
+		setNome(nome);
+		setEndereco(endereco);
+		setCpf(cpf);
+		setLogin(login);
+		setSenha(senha);
 	}
 
 	public Avaliador(String nome, String endereco, String cpf) {
