@@ -11,12 +11,12 @@ public class Autor {
 	public Autor() { }
 
 	public Autor(String nome, String endereco, String cpf, Obra[] obras, String login, String senha) {
-		this.nome = nome;
-		this.endereco = endereco;
-		this.cpf = cpf;
-		this.obras = obras;
-		this.login = login;
-		this.senha = senha;
+		setNome(nome);
+		setEndereco(endereco);
+		setCpf(cpf);
+		setObras(obras);
+		setLogin(login);
+		setSenha(senha);
 	}
 
 	public Autor(String nome, String endereco, String cpf) {
@@ -60,7 +60,9 @@ public class Autor {
 	}
 
 	public void setObras(Obra[] obras) {
-		this.obras = obras;
+		if (obras != null) {
+			this.obras = obras;	
+		}
 	}
 
 	public String getLogin() {
@@ -77,7 +79,7 @@ public class Autor {
 		return senha;
 	}
 
-	public void getSenha(String senha) {
+	public void setSenha(String senha) {
 		if (senha != null && senha != "") {
 			this.senha = senha;
 		}
@@ -106,8 +108,10 @@ public class Autor {
 		return;
 	}
 
-	public boolean logar(String login, String senha) {
-		//como se é feito esse processo?
-		return true;
+	public boolean logar(String login, String senha, Autor autor) {
+		if (login.equals(autor.login) && senha.equals(autor.senha))
+			return true;
+		else
+			return false;
 	}
 }

@@ -13,12 +13,12 @@ public class Obra {
 	public Obra() { }
 	
 	public Obra(String titulo, String genero, LocalDate ano, Autor autor, StatusObra status, Avaliador avaliador) {
-		this.titulo = titulo;
-		this.genero = genero;
-		this.ano = ano;
-		this.autor = autor;
-		this.status = status;
-		this.avaliador = avaliador;
+		setTitulo(titulo);
+		setGenero(genero);
+		setAno(ano);
+		setAutor(autor);
+		setStatus(status);
+		setAvaliador(avaliador);
 	}
 
 	public Obra(String titulo, String genero, LocalDate ano, StatusObra status) {
@@ -53,7 +53,9 @@ public class Obra {
 	}
 
 	public void setAno(LocalDate ano) {
-		this.ano = ano;
+		if (ano != null) {
+			this.ano = ano;
+		}
 	}
 	
 	public Autor getAutor() {
@@ -61,7 +63,9 @@ public class Obra {
 	}
 
 	public void setAutor(Autor autor) {
-		this.autor = autor;
+		if (autor != null) {
+			this.autor = autor;
+		}
 	}
 
 	public StatusObra getStatus() {
@@ -69,7 +73,9 @@ public class Obra {
 	}
 
 	public void setStatus(StatusObra status) {
-		this.status = status;
+		if (status != null) {
+			this.status = status;
+		}
 	}
 
 	public Avaliador getAvaliador() {
@@ -77,7 +83,9 @@ public class Obra {
 	}
 	
 	public void setAvaliador(Avaliador avaliador) {
-		this.avaliador = avaliador;
+		if (avaliador != null) {
+			this.avaliador = avaliador;
+		}
 	}
 
 	//alterar metódos depois

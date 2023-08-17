@@ -9,10 +9,10 @@ public class Gerente {
     public Gerente() { }
 
     public Gerente(String nome, boolean isGerente, String login, String senha) {
-        this.nome = nome;
-        this.isGerente = isGerente;
-        this.login = login;
-        this.senha = senha;    
+        setNome(nome);
+        setIsGerente(isGerente);
+        setLogin(login);
+        setSenha(senha);
     }
 
     public String getNome() {
@@ -54,7 +54,10 @@ public class Gerente {
     }
 
     //alterar metódos depois
-    public boolean logar(String login, String senha) {
-        return true;
+    public boolean logar(String login, String senha, Gerente gerente) {
+        if (login.equals(gerente.login) && senha.equals(gerente.senha))
+            return true;
+        else
+            return false;
     }
 }
