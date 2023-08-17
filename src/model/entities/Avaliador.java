@@ -1,20 +1,15 @@
 package model.entities;
 
-public class Avaliador {
-	private String nome;
+public class Avaliador extends Usuario {
 	private String endereco;
 	private String cpf;
-	private String login;
-	private String senha;
 
 	public Avaliador() { }
 	
 	public Avaliador(String nome, String endereco, String cpf, String login, String senha) {
-		setNome(nome);
+		super(nome,login,senha);
 		setEndereco(endereco);
 		setCpf(cpf);
-		setLogin(login);
-		setSenha(senha);
 	}
 
 	public Avaliador(String nome, String endereco, String cpf) {
@@ -23,18 +18,8 @@ public class Avaliador {
 		this.cpf = cpf;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		if (nome != null && nome != "") {
-			this.nome = nome;
-		}
-	}
-
 	public String getEndereco() {
-		return endereco;
+		return ehis.endereco;
 	}
 
 	public void setEndereco(String endereco) {
@@ -44,32 +29,12 @@ public class Avaliador {
 	}
 
 	public String getCpf() {
-		return cpf;
+		return this.cpf;
 	}
 
 	public void setCpf(String cpf) {
 		if (cpf != null && cpf != "") {
 			this.cpf = cpf;
-		}
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		if (login != null && login != "") {
-			this.login = login;
-		}
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		if (senha != null && senha != "") {
-			this.senha = senha;
 		}
 	}
 
@@ -91,10 +56,4 @@ public class Avaliador {
 		return;
 	}
 
-	public boolean logar(String login, String senha, Avaliador avaliador) {
-		if (login.equals(avaliador.login) && senha.equals(avaliador.senha))
-			return true;
-		else
-			return false;
-	}
 }

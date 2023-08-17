@@ -1,22 +1,17 @@
 package model.entities;
 
-public class Autor {
-	private String nome;
+public class Autor extends Usuario {
 	private String endereco;
 	private String cpf;
 	private Obra[] obras;
-	private String login;
-	private String senha;
 
 	public Autor() { }
 
 	public Autor(String nome, String endereco, String cpf, Obra[] obras, String login, String senha) {
-		setNome(nome);
+		super(nome,login,senha);
 		setEndereco(endereco);
 		setCpf(cpf);
 		setObras(obras);
-		setLogin(login);
-		setSenha(senha);
 	}
 
 	public Autor(String nome, String endereco, String cpf) {
@@ -25,18 +20,8 @@ public class Autor {
 		this.cpf = cpf;
 	}
 	
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		if (nome != null && nome != "") {
-			this.nome = nome;
-		}
-	}
-	
 	public String getEndereco() {
-		return endereco;
+		return this.endereco;
 	}
 
 	public void setEndereco(String endereco) {
@@ -46,7 +31,7 @@ public class Autor {
 	}
 
 	public String getCpf() {
-		return cpf;
+		return this.cpf;
 	}
 
 	public void setCpf(String cpf) {
@@ -56,32 +41,12 @@ public class Autor {
 	}
 
 	public Obra[] getObras() {
-		return obras;
+		return this.obras;
 	}
 
 	public void setObras(Obra[] obras) {
 		if (obras != null) {
 			this.obras = obras;	
-		}
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		if (login != null && login != "") {
-			this.login = login;
-		}
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		if (senha != null && senha != "") {
-			this.senha = senha;
 		}
 	}
 
@@ -108,10 +73,4 @@ public class Autor {
 		return;
 	}
 
-	public boolean logar(String login, String senha, Autor autor) {
-		if (login.equals(autor.login) && senha.equals(autor.senha))
-			return true;
-		else
-			return false;
-	}
 }
