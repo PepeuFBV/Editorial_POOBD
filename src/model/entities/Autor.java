@@ -60,7 +60,9 @@ public class Autor {
 	}
 
 	public void setObras(Obra[] obras) {
-		this.obras = obras;
+		if (obras != null) {
+			this.obras = obras;	
+		}
 	}
 
 	public String getLogin() {
