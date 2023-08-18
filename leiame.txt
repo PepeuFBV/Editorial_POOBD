@@ -1,2 +1,0 @@
-• Lembrem de acrescentar um arquivo leiame.txt que explica como fazer o sistema rodar
-corretamente (script de criação do bd e etc...)
