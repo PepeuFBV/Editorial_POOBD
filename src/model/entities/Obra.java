@@ -1,6 +1,8 @@
 package model.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Obra {
 	private String titulo;
@@ -9,8 +11,7 @@ public class Obra {
 	private Autor autor;
 	private StatusObra status;
 	private Avaliador avaliador;
-	
-	public Obra() { }
+	private List<Obra> obras = new ArrayList<>();
 	
 	public Obra(String titulo, String genero, LocalDate ano, Autor autor, StatusObra status, Avaliador avaliador) {
 		setTitulo(titulo);
@@ -19,13 +20,6 @@ public class Obra {
 		setAutor(autor);
 		setStatus(status);
 		setAvaliador(avaliador);
-	}
-
-	public Obra(String titulo, String genero, LocalDate ano, StatusObra status) {
-		this.titulo = titulo;
-		this.genero = genero;
-		this.ano = ano;
-		this.status = status;
 	}
 
 	public String getTitulo() {
@@ -101,40 +95,65 @@ public class Obra {
 		System.out.printf(obra.getTitulo() + " foi excluida!\n");
 	}
 
-	public Obra[] buscarPorTitulo(Obra obra) {
-		System.out.printf("Obra encontrada!\n");
-		return;
-	}
+	public List<Obra> buscarPorTitulo(String titulo) {
+        List<Obra> obrasEncontradas = new ArrayList<>();
+        for (Obra obra : obras) { // Suponha que 'todasAsObras' seja a lista completa de obras
+            if (obra.getTitulo().equalsIgnoreCase(titulo)) {
+                obrasEncontradas.add(obra);
+            }
+        }
+        return obrasEncontradas;
+    }
 
-	public Obra[] buscarPorGenero(Obra obra) {
-		System.out.printf("Obra encontrada!\n");
-		return;
-	}
+    public List<Obra> buscarPorGenero(String genero) {
+        List<Obra> obrasEncontradas = new ArrayList<>();
+        for (Obra obra : obras) {
+            if (obra.getGenero().equalsIgnoreCase(genero)) {
+                obrasEncontradas.add(obra);
+            }
+        }
+        return obrasEncontradas;
+    }
 
-	public Obra[] buscarPorAno(Obra obra) {
-		System.out.printf("Obra encontrada!\n");
-		return;
-	}
+    public List<Obra> buscarPorAno(LocalDate ano) {
+        List<Obra> obrasEncontradas = new ArrayList<>();
+        for (Obra obra : obras) {
+            if (obra.getAno().equals(ano)) {
+                obrasEncontradas.add(obra);
+            }
+        }
+        return obrasEncontradas;
+    }
 
-	public Obra[] buscarPorAutor(Obra obra) {
-		System.out.printf("Obra encontrada!\n");
-		return;
-	}
+    public List<Obra> buscarPorAutor(Autor autor) {
+        List<Obra> obrasEncontradas = new ArrayList<>();
+        for (Obra obra : obras) {
+            if (obra.getAutor().equals(autor)) {
+                obrasEncontradas.add(obra);
+            }
+        }
+        return obrasEncontradas;
+    }
 
-	public Obra[] buscarPorStatus(Obra obra) {
-		System.out.printf("Obra encontrada!\n");
-		return;
-	}
+    public List<Obra> buscarPorStatus(StatusObra status) {
+        List<Obra> obrasEncontradas = new ArrayList<>();
+        for (Obra obra : obras) {
+            if (obra.getStatus().equals(status)) {
+                obrasEncontradas.add(obra);
+            }
+        }
+        return obrasEncontradas;
+    }
 
 	public void definirAvaliador(Obra obra, Avaliador avaliador) {
 		obra.setAvaliador(avaliador);
 	}
 
-	public StatusObra avaliarObra(Obra obra, Avaliador avaliador) {
+	/*public StatusObra avaliarObra(Obra obra, Avaliador avaliador) {
 		return; //?
 	}
 	
-	public Obra[] gerarRelatorio(LocalDate inicio, LocalDate fim) {
+	public List<Obra> gerarRelatorio(LocalDate inicio, LocalDate fim) {
 		return; //?
-	}
+	}*/
 }

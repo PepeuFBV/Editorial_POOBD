@@ -1,42 +1,47 @@
 package model.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Avaliador extends Usuario {
-	private String endereco;
-	private String cpf;
+    private String endereco;
+    private String cpf;
+    private List<Obra> obras = new ArrayList<>(); //arraylist no lugar do obra[] para ficar dinamico
+    private List<Avaliador> avaliadores;
 
-	public Avaliador() { }
-	
-	public Avaliador(String nome, String endereco, String cpf, String login, String senha) {
-		super(nome,login,senha);
-		setEndereco(endereco);
-		setCpf(cpf);
-	}
+    public Avaliador(String nome, String endereco, String cpf, String login, String senha) {
+        super(nome, login, senha);
+        setEndereco(endereco);
+        setCpf(cpf);
+    }
 
-	public Avaliador(String nome, String endereco, String cpf) {
-		this.nome = nome;
-		this.endereco = endereco;
-		this.cpf = cpf;
-	}
+    public String getEndereco() {
+        return this.endereco;
+    }
 
-	public String getEndereco() {
-		return ehis.endereco;
-	}
+    public void setEndereco(String endereco) {
+        if (endereco != null && !endereco.isEmpty()) {
+            this.endereco = endereco;
+        }
+    }
 
-	public void setEndereco(String endereco) {
-		if (endereco != null && endereco != "") {
-			this.endereco = endereco;
-		}
-	}
+    public String getCpf() {
+        return this.cpf;
+    }
 
-	public String getCpf() {
-		return this.cpf;
-	}
+    public void setCpf(String cpf) {
+        if (cpf != null && !cpf.isEmpty()) {
+            this.cpf = cpf;
+        }
+    }
 
-	public void setCpf(String cpf) {
-		if (cpf != null && cpf != "") {
-			this.cpf = cpf;
-		}
-	}
+    public List<Obra> getObras() {
+        return obras;
+    }
+
+    public void setObras(List<Obra> obras) {
+        this.obras = obras;
+    }
 
 	//alterar metódos depois
 	public void cadastrar(Avaliador avaliador) {
@@ -51,9 +56,19 @@ public class Avaliador extends Usuario {
 		System.out.printf(avaliador.getNome() + " foi excluido!\n");
 	}
 
-	public Avaliador[] buscarPorObra(Obra obra) {
-		System.out.printf("Avaliador encontrado!\n");
-		return;
-	}
+	public Avaliador buscarPorObra(Obra obra) {
+        for (Avaliador avaliador : avaliadores) {
+            List<Obra> obrasDoAvaliador = avaliador.getObras();
+            for (Obra obraAvaliador : obrasDoAvaliador) {
+                if (obraAvaliador != null && obraAvaliador.equals(obra)) {
+                    System.out.println("Avaliador encontrado para a obra: " + obra.getTitulo());
+                    return avaliador;
+                }
+            }
+        }
+        
+        System.out.println("Nenhum avaliador encontrado para a obra.");
+        return null;
+    }
 
 }

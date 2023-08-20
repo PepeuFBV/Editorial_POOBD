@@ -1,5 +1,6 @@
+package model.entities;
+
 public class Usuario {
-    private int id;
     private String nome;
     private String login;
     private String senha;
@@ -10,20 +11,6 @@ public class Usuario {
         setNome(nome);
         setLogin(login);
         setSenha(senha);
-        setId();
-    }
-
-    public int getId() {
-        return this.id
-    }
-
-    public void setId(int id) {
-        if (id == null) {
-            this.id = 1;
-        }
-        else {
-            this.id += 1;
-        }
     }
 
     public String getNome() {
@@ -55,6 +42,7 @@ public class Usuario {
             this.senha = senha;
         }
     }
+    // Método logar aqui...
 
     //a serem consertados depois
     public boolean logar(String login, String senha, Usuario usuario) {
