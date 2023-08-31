@@ -7,7 +7,7 @@ public class Autor extends Usuario {
     private List<Autor> autores = new ArrayList<>();
     private String endereco;
     private String cpf;
-    private List<Obra> obras = new ArrayList<>(); //arraylist no lugar do obra[] para ficar dinamico
+    private List<Obra> obras = new ArrayList<>();
 
     public Autor(String nome, String endereco, String cpf, List<Obra> obras, String login, String senha) {
         super(nome, login, senha);

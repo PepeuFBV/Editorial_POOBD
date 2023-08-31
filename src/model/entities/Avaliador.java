@@ -6,7 +6,7 @@ import java.util.List;
 public class Avaliador extends Usuario {
     private String endereco;
     private String cpf;
-    private List<Obra> obras = new ArrayList<>(); //arraylist no lugar do obra[] para ficar dinamico
+    private List<Obra> obras = new ArrayList<>();
     private List<Avaliador> avaliadores;
 
     public Avaliador(String nome, String endereco, String cpf, String login, String senha) {

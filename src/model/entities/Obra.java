@@ -22,6 +22,8 @@ public class Obra {
 		setAvaliador(avaliador);
 	}
 
+	public Obra() {}
+
 	public String getTitulo() {
 		return titulo;
 	}
