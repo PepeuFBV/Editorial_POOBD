@@ -1,10 +1,10 @@
-package application.DAO;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionFactory {
+public class ConnectionFactory { //não tem que fazer algo a mais aqui para usar os atributos de BaseDAOImpl?
     public static Connection getConnection() {
         final String URL = "jdbc:postgresql://localhost/Editorial";
         final String USER = "postgres";

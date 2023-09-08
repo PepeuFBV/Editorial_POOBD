@@ -1,13 +1,17 @@
 package model.entities;
 
+
+//TODO: implementar exceções
+
+
 public class Usuario {
+    private String Id;
     private String nome;
     private String login;
     private String senha;
 
-    public Usuario() { }
-
-    public Usuario(String nome, String login, String senha) {
+    public Usuario(String id, String nome, String login, String senha) {
+        setId(id);
         setNome(nome);
         setLogin(login);
         setSenha(senha);
@@ -42,7 +46,14 @@ public class Usuario {
             this.senha = senha;
         }
     }
-    // Método logar aqui...
+
+    public String getId() {
+        return this.Id;
+    }
+
+    public void setId(String id) {
+        if (id != null && id != "") this.Id = id;
+    }
 
     //a serem consertados depois
     public boolean logar(String login, String senha, Usuario usuario) {

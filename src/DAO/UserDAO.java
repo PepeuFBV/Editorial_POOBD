@@ -1,4 +1,4 @@
-package application.DAO;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,46 +6,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.entities.Obra;
+import model.entities.Usuario;
 
-public class UserDAO implements UserInterface {
+public abstract class UserDAO<E> extends BaseDAOImpl<E> { //corrigir a questão do E !!!!
 
-    @Override
-    public void inserir(Obra obra) {
+    public Connection getConnection() {
         Connection con = ConnectionFactory.getConnection();
-        String comando = ""; //colocar comando SQL aqui
-        try {
-            PreparedStatement ps = con.prepareStatement(comando);
-            ps.setString(1, obra.getTitulo());
-            //inserir outros dados a serem postos na tabela sql
-            ps.execute();
-
-            ps.close();
-            con.close();
-
-        } catch (SQLException e) {   
-            e.printStackTrace();
-        }
+        return con;
     }
 
     @Override
-    public void deletar(Obra obra) {
-        Connection con = ConnectionFactory.getConnection();
-    }
+    public abstract void inserir(E entity);
 
     @Override
-    public void atualizar(Obra obra) {
-        Connection con = ConnectionFactory.getConnection();
-    }
+    public abstract void atualizar(E entity);
 
     @Override
-    public Obra buscar(Obra obra) {
+    public E buscar(E entity) { //haveram vários metódos buscar, um para cada tipo de busca, usando um listar diferente?
         Connection con = ConnectionFactory.getConnection();
         return null;
     }
     
     @Override
-    public List listar(Obra obra) {
+    public List<E> listar(E entity) {
         Connection con = ConnectionFactory.getConnection();
         String sql = "SELECT * FROM _______"; //inserir nome da tabela de obras
         try {
@@ -70,6 +53,25 @@ public class UserDAO implements UserInterface {
         
 
         return null;
+    }
+
+    @Override
+    public void excluir(E entity) {
+        Connection con = ConnectionFactory.getConnection();
+
+        Usuario usuario = (Usuario) entity;
+
+        String comando = "DELETE FROM _______ WHERE id = ?"; //colocar comando SQL de exclusão na tabela aqui
+
+        try {
+            PreparedStatement ps = con.prepareStatement(comando);
+            ps.setString(1, usuario.getId());
+            ps.execute();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

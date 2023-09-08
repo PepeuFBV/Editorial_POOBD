@@ -6,11 +6,11 @@ import java.util.List;
 public class Avaliador extends Usuario {
     private String endereco;
     private String cpf;
-    private List<Obra> obras = new ArrayList<>();
+    private List<Obra> obras = new ArrayList<>(); //será um array list só como id das obras?
     private List<Avaliador> avaliadores;
 
-    public Avaliador(String nome, String endereco, String cpf, String login, String senha) {
-        super(nome, login, senha);
+    public Avaliador(String id, String nome, String endereco, String cpf, String login, String senha) {
+        super(id,nome, login, senha);
         setEndereco(endereco);
         setCpf(cpf);
     }

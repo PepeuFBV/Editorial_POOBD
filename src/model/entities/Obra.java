@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Obra {
+	private String Id;
 	private String titulo;
 	private String genero;
 	private LocalDate ano;
