@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Obra {
-	private String Id;
+	private String id;
 	private String titulo;
 	private String genero;
 	private LocalDate ano;
@@ -14,16 +14,27 @@ public class Obra {
 	private Avaliador avaliador;
 	private List<Obra> obras = new ArrayList<>();
 	
-	public Obra(String titulo, String genero, LocalDate ano, Autor autor, StatusObra status, Avaliador avaliador) {
-		setTitulo(titulo);
-		setGenero(genero);
-		setAno(ano);
-		setAutor(autor);
-		setStatus(status);
-		setAvaliador(avaliador);
-	}
+    public Obra(String id, String titulo, String genero, LocalDate ano, Autor autor, StatusObra status, Avaliador avaliador) {
+        setId(id);
+        setTitulo(titulo);
+        setGenero(genero);
+        setAno(ano);
+        setAutor(autor);
+        setStatus(status);
+        setAvaliador(avaliador);
+    }
 
 	public Obra() {}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        if (id != null && !"".equals(id)) {
+            this.id = id;
+        }
+    }
 
 	public String getTitulo() {
 		return titulo;
@@ -100,7 +111,7 @@ public class Obra {
 
 	public List<Obra> buscarPorTitulo(String titulo) {
         List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) { // Suponha que 'todasAsObras' seja a lista completa de obras
+        for (Obra obra : obras) {
             if (obra.getTitulo().equalsIgnoreCase(titulo)) {
                 obrasEncontradas.add(obra);
             }

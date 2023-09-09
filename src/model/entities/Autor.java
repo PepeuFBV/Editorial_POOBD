@@ -5,35 +5,11 @@ import java.util.List;
 
 public class Autor extends Usuario {
     private List<Autor> autores = new ArrayList<>();
-    private String endereco;
-    private String cpf;
     private List<Obra> obras = new ArrayList<>();
 
     public Autor(String id, String nome, String endereco, String cpf, List<Obra> obras, String login, String senha) {
-        super(id,nome, login, senha);
-        setEndereco(endereco);
-        setCpf(cpf);
+        super(id,nome, login, senha, endereco, cpf);
         setObras(obras);
-    }
-
-    public String getEndereco() {
-        return this.endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        if (endereco != null && !endereco.isEmpty()) {
-            this.endereco = endereco;
-        }
-    }
-
-    public String getCpf() {
-        return this.cpf;
-    }
-
-    public void setCpf(String cpf) {
-        if (cpf != null && !cpf.isEmpty()) {
-            this.cpf = cpf;
-        }
     }
 
     public List<Obra> getObras() {

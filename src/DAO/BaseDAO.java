@@ -1,11 +1,8 @@
 package DAO;
 
-import java.sql.Connection;
 import java.util.List;
 
 public interface BaseDAO<E> {
-
-    public Connection getConnection();
 
     public void inserir(E entity);
     

@@ -4,35 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Avaliador extends Usuario {
-    private String endereco;
-    private String cpf;
     private List<Obra> obras = new ArrayList<>(); //será um array list só como id das obras?
-    private List<Avaliador> avaliadores;
+    private List<Avaliador> avaliadores = new ArrayList<>();
 
     public Avaliador(String id, String nome, String endereco, String cpf, String login, String senha) {
-        super(id,nome, login, senha);
-        setEndereco(endereco);
-        setCpf(cpf);
-    }
-
-    public String getEndereco() {
-        return this.endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        if (endereco != null && !endereco.isEmpty()) {
-            this.endereco = endereco;
-        }
-    }
-
-    public String getCpf() {
-        return this.cpf;
-    }
-
-    public void setCpf(String cpf) {
-        if (cpf != null && !cpf.isEmpty()) {
-            this.cpf = cpf;
-        }
+        super(id,nome, login, senha, endereco, cpf);
+        setObras(obras);
     }
 
     public List<Obra> getObras() {

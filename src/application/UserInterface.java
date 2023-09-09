@@ -1,16 +1,16 @@
 package application;
 
-import model.entities.Usuario;
 import java.util.List;
+import model.entities.Usuario;
 
 public interface UserInterface {
-    public void inserir(Usuario usu);
+    public void inserir(Usuario usuario);
 
-    public void deletar(Usuario usu);
-    
-    public void atualizar(Usuario usu);
+    public void deletar(Usuario usuario);
 
-    public Usuario buscar(Usuario usu);
-    
-    public List listar(Usuario usu);
+    public void atualizar(Usuario usuario);
+
+    public Usuario buscar(Usuario usuario);
+
+    public List<Usuario> listar();
 }

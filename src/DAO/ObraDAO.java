@@ -4,91 +4,115 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import model.entities.Obra;
 
-public class ObraDAO<E> extends BaseDAOImpl<E> { //corrigir a questão do E !!!! e a questão do connection factory
-
-    public Connection getConnection() {
-        Connection con = ConnectionFactory.getConnection();
-        return con;
-    }
+public class ObraDAO extends BaseDAOImpl<Obra> {
 
     @Override
-    public void inserir(E entity) { //deve se receber E ou Obra?
-
-        //chamar metodo de conexao aqui
-        Connection con = ConnectionFactory.getConnection(); //remover essa linha
-        
-        //realizar downcasting, checar se está correto depois
-        Obra obra = (Obra) entity;
-
-        String comando = ""; //colocar comando SQL de inserção na tabela aqui
+    public void inserir(Obra entity) {
+        Connection con = getConnection();
+        String comando = "INSERT INTO tabela_obras (titulo, genero, ano, autor, status) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(comando);
-            ps.setString(1, obra.getTitulo());
-            //inserir outros dados a serem postos na tabela sql, todas as informações devem ser
-            //inseridas por aqui
-            ps.execute();
-
+            ps.setString(1, entity.getTitulo());
+            ps.setString(2, entity.getGenero());
+            ps.setDate(3, java.sql.Date.valueOf(entity.getAno()));
+            ps.setString(4, entity.getAutor().getId()); 
+            ps.setString(5, entity.getStatus().name()); 
+            ps.executeUpdate();
             ps.close();
-            con.close();
-
-        } catch (SQLException e) {   
+        } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
     @Override
-    public void atualizar(E entity) {
-        Connection con = ConnectionFactory.getConnection();
+    public void atualizar(Obra entity) {
+        Connection con = getConnection();
+        String comando = "UPDATE tabela_obras SET titulo = ?, genero = ?, ano = ?, autor = ?, status = ? WHERE id = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(comando);
+            ps.setString(1, entity.getTitulo());
+            ps.setString(2, entity.getGenero());
+            ps.setDate(3, java.sql.Date.valueOf(entity.getAno()));
+            ps.setString(4, entity.getAutor().getId());
+            ps.setString(5, entity.getStatus().name());
+            ps.setString(6, entity.getId());
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
     }
 
     @Override
-    public E buscar(E entity) {
-        Connection con = ConnectionFactory.getConnection();
+    public Obra buscar(Obra entity) {
+        Connection con = getConnection();
+        String sql = "SELECT * FROM tabela_obras WHERE id = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, entity.getId());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Obra obra = new Obra();
+                obra.setId(rs.getString("id"));
+                obra.setTitulo(rs.getString("titulo"));
+                obra.setGenero(rs.getString("genero"));
+                obra.setAno(rs.getDate("ano").toLocalDate());
+                return obra;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
         return null;
     }
-    
+
     @Override
-    public List<E> listar(E entity) {
-        
-        //chamar metodo de conexao aqui
-        Connection con = ConnectionFactory.getConnection(); //remover essa linha
-        
-        //realizar downcasting, checar se está correto depois
-        Obra obra = (Obra) entity;
-
-
-        String sql = "SELECT * FROM _______"; //inserir nome da tabela de obras
+    public List<Obra> listar(Obra entity) {
+        Connection con = getConnection();
+        String sql = "SELECT * FROM tabela_obras";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            List<Obra> lista = new ArrayList<Obra>();
+            List<Obra> obras = new ArrayList<>();
             while (rs.next()) {
-                Obra obraAtual = new Obra();
-                try {
-                    obraAtual.setTitulo(rs.getString("titulo"));
-                    //inserir outros dados a serem coletados na tabela sql 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                obra.cadastrar(obraAtual); //adicionar em uma lista de obras
-                lista.add(obraAtual);
+                Obra obra = new Obra();
+                obra.setId(rs.getString("id"));
+                obra.setTitulo(rs.getString("titulo"));
+                obra.setGenero(rs.getString("genero"));
+                obra.setAno(rs.getDate("ano").toLocalDate());
+                obras.add(obra);
             }
-            return lista;
+            return obras;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
-        
-
         return null;
     }
 
     @Override
-    public void excluir(E entity) {
-        Connection con = ConnectionFactory.getConnection();
-    } 
-
+    public void excluir(Obra entity) {
+        Connection con = getConnection();
+        String comando = "DELETE FROM tabela_obras WHERE id = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(comando);
+            ps.setString(1, entity.getId());
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
 }

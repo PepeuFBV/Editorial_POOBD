@@ -4,57 +4,59 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import model.entities.Gerente;
+import model.entities.Usuario;
 
-public class GerenteDAO<E> extends UserDAO<E> {
-    
+public class GerenteDAO extends UserDAO {
 
     @Override
-    public void inserir(E entity) {
+    public void inserir(Usuario entity) {
+        Connection con = getConnection();
 
-        //chamar metodo de conexao aqui
-        Connection con = ConnectionFactory.getConnection(); //remover essa linha
+        if (entity instanceof Gerente) {
+            Gerente gerente = (Gerente) entity;
 
-        //realizar downcasting, checar se está correto depois
-        Gerente gerente = (Gerente) entity;
-
-        String comando = "INSERT INTO TABLE _______ VALUES (?,?,?,?)"; //colocar comando SQL de inserção na tabela aqui
-        try {
-            PreparedStatement ps = con.prepareStatement(comando); //alterar o statement de acordo com a tabela no SQL
-            ps.setString(1, gerente.getId());
-            ps.setString(2, gerente.getNome());
-            ps.setString(3, gerente.getLogin());
-            ps.setString(4, gerente.getSenha());
-            ps.execute();
-            ps.close();
-            con.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            String comando = "INSERT INTO sua_tabela (id, nome, login, senha) VALUES (?, ?, ?, ?)";
+            try {
+                PreparedStatement ps = con.prepareStatement(comando);
+                ps.setString(1, gerente.getId());
+                ps.setString(2, gerente.getNome());
+                ps.setString(3, gerente.getLogin());
+                ps.setString(4, gerente.getSenha());
+                ps.execute();
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                closeConnection();
+            }
+        } else {
+            throw new IllegalArgumentException("Tipo de entidade não suportado");
         }
     }
 
     @Override
-    public void atualizar(E entity) {
-        Connection con = ConnectionFactory.getConnection();
+    public void atualizar(Usuario entity) {
+        Connection con = getConnection();
 
-        Gerente gerente = (Gerente) entity;
+        if (entity instanceof Gerente) {
+            Gerente gerente = (Gerente) entity;
 
-        String comando = "UPDATE TABLE _______ nome = ?, login = ?, senha = ? WHERE id = ?"; //colocar comando SQL de atualização na tabela aqui
-    
-        try {
-            PreparedStatement ps = con.prepareStatement(comando);
-            ps.setString(1, gerente.getNome());
-            ps.setString(2, gerente.getLogin());
-            ps.setString(3, gerente.getSenha());
-            ps.execute();
-            ps.close();
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            String comando = "UPDATE sua_tabela SET nome = ?, login = ?, senha = ? WHERE id = ?";
+            try {
+                PreparedStatement ps = con.prepareStatement(comando);
+                ps.setString(1, gerente.getNome());
+                ps.setString(2, gerente.getLogin());
+                ps.setString(3, gerente.getSenha());
+                ps.setString(4, gerente.getId());
+                ps.execute();
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                closeConnection();
+            }
+        } else {
+            throw new IllegalArgumentException("Tipo de entidade não suportado");
         }
     }
-
-
-
-
 }

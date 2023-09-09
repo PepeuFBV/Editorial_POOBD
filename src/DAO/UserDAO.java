@@ -8,70 +8,80 @@ import java.util.ArrayList;
 import java.util.List;
 import model.entities.Usuario;
 
-public abstract class UserDAO<E> extends BaseDAOImpl<E> { //corrigir a questão do E !!!!
-
-    public Connection getConnection() {
-        Connection con = ConnectionFactory.getConnection();
-        return con;
-    }
+public abstract class UserDAO extends BaseDAOImpl<Usuario> {
 
     @Override
-    public abstract void inserir(E entity);
+    public abstract void inserir(Usuario entity); 
 
     @Override
-    public abstract void atualizar(E entity);
+    public abstract void atualizar(Usuario entity);
 
     @Override
-    public E buscar(E entity) { //haveram vários metódos buscar, um para cada tipo de busca, usando um listar diferente?
-        Connection con = ConnectionFactory.getConnection();
-        return null;
-    }
-    
-    @Override
-    public List<E> listar(E entity) {
-        Connection con = ConnectionFactory.getConnection();
-        String sql = "SELECT * FROM _______"; //inserir nome da tabela de obras
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            List<Obra> lista = new ArrayList<Obra>();
-            while (rs.next()) {
-                Obra obraAtual = new Obra();
-                try {
-                    obraAtual.setTitulo(rs.getString("titulo"));
-                    //inserir outros dados a serem coletados na tabela sql 
-                } catch (Exception e) {
-                    e.printStackTrace();
+    public Usuario buscar(Usuario entity) {
+        if (entity instanceof Usuario) {
+            Usuario usuario = (Usuario) entity;
+            try (Connection con = getConnection()) {
+                String sql = "SELECT * FROM usuario WHERE id=?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, usuario.getId());
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    usuario.setNome(rs.getString("nome"));
+                    usuario.setLogin(rs.getString("login"));
+                    usuario.setSenha(rs.getString("senha"));
+                    usuario.setEndereco(rs.getString("endereco"));
+                    usuario.setCpf(rs.getString("cpf"));
                 }
-                obra.cadastrar(obraAtual); //adicionar em uma lista de obras
-                lista.add(obraAtual);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            return lista;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
+            throw new IllegalArgumentException("Tipo de entidade não suportado");
         }
-        
-
-        return null;
+        return entity;
     }
 
     @Override
-    public void excluir(E entity) {
-        Connection con = ConnectionFactory.getConnection();
-
-        Usuario usuario = (Usuario) entity;
-
-        String comando = "DELETE FROM _______ WHERE id = ?"; //colocar comando SQL de exclusão na tabela aqui
-
-        try {
-            PreparedStatement ps = con.prepareStatement(comando);
-            ps.setString(1, usuario.getId());
-            ps.execute();
-            ps.close();
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public List<Usuario> listar(Usuario entity) {
+        if (entity instanceof Usuario) {
+            List<Usuario> usuarios = new ArrayList<>();
+            try (Connection con = getConnection()) {
+                String sql = "SELECT * FROM usuario";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    Usuario usuario = new Usuario();
+                    usuario.setId(rs.getString("id"));
+                    usuario.setNome(rs.getString("nome"));
+                    usuario.setLogin(rs.getString("login"));
+                    usuario.setSenha(rs.getString("senha"));
+                    usuario.setEndereco(rs.getString("endereco"));
+                    usuario.setCpf(rs.getString("cpf"));
+                    usuarios.add(usuario);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return usuarios;
+        } else {
+            throw new IllegalArgumentException("Tipo de entidade não suportado");
         }
     }
 
+    @Override
+    public void excluir(Usuario entity) {
+        if (entity instanceof Usuario) {
+            Usuario usuario = (Usuario) entity;
+            try (Connection con = getConnection()) {
+                String sql = "DELETE FROM usuario WHERE id=?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, usuario.getId());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            throw new IllegalArgumentException("Tipo de entidade não suportado");
+        }
+    }
 }
