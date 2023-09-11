@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Autor extends Usuario {
+
     private List<Autor> autores = new ArrayList<>();
     private List<Obra> obras = new ArrayList<>();
 
-    public Autor(String id, String nome, String endereco, String cpf, List<Obra> obras, String login, String senha) {
-        super(id,nome, login, senha, endereco, cpf);
-        setObras(obras);
+    public Autor(Long id, String nome, String endereco, String cpf, List<Obra> obras, String login, String senha) {
+        super(id, nome, login, senha, endereco, cpf);
     }
 
     public List<Obra> getObras() {
@@ -22,8 +22,16 @@ public class Autor extends Usuario {
         }
     }
 
-	//alterar metódos depois
-	//parte sql
+    public List<Autor> getAutores() {
+        return this.autores;
+    }
+
+    public void setAutores(List<Autor> autores) {
+        this.autores = autores;
+    }
+
+    //alterar metódos depois
+    /*
 	public void cadastrar(Autor autor) {
 		autores.add(autor);
 		System.out.printf(autor.getNome() + " está cadastrado!\n");
@@ -58,5 +66,6 @@ public class Autor extends Usuario {
         System.out.println("Autor não encontrado para a obra: " + obra.getTitulo());
         return null;
     }
+    */
 
 }

@@ -1,24 +1,23 @@
 package DAO;
 
-import java.util.List; 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class BaseDAOImpl<E> implements BaseDAO<E> {
+public abstract class BaseDAOImpl<VO> implements BaseDAO<VO> {
+
     final static String URL = "jdbc:postgresql://localhost/Editorial";
-    final static String USER = "postgres";
+    final static String USER = "postgres"; //alterar usuario
     final static String PASS = "password"; //alterar senha
-	static Connection con = null ;
+	static Connection con = null;
+
 	public static Connection getConnection() {
 		if(con == null) {
 			try {
 				con = DriverManager.getConnection(URL,USER,PASS);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				
 			}
 			return con;
 		}
@@ -31,26 +30,24 @@ public abstract class BaseDAOImpl<E> implements BaseDAO<E> {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			con = null;
 		}
-		
 	}
 
     @Override
-    public abstract void inserir(E entity);
+    public abstract void inserir(VO vo);
 
     @Override
-    public abstract void atualizar(E entity);
+    public abstract void atualizar(VO vo);
 
     @Override
-    public abstract E buscar(E entity);
+    public abstract ResultSet buscarPorId(VO vo);
 
     @Override
-    public abstract List<E> listar(E entity);
+    public abstract ResultSet listarTodos(VO vo);
 
     @Override
-    public abstract void excluir(E entity);
+    public abstract void excluir(VO vo);
 }

@@ -2,10 +2,7 @@ package model.entities;
 
 public class Gerente extends Usuario {
 
-    public Gerente(String id, String nome, String login, String senha) {
-        setId(id);
-        setNome(nome);
-        setLogin(login);
-        setSenha(senha);
+    public Gerente(Long id, String nome, String login, String senha, String endereco, String cpf) {
+        super(id, nome, login, senha, endereco, cpf);
     }
 }

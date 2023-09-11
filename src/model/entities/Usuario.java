@@ -1,23 +1,21 @@
 package model.entities;
 
 public class Usuario {
-    private String id;
+
+    private Long id;
     private String nome;
     private String login;
     private String senha;
-    private String cpf;
     private String endereco;
+    private String cpf;
 
-    public Usuario(String id, String nome, String login, String senha, String cpf, String endereco) {
+    public Usuario(Long id, String nome, String login, String senha, String endereco, String cpf) { //para a criação de gerente
         setId(id);
         setNome(nome);
         setLogin(login);
         setSenha(senha);
-        setCpf(cpf);
         setEndereco(endereco);
-    }
-
-    public Usuario() {
+        setCpf(cpf);
     }
 
     public String getNome() {
@@ -50,23 +48,27 @@ public class Usuario {
         }
     }
 
-    public String getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         if (id != null && !id.isEmpty()) {
             this.id = id;
         }
     }
-    
+
     public String getCpf() {
         return this.cpf;
     }
 
     public void setCpf(String cpf) {
-        if (cpf != null && !cpf.isEmpty()) {
-            this.cpf = cpf;
+        if (Usuario.isInstanceof(Gerente)) {
+            cpf = null;
+        } else {
+            if (cpf != null && !cpf.isEmpty()) {
+                this.cpf = cpf;
+            }
         }
     }
     
@@ -75,12 +77,19 @@ public class Usuario {
     }
 
     public void setEndereco(String endereco) {
-        if (endereco != null && !endereco.isEmpty()) {
-            this.endereco = endereco;
+        if (Usuario.isInstanceof(Gerente)) {
+            endereco = null;
+        } else {
+            if (endereco != null && !endereco.isEmpty()) {
+                this.endereco = endereco;
+            }
         }
     }
 
+
+    /*
     public boolean logar(String login, String senha, Usuario usuario) {
         return login.equals(usuario.login) && senha.equals(usuario.senha);
     }
+    */
 }

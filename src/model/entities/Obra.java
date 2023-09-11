@@ -9,8 +9,8 @@ public class Obra {
 	private String titulo;
 	private String genero;
 	private LocalDate ano;
-	private Autor autor;
 	private StatusObra status;
+	private Autor autor;
 	private Avaliador avaliador;
 	private List<Obra> obras = new ArrayList<>();
 	
