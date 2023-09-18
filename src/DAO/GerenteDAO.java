@@ -1,117 +1,95 @@
 package DAO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
-public class GerenteDAO extends UserDAO<GerenteVO> {
+import model.entities.Gerente;
+
+public class GerenteDAO extends UsersDAO {
     
-    @Override
-    public void inserir(GerenteVO vo) {
+    public void inserir(Gerente gerente) {
         try {
-            super.inserir(vo);
-            String sql = "INSERT INTO gerente (id_user, nome, login, senha) VALUES (?, ?, ?, ?)";
-            PreparedStatement ps;
-            ps = con.prepareStatement(sql);
-            ps.setString(1, vo.getId());
-            ps.setString(2, vo.getNome());
-            ps.setString(3, vo.getLogin());
-            ps.setString(4, vo.getSenha());
-
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Falha na criação do gerente. Nenhuma linha foi criada.");
-            }
-
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                vo.setId(rs.getLong("id"));
-            } else {
-                throw new SQLException("Falha na criação do gerente. Nenhum ID foi retornado.");
-            }
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "INSERT INTO gerente (id_gerente, nome, login, senha) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, gerente.getId());
+            statement.setString(2, gerente.getNome());
+            statement.setString(3, gerente.getLogin());
+            statement.setString(4, gerente.getSenha());
+            statement.executeUpdate();
+            statement.close();
+            super.inserir(gerente);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void atualizar(Gerente gerente) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "UPDATE gerente SET nome = ?, login = ?, senha = ? WHERE id_gerente = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, gerente.getNome());
+            statement.setString(2, gerente.getLogin());
+            statement.setString(3, gerente.getSenha());
+            statement.setInt(4, gerente.getId());
+            statement.executeUpdate();
+            statement.close();
+            super.atualizar(gerente);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    @Override
-    public void atualizar(GerenteVO vo) {
+    public ResultSet buscarPorId(Gerente gerente) {
         try {
-            super.atualizar(vo);
-            String sql = "UPDATE gerente SET nome = ?, login = ?, senha = ? WHERE id = ?";
-            PreparedStatement ps;
-            ps = con.prepareStatement(sql);
-            ps.setString(1, vo.getNome());
-            ps.setString(2, vo.getLogin());
-            ps.setString(3, vo.getSenha());
-            ps.setLong(4, vo.getId());
-
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Falha na atualização do gerente. Nenhuma linha foi atualizada.");
-            }
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM gerente WHERE id_gerente = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, gerente.getId());
+            ResultSet rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+            return rs;
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    public ResultSet buscarPorId(GerenteVO vo) {
-        String sql = "SELECT * FROM gerente WHERE id = ?";
-        PreparedStatement ps;
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setLong(1, vo.getId());
-
-            ResultSet rs = ps.executeQuery();
-            if (rs != null) { //checar se está correto, mudar provavelmente
-                return rs;
-            } else {
-                throw new SQLException("Falha na busca do gerente. Nenhuma linha foi encontrada.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return null;
         }
 
     }
 
-    @Override
-    public ResultSet listarTodos(GerenteVO vo) {
-        String sql = "SELECT * FROM gerente";
-        PreparedStatement ps;
+    public ResultSet listarTodos() {
         try {
-            ps = con.prepareStatement(sql);
-
-            ResultSet rs = ps.executeQuery();
-            if (rs != null) { //checar se está correto, mudar provavelmente
-                return rs;
-            } else {
-                throw new SQLException("Falha na busca do gerente. Nenhuma linha foi encontrada.");
-            }
-
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM gerente";
+            PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+            return rs;
+        } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
     }
 
-    @Override
-    public void excluir(GerenteVO vo) {
-        String sql = "DELETE FROM gerente WHERE id = ?";
-        PreparedStatement ps;
+    public void excluir(Gerente gerente) {
         try {
-            ps = con.prepareStatement(sql);
-            ps.setLong(1, vo.getId());
-
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Falha na exclusão do gerente. Nenhuma linha foi excluída.");
-            }
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "DELETE FROM gerente WHERE id_gerente = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, gerente.getId());
+            statement.executeUpdate();
+            statement.close();
+            super.excluir(gerente);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
 }

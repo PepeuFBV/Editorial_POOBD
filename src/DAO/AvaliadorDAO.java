@@ -1,119 +1,97 @@
 package DAO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import model.entities.Avaliador;
 
-public class AvaliadorDAO extends UserDAO<AvaliadorVO> {
+//TODO
+//Adicionar na tabela avaliadaPor o id do avaliador
+
+public class AvaliadorDAO extends UsersDAO {
     
-    @Override
-    public void inserir(AvaliadorVO vo) {
+    public void inserir(Avaliador avaliador) {
         try {
-            super.inserir(vo);
-            String sql = "INSERT INTO avaliador (id_user, nome, login, senha, endereco, cpf) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps;
-            ps = con.prepareStatement(sql);
-            ps.setString(1, vo.getId());
-            ps.setString(2, vo.getNome());
-            ps.setString(3, vo.getLogin());
-            ps.setString(4, vo.getSenha());
-            ps.setString(5, vo.getEndereco());
-            ps.setString(6, vo.getCpf());
-
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Falha na criação do avaliador. Nenhuma linha foi criada.");
-            }
-
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                vo.setId(rs.getLong("id"));
-            } else {
-                throw new SQLException("Falha na criação do avaliador. Nenhum ID foi retornado.");
-            }
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "INSERT INTO avaliador (id_avaliador, nome, login, senha) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, avaliador.getId());
+            statement.setString(2, avaliador.getNome());
+            statement.setString(3, avaliador.getLogin());
+            statement.setString(4, avaliador.getSenha());
+            statement.executeUpdate();
+            statement.close();
+            super.inserir(avaliador);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void atualizar(Avaliador avaliador) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "UPDATE avaliador SET nome = ?, login = ?, senha = ? WHERE id_avaliador = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, avaliador.getNome());
+            statement.setString(2, avaliador.getLogin());
+            statement.setString(3, avaliador.getSenha());
+            statement.setInt(4, avaliador.getId());
+            statement.executeUpdate();
+            statement.close();
+            super.atualizar(avaliador);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    @Override
-    public void atualizar(AvaliadorVO vo) {
+    public ResultSet buscarPorId(Avaliador avaliador) {
         try {
-            super.atualizar(vo);
-            String sql = "UPDATE avaliador SET nome = ?, login = ?, senha = ?, endereco = ?, cpf = ? WHERE id = ?";
-            PreparedStatement ps;
-            ps = con.prepareStatement(sql);
-            ps.setString(1, vo.getNome());
-            ps.setString(2, vo.getLogin());
-            ps.setString(3, vo.getSenha());
-            ps.setString(4, vo.getEndereco());
-            ps.setString(5, vo.getCpf());
-            ps.setLong(6, vo.getId());
-
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Falha na atualização do avaliador. Nenhuma linha foi atualizada.");
-            }
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM avaliador WHERE id_avaliador = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, avaliador.getId());
+            ResultSet rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+            return rs;
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    public ResultSet buscarPorId(AvaliadorVO vo) {
-        String sql = "SELECT * FROM avaliador WHERE id = ?";
-        PreparedStatement ps;
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setLong(1, vo.getId());
-            ResultSet rs = ps.executeQuery();
-            if (rs != null) { //checar se está correto, mudar provavelmente
-                return rs;
-            } else {
-                throw new SQLException("Falha na busca do avaliador. Nenhuma linha foi encontrada.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return null;
         }
 
     }
 
-    @Override
-    public ResultSet listarTodos(AvaliadorVO vo) {
-        String sql = "SELECT * FROM avaliador";
-        PreparedStatement ps;
+    public ResultSet listarTodos() {
         try {
-            ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            if (rs != null) { //checar se está correto, mudar provavelmente
-                return rs;
-            } else {
-                throw new SQLException("Falha na busca do avaliador. Nenhuma linha foi encontrada.");
-            }
-
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM avaliador";
+            PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+            return rs;
+        } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
     }
 
-    @Override
-    public void excluir(AvaliadorVO vo) {
-        String sql = "DELETE FROM avaliador WHERE id = ?";
-        PreparedStatement ps;
+    public void excluir(Avaliador avaliador) {
         try {
-            ps = con.prepareStatement(sql);
-            ps.setLong(1, vo.getId());
-
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Falha na exclusão do avaliador. Nenhuma linha foi excluída.");
-            }
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "DELETE FROM avaliador WHERE id_avaliador = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, avaliador.getId());
+            statement.executeUpdate();
+            statement.close();
+            super.excluir(avaliador);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
 }

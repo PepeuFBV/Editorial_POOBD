@@ -3,18 +3,41 @@ package model.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Avaliador extends Usuario {
+public class Avaliador extends User {
 
+    private static int contador = 1;
+    private String endereco;
+    private String cpf;
     private List<Obra> obras = new ArrayList<>();
-    private List<Avaliador> avaliadores = new ArrayList<>();
 
-    public Avaliador(Long id, String nome, String login, String senha, String endereco, String cpf) {
-        super(id, nome, login, senha, endereco, cpf);
+    public Avaliador(String nome, String login, String senha, String endereco, String cpf, List<Obra> obras, List<Avaliador> avaliadores) {
+        super(contador, nome, login, senha);
+        setEndereco(endereco);
+        setCpf(cpf);
         setObras(obras);
         setAvaliadores(avaliadores);
+        contador++;
     }
-    
-    //getters e setters
+
+    public String getEndereco() {
+        return this.endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        if (endereco != null && !endereco.isEmpty()) {
+            this.endereco = endereco;
+        }
+    }
+
+    public String getCpf() {
+        return this.cpf;
+    }
+
+    public void setCpf(String cpf) {
+        if (cpf != null && !cpf.isEmpty()) {
+            this.cpf = cpf;
+        }
+    }
 
     public List<Obra> getObras() {
         return this.obras;

@@ -1,5 +1,3 @@
-
-
 import java.util.List;
 
 //importar exceptions
@@ -11,7 +9,7 @@ public interface BaseInterBO<VO> {
 
     public void buscarPorId(VO vo);
 
-    public List<VO> listar();
+    public List<VO> listarTodos();
 
     public void alterar(VO vo);
 

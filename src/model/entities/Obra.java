@@ -1,43 +1,47 @@
 package model.entities;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO
+//Checar no setStatus se o status é válido (uma das 4 opções) (era um enum)
+
 public class Obra {
-	private String id;
+
+	private static int contador = 1;
+	private int id;
 	private String titulo;
 	private String genero;
 	private LocalDate ano;
-	private StatusObra status;
-	private Autor autor;
-	private Avaliador avaliador;
-	private List<Obra> obras = new ArrayList<>();
+	private String status;
+	private Autor autor; //servirá para pegar o id do autor
+	private Avaliador avaliador; //servirá para pegar o id do avaliador
 	
-    public Obra(String id, String titulo, String genero, LocalDate ano, Autor autor, StatusObra status, Avaliador avaliador) {
-        setId(id);
+    public Obra(String titulo, String genero, LocalDate ano, String status, Autor autor, Avaliador avaliador) {
+        setId(contador);
         setTitulo(titulo);
         setGenero(genero);
         setAno(ano);
-        setAutor(autor);
-        setStatus(status);
-        setAvaliador(avaliador);
+		setStatus(status);
+		setAutor(autor);
+		setAvaliador(avaliador);
+		contador++;
     }
 
-	public Obra() {}
-
-    public String getId() {
-        return id;
+    public int getId() {
+        return this.id;
     }
 
-    public void setId(String id) {
-        if (id != null && !"".equals(id)) {
+    public void setId(int id) {
+        if (id > 0) {
             this.id = id;
         }
     }
 
 	public String getTitulo() {
-		return titulo;
+		return this.titulo;
 	}
 
 	public void setTitulo(String titulo) {
@@ -47,7 +51,7 @@ public class Obra {
 	}
 
 	public String getGenero() {
-		return genero;
+		return this.genero;
 	}
 
 	public void setGenero(String genero) {
@@ -57,7 +61,7 @@ public class Obra {
 	}
 
 	public LocalDate getAno() {
-		return ano;
+		return this.ano;
 	}
 
 	public void setAno(LocalDate ano) {
@@ -65,9 +69,19 @@ public class Obra {
 			this.ano = ano;
 		}
 	}
-	
+
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		if (status != null && !status.isEmpty()) {
+			this.status = status;
+		}
+	}
+
 	public Autor getAutor() {
-		return autor;
+		return this.autor;
 	}
 
 	public void setAutor(Autor autor) {
@@ -76,18 +90,8 @@ public class Obra {
 		}
 	}
 
-	public StatusObra getStatus() {
-		return status;
-	}
-
-	public void setStatus(StatusObra status) {
-		if (status != null) {
-			this.status = status;
-		}
-	}
-
 	public Avaliador getAvaliador() {
-		return avaliador;
+		return this.avaliador;
 	}
 	
 	public void setAvaliador(Avaliador avaliador) {
@@ -95,6 +99,20 @@ public class Obra {
 			this.avaliador = avaliador;
 		}
 	}
+
+	public List<Obra> getObras() {
+		return this.obras;
+	}
+
+	public void setObras(List<Obra> obras) {
+		if (obras != null) {
+			this.obras = obras;
+		}
+	}
+
+
+
+
 
 	//alterar metódos depois
 	public void cadastrar(Obra obra) {

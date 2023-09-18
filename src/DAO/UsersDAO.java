@@ -3,43 +3,21 @@ package DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import model.entities.Autor;
+import model.entities.User;
 
-//TODO
-//Adicionar na tabela escritaPor o id do autor
-
-public class AutorDAO extends UsersDAO {
+public class UsersDAO implements BaseDAO<User> {
     
-    public void inserir(Autor autor) {
+    public void inserir(User user) {
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "INSERT INTO autor (id_autor, nome, login, senha) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO users (id_usuario, tipo, login, senha) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, autor.getId());
-            statement.setString(2, autor.getNome());
-            statement.setString(3, autor.getLogin());
-            statement.setString(4, autor.getSenha());
+            statement.setInt(1, user.getId());
+            statement.setString(2, user.getClassName());
+            statement.setString(3, user.getLogin());
+            statement.setString(4, user.getSenha());
             statement.executeUpdate();
             statement.close();
-            super.inserir(autor);
-            BaseDAOImpl.closeConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void atualizar(Autor autor) {
-        try {
-            Connection con = BaseDAOImpl.getConnection();
-            String sql = "UPDATE autor SET nome = ?, login = ?, senha = ? WHERE id_autor = ?";
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setString(1, autor.getNome());
-            statement.setString(2, autor.getLogin());
-            statement.setString(3, autor.getSenha());
-            statement.setInt(4, autor.getId());
-            statement.executeUpdate();
-            statement.close();
-            super.atualizar(autor);
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,12 +25,29 @@ public class AutorDAO extends UsersDAO {
 
     }
 
-    public ResultSet buscarPorId(Autor autor) {
+    public void atualizar(User user) {
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "SELECT * FROM autor WHERE id_autor = ?";
+            String sql = "UPDATE users SET login = ?, senha = ? WHERE id_usuario = ?";
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, autor.getId());
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getSenha());
+            statement.setInt(3, user.getId());
+            statement.executeUpdate();
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public ResultSet buscarPorId(User user) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM users WHERE id_usuario = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, user.getId());
             ResultSet rs = statement.executeQuery();
             BaseDAOImpl.closeConnection();
             return rs;
@@ -60,13 +55,12 @@ public class AutorDAO extends UsersDAO {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public ResultSet listarTodos() {
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "SELECT * FROM autor";
+            String sql = "SELECT * FROM users";
             PreparedStatement statement = con.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             BaseDAOImpl.closeConnection();
@@ -75,23 +69,20 @@ public class AutorDAO extends UsersDAO {
             e.printStackTrace();
             return null;
         }
-
     }
 
-    public void excluir(Autor autor) {
+    public void excluir(User user) {
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "DELETE FROM autor WHERE id_autor = ?";
+            String sql = "DELETE FROM users WHERE id_usuario = ?";
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, autor.getId());
+            statement.setInt(1, user.getId());
             statement.executeUpdate();
             statement.close();
-            super.excluir(autor);
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 }
