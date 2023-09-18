@@ -1,11 +1,14 @@
 package model.entities;
 
-public class Gerente extends Usuario {
+import java.util.ArrayList;
+import java.util.List;
 
-    public Gerente(String id, String nome, String login, String senha) {
-        setId(id);
-        setNome(nome);
-        setLogin(login);
-        setSenha(senha);
+public class Gerente extends User {
+
+    private static int contador = 1;
+
+    public Gerente(String nome, String login, String senha) {
+        super(contador, nome, login, senha);
     }
+    
 }

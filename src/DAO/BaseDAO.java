@@ -1,6 +1,6 @@
 package DAO;
 
-import java.util.List;
+import java.sql.ResultSet;
 
 public interface BaseDAO<E> {
 
@@ -8,10 +8,10 @@ public interface BaseDAO<E> {
     
     public void atualizar(E entity);
 
-    public E buscar(E entity);
+    public ResultSet buscarPorId(E entity);
 
-    public List<E> listar(E entity);
+    public ResultSet listarTodos();
 
     public void excluir(E entity);
-    
+
 }

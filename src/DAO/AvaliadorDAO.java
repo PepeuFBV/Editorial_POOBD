@@ -2,65 +2,96 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.ResultSet;
 import model.entities.Avaliador;
-import model.entities.Usuario;
 
-public class AvaliadorDAO extends UserDAO {
+//TODO
+//Adicionar na tabela avaliadaPor o id do avaliador
 
-    @Override
-    public void inserir(Usuario entity) {
-        Connection con = getConnection();
-
-        if (entity instanceof Avaliador) {
-            Avaliador avaliador = (Avaliador) entity;
-
-            String comando = "INSERT INTO sua_tabela (id, nome, login, senha, endereco, cpf) VALUES (?, ?, ?, ?, ?, ?)";
-            try {
-                PreparedStatement ps = con.prepareStatement(comando);
-                ps.setString(1, avaliador.getId());
-                ps.setString(2, avaliador.getNome());
-                ps.setString(3, avaliador.getLogin());
-                ps.setString(4, avaliador.getSenha());
-                ps.setString(5, avaliador.getEndereco());
-                ps.setString(6, avaliador.getCpf());
-                ps.execute();
-                ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                closeConnection();
-            }
-        } else {
-            throw new IllegalArgumentException("Tipo de entidade não suportado");
+public class AvaliadorDAO extends UsersDAO {
+    
+    public void inserir(Avaliador avaliador) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "INSERT INTO avaliador (id_avaliador, nome, login, senha) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, avaliador.getId());
+            statement.setString(2, avaliador.getNome());
+            statement.setString(3, avaliador.getLogin());
+            statement.setString(4, avaliador.getSenha());
+            statement.executeUpdate();
+            statement.close();
+            super.inserir(avaliador);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
-    @Override
-    public void atualizar(Usuario entity) {
-        Connection con = getConnection();
-
-        if (entity instanceof Avaliador) {
-            Avaliador avaliador = (Avaliador) entity;
-
-            String comando = "UPDATE sua_tabela SET nome = ?, login = ?, senha = ?, endereco = ?, cpf = ? WHERE id = ?";
-            try {
-                PreparedStatement ps = con.prepareStatement(comando);
-                ps.setString(1, avaliador.getNome());
-                ps.setString(2, avaliador.getLogin());
-                ps.setString(3, avaliador.getSenha());
-                ps.setString(4, avaliador.getEndereco());
-                ps.setString(5, avaliador.getCpf());
-                ps.setString(6, avaliador.getId());
-                ps.execute();
-                ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                closeConnection();
-            }
-        } else {
-            throw new IllegalArgumentException("Tipo de entidade não suportado");
+    
+    public void atualizar(Avaliador avaliador) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "UPDATE avaliador SET nome = ?, login = ?, senha = ? WHERE id_avaliador = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, avaliador.getNome());
+            statement.setString(2, avaliador.getLogin());
+            statement.setString(3, avaliador.getSenha());
+            statement.setInt(4, avaliador.getId());
+            statement.executeUpdate();
+            statement.close();
+            super.atualizar(avaliador);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
+
+    public ResultSet buscarPorId(Avaliador avaliador) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM avaliador WHERE id_avaliador = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, avaliador.getId());
+            ResultSet rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+            return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public ResultSet listarTodos() {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM avaliador";
+            PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+            return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public void excluir(Avaliador avaliador) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "DELETE FROM avaliador WHERE id_avaliador = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, avaliador.getId());
+            statement.executeUpdate();
+            statement.close();
+            super.excluir(avaliador);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

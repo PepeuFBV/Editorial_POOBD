@@ -1,118 +1,92 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.ArrayList;
 import model.entities.Obra;
 
-public class ObraDAO extends BaseDAOImpl<Obra> {
-
-    @Override
-    public void inserir(Obra entity) {
-        Connection con = getConnection();
-        String comando = "INSERT INTO tabela_obras (titulo, genero, ano, autor, status) VALUES (?, ?, ?, ?, ?)";
+public class ObraDAO implements BaseDAO<Obra> {
+    
+    public void inserir(Obra obra) {
         try {
-            PreparedStatement ps = con.prepareStatement(comando);
-            ps.setString(1, entity.getTitulo());
-            ps.setString(2, entity.getGenero());
-            ps.setDate(3, java.sql.Date.valueOf(entity.getAno()));
-            ps.setString(4, entity.getAutor().getId()); 
-            ps.setString(5, entity.getStatus().name()); 
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "INSERT INTO obra (id_obra, id_autor, titulo, genero, ano, status) VALUES (?, ?, ?, ?, ?, ?)";
+            java.sql.PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, obra.getId());
+            statement.setInt(2, obra.getAutor().getId());
+            statement.setString(3, obra.getTitulo());
+            statement.setString(4, obra.getGenero());
+            statement.setDate(5, obra.getAno()); //consertar
+            statement.setString(6, obra.getStatus());
+            statement.executeUpdate();
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            closeConnection();
+        }
+
+    }
+    
+    public void atualizar(Obra obra) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "UPDATE obra SET id_avaliador = ?, titulo = ?, genero = ?, ano = ?, status = ? WHERE id_obra = ?";
+            java.sql.PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, obra.getAvaliador().getId());
+            statement.setString(2, obra.getTitulo());
+            statement.setString(3, obra.getGenero());
+            statement.setDate(4, obra.getAno()); //consertar
+            statement.setString(5, obra.getStatus());
+            statement.setInt(6, obra.getId());
+            statement.executeUpdate();
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    @Override
-    public void atualizar(Obra entity) {
-        Connection con = getConnection();
-        String comando = "UPDATE tabela_obras SET titulo = ?, genero = ?, ano = ?, autor = ?, status = ? WHERE id = ?";
+    public ResultSet buscarPorId(Obra obra) {
         try {
-            PreparedStatement ps = con.prepareStatement(comando);
-            ps.setString(1, entity.getTitulo());
-            ps.setString(2, entity.getGenero());
-            ps.setDate(3, java.sql.Date.valueOf(entity.getAno()));
-            ps.setString(4, entity.getAutor().getId());
-            ps.setString(5, entity.getStatus().name());
-            ps.setString(6, entity.getId());
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM obra WHERE id_obra = ?";
+            java.sql.PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, obra.getId());
+            ResultSet rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+            return rs;
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            closeConnection();
+            return null;
         }
+
     }
 
-    @Override
-    public Obra buscar(Obra entity) {
-        Connection con = getConnection();
-        String sql = "SELECT * FROM tabela_obras WHERE id = ?";
+    public ResultSet listarTodos() {
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, entity.getId());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Obra obra = new Obra();
-                obra.setId(rs.getString("id"));
-                obra.setTitulo(rs.getString("titulo"));
-                obra.setGenero(rs.getString("genero"));
-                obra.setAno(rs.getDate("ano").toLocalDate());
-                return obra;
-            }
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM obra";
+            java.sql.PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+            return rs;
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            closeConnection();
+            return null;
         }
-        return null;
+
     }
 
-    @Override
-    public List<Obra> listar(Obra entity) {
-        Connection con = getConnection();
-        String sql = "SELECT * FROM tabela_obras";
+    public void excluir(Obra obra) {
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            List<Obra> obras = new ArrayList<>();
-            while (rs.next()) {
-                Obra obra = new Obra();
-                obra.setId(rs.getString("id"));
-                obra.setTitulo(rs.getString("titulo"));
-                obra.setGenero(rs.getString("genero"));
-                obra.setAno(rs.getDate("ano").toLocalDate());
-                obras.add(obra);
-            }
-            return obras;
-        } catch (SQLException e) {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "DELETE FROM obra WHERE id_obra = ?";
+            java.sql.PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, obra.getId());
+            statement.executeUpdate();
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-        return null;
-    }
-
-    @Override
-    public void excluir(Obra entity) {
-        Connection con = getConnection();
-        String comando = "DELETE FROM tabela_obras WHERE id = ?";
-        try {
-            PreparedStatement ps = con.prepareStatement(comando);
-            ps.setString(1, entity.getId());
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
         }
     }
 }

@@ -2,61 +2,94 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.ResultSet;
+
 import model.entities.Gerente;
-import model.entities.Usuario;
 
-public class GerenteDAO extends UserDAO {
-
-    @Override
-    public void inserir(Usuario entity) {
-        Connection con = getConnection();
-
-        if (entity instanceof Gerente) {
-            Gerente gerente = (Gerente) entity;
-
-            String comando = "INSERT INTO sua_tabela (id, nome, login, senha) VALUES (?, ?, ?, ?)";
-            try {
-                PreparedStatement ps = con.prepareStatement(comando);
-                ps.setString(1, gerente.getId());
-                ps.setString(2, gerente.getNome());
-                ps.setString(3, gerente.getLogin());
-                ps.setString(4, gerente.getSenha());
-                ps.execute();
-                ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                closeConnection();
-            }
-        } else {
-            throw new IllegalArgumentException("Tipo de entidade não suportado");
+public class GerenteDAO extends UsersDAO {
+    
+    public void inserir(Gerente gerente) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "INSERT INTO gerente (id_gerente, nome, login, senha) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, gerente.getId());
+            statement.setString(2, gerente.getNome());
+            statement.setString(3, gerente.getLogin());
+            statement.setString(4, gerente.getSenha());
+            statement.executeUpdate();
+            statement.close();
+            super.inserir(gerente);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
-    @Override
-    public void atualizar(Usuario entity) {
-        Connection con = getConnection();
-
-        if (entity instanceof Gerente) {
-            Gerente gerente = (Gerente) entity;
-
-            String comando = "UPDATE sua_tabela SET nome = ?, login = ?, senha = ? WHERE id = ?";
-            try {
-                PreparedStatement ps = con.prepareStatement(comando);
-                ps.setString(1, gerente.getNome());
-                ps.setString(2, gerente.getLogin());
-                ps.setString(3, gerente.getSenha());
-                ps.setString(4, gerente.getId());
-                ps.execute();
-                ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                closeConnection();
-            }
-        } else {
-            throw new IllegalArgumentException("Tipo de entidade não suportado");
+    
+    public void atualizar(Gerente gerente) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "UPDATE gerente SET nome = ?, login = ?, senha = ? WHERE id_gerente = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, gerente.getNome());
+            statement.setString(2, gerente.getLogin());
+            statement.setString(3, gerente.getSenha());
+            statement.setInt(4, gerente.getId());
+            statement.executeUpdate();
+            statement.close();
+            super.atualizar(gerente);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
+
+    public ResultSet buscarPorId(Gerente gerente) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM gerente WHERE id_gerente = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, gerente.getId());
+            ResultSet rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+            return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public ResultSet listarTodos() {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM gerente";
+            PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+            return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public void excluir(Gerente gerente) {
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "DELETE FROM gerente WHERE id_gerente = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, gerente.getId());
+            statement.executeUpdate();
+            statement.close();
+            super.excluir(gerente);
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
