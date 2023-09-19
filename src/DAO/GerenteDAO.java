@@ -11,16 +11,24 @@ public class GerenteDAO extends UsersDAO {
     public void inserir(Gerente gerente) {
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "INSERT INTO gerente (id_gerente, nome, login, senha) VALUES (?, ?, ?, ?)";
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, gerente.getId());
-            statement.setString(2, gerente.getNome());
-            statement.setString(3, gerente.getLogin());
-            statement.setString(4, gerente.getSenha());
-            statement.executeUpdate();
+            String sql = "INSERT INTO gerente (nome, login, senha) VALUES (?, ?, ?)";
+            PreparedStatement statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setString(1, gerente.getNome());
+            statement.setString(2, gerente.getLogin());
+            statement.setString(3, gerente.getSenha());
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new Exception("A inserção falhou. Nenhuma linha foi alterada.");
+            }
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                gerente.setId(generatedKeys.getInt(1));
+            } else {
+                throw new Exception("A inserção falhou. Nenhum id foi retornado.");
+            }
             statement.close();
-            super.inserir(gerente);
             BaseDAOImpl.closeConnection();
+            super.inserir(gerente);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,8 +45,8 @@ public class GerenteDAO extends UsersDAO {
             statement.setInt(4, gerente.getId());
             statement.executeUpdate();
             statement.close();
-            super.atualizar(gerente);
             BaseDAOImpl.closeConnection();
+            super.atualizar(gerente);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,33 +54,33 @@ public class GerenteDAO extends UsersDAO {
     }
 
     public ResultSet buscarPorId(Gerente gerente) {
+        ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();
             String sql = "SELECT * FROM gerente WHERE id_gerente = ?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, gerente.getId());
-            ResultSet rs = statement.executeQuery();
+            rs = statement.executeQuery();
             BaseDAOImpl.closeConnection();
-            return rs;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return rs;
 
     }
 
     public ResultSet listarTodos() {
+        ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();
             String sql = "SELECT * FROM gerente";
             PreparedStatement statement = con.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
+            rs = statement.executeQuery();
             BaseDAOImpl.closeConnection();
-            return rs;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return rs;
 
     }
 
@@ -84,8 +92,8 @@ public class GerenteDAO extends UsersDAO {
             statement.setInt(1, gerente.getId());
             statement.executeUpdate();
             statement.close();
-            super.excluir(gerente);
             BaseDAOImpl.closeConnection();
+            super.excluir(gerente);
         } catch (Exception e) {
             e.printStackTrace();
         }

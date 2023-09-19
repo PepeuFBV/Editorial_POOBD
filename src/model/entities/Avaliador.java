@@ -5,18 +5,16 @@ import java.util.List;
 
 public class Avaliador extends User {
 
-    private static int contador = 1;
     private String endereco;
     private String cpf;
     private List<Obra> obras = new ArrayList<>();
 
-    public Avaliador(String nome, String login, String senha, String endereco, String cpf, List<Obra> obras, List<Avaliador> avaliadores) {
-        super(contador, nome, login, senha);
+    public Avaliador(int id, String nome, String login, String senha, String endereco, String cpf, List<Obra> obras, List<Avaliador> avaliadores) {
+        super(id, nome, login, senha);
         setEndereco(endereco);
         setCpf(cpf);
         setObras(obras);
         setAvaliadores(avaliadores);
-        contador++;
     }
 
     public String getEndereco() {

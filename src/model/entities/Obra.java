@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Obra {
 
-	private static int contador = 1;
 	private int id;
 	private String titulo;
 	private String genero;
@@ -19,15 +18,14 @@ public class Obra {
 	private Autor autor; //servirá para pegar o id do autor
 	private Avaliador avaliador; //servirá para pegar o id do avaliador
 	
-    public Obra(String titulo, String genero, LocalDate ano, String status, Autor autor, Avaliador avaliador) {
-        setId(contador);
+    public Obra(int id,String titulo, String genero, LocalDate ano, String status, Autor autor, Avaliador avaliador) {
+        setId(id);
         setTitulo(titulo);
         setGenero(genero);
         setAno(ano);
 		setStatus(status);
 		setAutor(autor);
 		setAvaliador(avaliador);
-		contador++;
     }
 
     public int getId() {

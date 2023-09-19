@@ -5,17 +5,15 @@ import java.util.List;
 
 public class Autor extends User {
 
-    private static int contador = 1;
     private String endereco;
     private String cpf;
     private List<Obra> obras = new ArrayList<>();
 
-    public Autor(String nome, String login, String senha, String endereco, String cpf, List<Obra> obras) {
-        super(contador, nome, login, senha);
+    public Autor(int id, String nome, String login, String senha, String endereco, String cpf, List<Obra> obras) {
+        super(id, nome, login, senha);
         setEndereco(endereco);
         setCpf(cpf);
         setObras(obras);
-        contador++;
     }
 
     public String getEndereco() {

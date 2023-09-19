@@ -5,10 +5,8 @@ import java.util.List;
 
 public class Gerente extends User {
 
-    private static int contador = 1;
-
-    public Gerente(String nome, String login, String senha) {
-        super(contador, nome, login, senha);
+    public Gerente(int id,String nome, String login, String senha) {
+        super(id, nome, login, senha);
     }
     
 }

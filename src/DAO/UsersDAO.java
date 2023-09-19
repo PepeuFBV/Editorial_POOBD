@@ -28,11 +28,12 @@ public class UsersDAO implements BaseDAO<User> {
     public void atualizar(User user) {
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "UPDATE users SET login = ?, senha = ? WHERE id_usuario = ?";
+            String sql = "UPDATE users SET login = ?, senha = ? WHERE id_usuario = ? AND tipo = '?'";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getSenha());
             statement.setInt(3, user.getId());
+            statement.setString(4, user.getClassName());
             statement.executeUpdate();
             statement.close();
             BaseDAOImpl.closeConnection();
@@ -43,40 +44,43 @@ public class UsersDAO implements BaseDAO<User> {
     }
 
     public ResultSet buscarPorId(User user) {
+        ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "SELECT * FROM users WHERE id_usuario = ?";
+            String sql = "SELECT * FROM users WHERE id_usuario = ? AND tipo = '?'";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, user.getId());
-            ResultSet rs = statement.executeQuery();
+            statement.setString(2, user.getClassName());
+            rs = statement.executeQuery();
             BaseDAOImpl.closeConnection();
-            return rs;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+        return rs;
     }
 
     public ResultSet listarTodos() {
+        ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();
             String sql = "SELECT * FROM users";
             PreparedStatement statement = con.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
+            rs = statement.executeQuery();
             BaseDAOImpl.closeConnection();
-            return rs;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return rs;
     }
 
     public void excluir(User user) {
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "DELETE FROM users WHERE id_usuario = ?";
+            String sql = "DELETE FROM users WHERE id_usuario = ? AND tipo = '?'";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, user.getId());
+            statement.setString(2, user.getClassName());
             statement.executeUpdate();
             statement.close();
             BaseDAOImpl.closeConnection();

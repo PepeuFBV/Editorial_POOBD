@@ -5,24 +5,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import model.entities.Avaliador;
 
-//TODO
-//Adicionar na tabela avaliadaPor o id do avaliador
-
 public class AvaliadorDAO extends UsersDAO {
     
     public void inserir(Avaliador avaliador) {
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "INSERT INTO avaliador (id_avaliador, nome, login, senha) VALUES (?, ?, ?, ?)";
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, avaliador.getId());
+            String sql = "INSERT INTO avaliador (nome, login, senha, endereco, cpf) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(2, avaliador.getNome());
             statement.setString(3, avaliador.getLogin());
             statement.setString(4, avaliador.getSenha());
+            statement.setString(5, avaliador.getEndereco());
+            statement.setString(6, avaliador.getCpf());
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new Exception("A inserção falhou. Nenhuma linha foi alterada.");
+            }
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                avaliador.setId(generatedKeys.getInt(1));
+            } else {
+                throw new Exception("A inserção falhou. Nenhum id foi retornado.");
+            }
             statement.executeUpdate();
-            statement.close();
-            super.inserir(avaliador);
+            statement.close();  
             BaseDAOImpl.closeConnection();
+            super.inserir(avaliador);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -31,16 +39,18 @@ public class AvaliadorDAO extends UsersDAO {
     public void atualizar(Avaliador avaliador) {
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "UPDATE avaliador SET nome = ?, login = ?, senha = ? WHERE id_avaliador = ?";
+            String sql = "UPDATE avaliador SET nome = ?, login = ?, senha = ?, endereco = ?, cpf = ? WHERE id_avaliador = ?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, avaliador.getNome());
             statement.setString(2, avaliador.getLogin());
             statement.setString(3, avaliador.getSenha());
+            statement.setString(4, avaliador.getEndereco());
+            statement.setString(5, avaliador.getCpf());
             statement.setInt(4, avaliador.getId());
             statement.executeUpdate();
             statement.close();
-            super.atualizar(avaliador);
             BaseDAOImpl.closeConnection();
+            super.atualizar(avaliador);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,33 +58,33 @@ public class AvaliadorDAO extends UsersDAO {
     }
 
     public ResultSet buscarPorId(Avaliador avaliador) {
+        ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();
             String sql = "SELECT * FROM avaliador WHERE id_avaliador = ?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, avaliador.getId());
-            ResultSet rs = statement.executeQuery();
+            rs = statement.executeQuery();
             BaseDAOImpl.closeConnection();
-            return rs;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return rs;
 
     }
 
     public ResultSet listarTodos() {
+        ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();
             String sql = "SELECT * FROM avaliador";
             PreparedStatement statement = con.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
+            rs = statement.executeQuery();
             BaseDAOImpl.closeConnection();
-            return rs;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return rs;
 
     }
 
@@ -86,8 +96,8 @@ public class AvaliadorDAO extends UsersDAO {
             statement.setInt(1, avaliador.getId());
             statement.executeUpdate();
             statement.close();
-            super.excluir(avaliador);
             BaseDAOImpl.closeConnection();
+            super.excluir(avaliador);
         } catch (Exception e) {
             e.printStackTrace();
         }
