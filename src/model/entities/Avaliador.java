@@ -1,100 +1,88 @@
 package model.entities;
 
-public class Avaliador {
-	private String nome;
-	private String endereco;
-	private String cpf;
-	private String login;
-	private String senha;
+import java.util.ArrayList;
+import java.util.List;
 
-	public Avaliador() { }
-	
-	public Avaliador(String nome, String endereco, String cpf, String login, String senha) {
-		setNome(nome);
-		setEndereco(endereco);
-		setCpf(cpf);
-		setLogin(login);
-		setSenha(senha);
-	}
+public class Avaliador extends User {
 
-	public Avaliador(String nome, String endereco, String cpf) {
-		this.nome = nome;
-		this.endereco = endereco;
-		this.cpf = cpf;
-	}
+    private String endereco;
+    private String cpf;
+    private List<Obra> obras = new ArrayList<>();
 
-	public String getNome() {
-		return nome;
-	}
+    public Avaliador(int id, String nome, String login, String senha, String endereco, String cpf, List<Obra> obras, List<Avaliador> avaliadores) {
+        super(id, nome, login, senha);
+        setEndereco(endereco);
+        setCpf(cpf);
+        setObras(obras);
+        setAvaliadores(avaliadores);
+    }
 
-	public void setNome(String nome) {
-		if (nome != null && nome != "") {
-			this.nome = nome;
-		}
-	}
+    public String getEndereco() {
+        return this.endereco;
+    }
 
-	public String getEndereco() {
-		return endereco;
-	}
+    public void setEndereco(String endereco) {
+        if (endereco != null && !endereco.isEmpty()) {
+            this.endereco = endereco;
+        }
+    }
 
-	public void setEndereco(String endereco) {
-		if (endereco != null && endereco != "") {
-			this.endereco = endereco;
-		}
-	}
+    public String getCpf() {
+        return this.cpf;
+    }
 
-	public String getCpf() {
-		return cpf;
-	}
+    public void setCpf(String cpf) {
+        if (cpf != null && !cpf.isEmpty()) {
+            this.cpf = cpf;
+        }
+    }
 
-	public void setCpf(String cpf) {
-		if (cpf != null && cpf != "") {
-			this.cpf = cpf;
-		}
-	}
+    public List<Obra> getObras() {
+        return this.obras;
+    }
 
-	public String getLogin() {
-		return login;
-	}
+    public void setObras(List<Obra> obras) {
+        this.obras = obras;
+    }
 
-	public void setLogin(String login) {
-		if (login != null && login != "") {
-			this.login = login;
-		}
-	}
+    public List<Avaliador> getAvaliadores() {
+        return this.avaliadores;
+    }
 
-	public String getSenha() {
-		return senha;
-	}
+    public void setAvaliadores(List<Avaliador> avaliadores) {
+        this.avaliadores = avaliadores;
+    }
 
-	public void setSenha(String senha) {
-		if (senha != null && senha != "") {
-			this.senha = senha;
-		}
-	}
 
-	//alterar metódos depois
-	public void cadastrar(Avaliador avaliador) {
-		System.out.printf(avaliador.getNome() + " está cadastrado!\n");
-	}
-
-	public void alterar(Avaliador avaliador) {
-		System.out.printf(avaliador.getNome() + " está alterado!\n");
-	}
-
-	public void excluir(Avaliador avaliador) {
-		System.out.printf(avaliador.getNome() + " foi excluido!\n");
-	}
-
-	public Avaliador[] buscarPorObra(Obra obra) {
-		System.out.printf("Avaliador encontrado!\n");
-		return;
-	}
-
-	public boolean logar(String login, String senha, Avaliador avaliador) {
-		if (login.equals(avaliador.login) && senha.equals(avaliador.senha))
-			return true;
-		else
-			return false;
-	}
+    //alterar metódos depois
+    /*
+    public void cadastrar(Avaliador avaliador) {
+    	System.out.printf(avaliador.getNome() + " está cadastrado!\n");
+    }
+    
+    public void alterar(Avaliador avaliador) {
+    	System.out.printf(avaliador.getNome() + " está alterado!\n");
+    }
+    
+    public void excluir(Avaliador avaliador) {
+    	System.out.printf(avaliador.getNome() + " foi excluido!\n");
+    }
+    
+    public Avaliador buscarPorObra(Obra obra) {
+        for (Avaliador avaliador : avaliadores) {
+            List<Obra> obrasDoAvaliador = avaliador.getObras();
+            for (Obra obraAvaliador : obrasDoAvaliador) {
+                if (obraAvaliador != null && obraAvaliador.equals(obra)) {
+                    System.out.println("Avaliador encontrado para a obra: " + obra.getTitulo());
+                    return avaliador;
+                }
+            }
+        }
+    
+        System.out.println("Nenhum avaliador encontrado para a obra.");
+        return null;
+    }
+    
+    */
+    
 }
