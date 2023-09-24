@@ -62,7 +62,7 @@ public class ObraDAO implements BaseDAO<Obra> {
             String sql = "SELECT * FROM obra WHERE id_obra = ?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, obra.getId());
-            ResultSet rs = statement.executeQuery();
+            rs = statement.executeQuery();
             BaseDAOImpl.closeConnection();
             
         } catch (Exception e) {

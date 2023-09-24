@@ -72,6 +72,21 @@ public class AutorDAO extends UsersDAO {
 
     }
 
+    public ResultSet buscarPorNome(Autor autor) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM autor WHERE nome LIKE ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, "%" + autor.getNome() + "%");
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public ResultSet listarTodos() {
         ResultSet rs = null;
         try {

@@ -1,6 +1,5 @@
 package model.entities;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,16 +97,6 @@ public class Obra {
 		}
 	}
 
-	public List<Obra> getObras() {
-		return this.obras;
-	}
-
-	public void setObras(List<Obra> obras) {
-		if (obras != null) {
-			this.obras = obras;
-		}
-	}
-
 
 
 
@@ -127,7 +116,7 @@ public class Obra {
 
 	public List<Obra> buscarPorTitulo(String titulo) {
         List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) {
+        for (Obra obra : obrasEncontradas) {
             if (obra.getTitulo().equalsIgnoreCase(titulo)) {
                 obrasEncontradas.add(obra);
             }
@@ -137,7 +126,7 @@ public class Obra {
 
     public List<Obra> buscarPorGenero(String genero) {
         List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) {
+        for (Obra obra : obrasEncontradas) {
             if (obra.getGenero().equalsIgnoreCase(genero)) {
                 obrasEncontradas.add(obra);
             }
@@ -147,7 +136,7 @@ public class Obra {
 
     public List<Obra> buscarPorAno(LocalDate ano) {
         List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) {
+        for (Obra obra : obrasEncontradas) {
             if (obra.getAno().equals(ano)) {
                 obrasEncontradas.add(obra);
             }
@@ -157,7 +146,7 @@ public class Obra {
 
     public List<Obra> buscarPorAutor(Autor autor) {
         List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) {
+        for (Obra obra : obrasEncontradas) {
             if (obra.getAutor().equals(autor)) {
                 obrasEncontradas.add(obra);
             }
@@ -165,9 +154,9 @@ public class Obra {
         return obrasEncontradas;
     }
 
-    public List<Obra> buscarPorStatus(StatusObra status) {
+    public List<Obra> buscarPorStatus(String status) {
         List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) {
+        for (Obra obra : obrasEncontradas) {
             if (obra.getStatus().equals(status)) {
                 obrasEncontradas.add(obra);
             }

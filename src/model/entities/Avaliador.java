@@ -9,12 +9,11 @@ public class Avaliador extends User {
     private String cpf;
     private List<Obra> obras = new ArrayList<>();
 
-    public Avaliador(int id, String nome, String login, String senha, String endereco, String cpf, List<Obra> obras, List<Avaliador> avaliadores) {
+    public Avaliador(int id, String nome, String login, String senha, String endereco, String cpf, List<Obra> obras) {
         super(id, nome, login, senha);
         setEndereco(endereco);
         setCpf(cpf);
         setObras(obras);
-        setAvaliadores(avaliadores);
     }
 
     public String getEndereco() {
@@ -44,15 +43,6 @@ public class Avaliador extends User {
     public void setObras(List<Obra> obras) {
         this.obras = obras;
     }
-
-    public List<Avaliador> getAvaliadores() {
-        return this.avaliadores;
-    }
-
-    public void setAvaliadores(List<Avaliador> avaliadores) {
-        this.avaliadores = avaliadores;
-    }
-
 
     //alterar metódos depois
     /*

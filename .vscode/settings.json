@@ -1,6 +1,19 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\Users\\pedro\\Documents\\CC\\Drivers Databases\\postegree-conector-ver8.0\\postgresql-42.6.0.jar"
-    ]
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "c:\\Users\\pedro\\Documents\\CC\\Drivers Databases\\postegree-conector-ver8.0\\postgresql-42.6.0.jar",
+            "c:\\Program Files\\javafx-sdk-17.0.8\\lib\\javafx.base.jar",
+            "c:\\Program Files\\javafx-sdk-17.0.8\\lib\\javafx.controls.jar",
+            "c:\\Program Files\\javafx-sdk-17.0.8\\lib\\javafx.fxml.jar",
+            "c:\\Program Files\\javafx-sdk-17.0.8\\lib\\javafx.graphics.jar",
+            "c:\\Program Files\\javafx-sdk-17.0.8\\lib\\javafx.media.jar",
+            "c:\\Program Files\\javafx-sdk-17.0.8\\lib\\javafx.swing.jar",
+            "c:\\Program Files\\javafx-sdk-17.0.8\\lib\\javafx.web.jar",
+            "c:\\Program Files\\javafx-sdk-17.0.8\\lib\\javafx-swt.jar"
+        ],
+        "exclude": [
+            "c:\\Program Files\\javafx-sdk-17.0.8\\lib\\javafx.fxml.jar"
+        ]
+    }
 }
