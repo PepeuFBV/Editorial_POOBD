@@ -15,7 +15,7 @@
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0">
          <image>
-            <Image url="@Borda.png" />
+            <Image url="@VE/Borda.png" />
          </image>
       </ImageView>
       <Button fx:id="entrar" contentDisplay="CENTER" layoutX="273.0" layoutY="338.0" mnemonicParsing="false" onAction="#fazerLogin" style="-fx-background-color: #01FFB3; -fx-background-radius: 100; -fx-text-fill: black;" text="entrar" textAlignment="CENTER">
@@ -27,7 +27,7 @@
       <PasswordField layoutX="251.0" layoutY="289.0" promptText="senha" />
       <ImageView fitHeight="191.0" fitWidth="200.0" layoutX="200.0" layoutY="58.0">
          <image>
-            <Image url="@Logo-loginpage.png" />
+            <Image url="@VE/Logo-loginpage.png" />
          </image>
       </ImageView>
       <Text layoutX="207.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editorial do Paulão">

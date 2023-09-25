@@ -26,17 +26,24 @@ public class LoginPageController {
     @FXML
     private Button btnLogin;
     
+
+
+    
     @FXML
     public void fazerLogin(ActionEvent event) throws ErroLoginException {
         String login = txtLogin.getText();
         String senha = txtSenha.getText();
 
         if (login == null || login.isEmpty()) {
-            lbLoginOuSenhaInvalidos.setVisible(true);
             txtLabel.setText("Usuário não existe!");
-        } else if (senha == null || senha.isEmpty()) {
+            lbLoginOuSenhaInvalidos.setLabelFor(txtLabel); //checar se é assim que se insere o texto na label
             lbLoginOuSenhaInvalidos.setVisible(true);
+            throw new ErroLoginException("Usuário não existe");
+        } else if (senha == null || senha.isEmpty()) {
             txtLabel.setText("Senha inválida!");
+            lbLoginOuSenhaInvalidos.setLabelFor(txtLabel);
+            lbLoginOuSenhaInvalidos.setVisible(true);
+            throw new ErroLoginException("Senha inválida");
         } else {
             UserBO userBO = new UserBO();
             if (userBO.login(login)) { //metodo login do UserBO retorna true se o login existir
@@ -60,8 +67,10 @@ public class LoginPageController {
                     loginValido = avaliadorBO.login();
                 }
             } else {
-                lbLoginOuSenhaInvalidos.setVisible(true);
                 txtLabel.setText("Erro ao fazer login. Verifique suas credenciais.");
+                lbLoginOuSenhaInvalidos.setLabelFor(txtLabel);
+                lbLoginOuSenhaInvalidos.setVisible(true);
+                throw new ErroLoginException("Usuário não existe");
             }
         }
     }
