@@ -22,7 +22,6 @@ public class UsersDAO implements BaseDAO<User> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void atualizar(User user) {
@@ -40,7 +39,6 @@ public class UsersDAO implements BaseDAO<User> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public ResultSet buscarPorId(User user) {
@@ -55,12 +53,41 @@ public class UsersDAO implements BaseDAO<User> {
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
         return rs;
     }
 
-    public ResultSet listarTodos() {
+    public ResultSet buscarPorNome(User user) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM users WHERE nome = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, user.getNome());
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet buscarPorLogin(User user) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM users WHERE login = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, user.getLogin());
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet listar() {
         ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();

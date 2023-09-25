@@ -10,7 +10,7 @@ public interface BaseDAO<E> {
 
     public ResultSet buscarPorId(E entity);
 
-    public ResultSet listarTodos();
+    public ResultSet listar();
 
     public void excluir(E entity);
 

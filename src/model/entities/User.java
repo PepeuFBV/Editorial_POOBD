@@ -1,8 +1,5 @@
 package model.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
 
     private int id;
@@ -10,8 +7,7 @@ public class User {
     private String login;
     private String senha;
 
-    public User(int id, String nome, String login, String senha) {
-        setId(id);
+    public User(String nome, String login, String senha) {
         setNome(nome);
         setLogin(login);
         setSenha(senha);

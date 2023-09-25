@@ -53,7 +53,6 @@ public class AutorDAO extends UsersDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public ResultSet buscarPorId(Autor autor) {
@@ -69,7 +68,21 @@ public class AutorDAO extends UsersDAO {
             e.printStackTrace();
         }
         return rs;
+    }
 
+    public ResultSet buscarPorLogin(Autor autor) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM autor WHERE login = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, autor.getLogin());
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
 
     public ResultSet buscarPorNome(Autor autor) {
@@ -87,7 +100,52 @@ public class AutorDAO extends UsersDAO {
         return rs;
     }
 
-    public ResultSet listarTodos() {
+    public ResultSet buscarPorEndereco(Autor autor) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM autor WHERE endereco LIKE ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, "%" + autor.getEndereco() + "%");
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet buscarPorCpf(Autor autor) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM autor WHERE cpf LIKE ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, "%" + autor.getCpf() + "%");
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet buscarPorObras(Autor autor) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM autor WHERE id_autor IN (SELECT id_autor FROM obra_autor WHERE id_obra = ?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, autor.getId());
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet listar() {
         ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();

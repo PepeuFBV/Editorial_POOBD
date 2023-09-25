@@ -9,11 +9,10 @@ public class Avaliador extends User {
     private String cpf;
     private List<Obra> obras = new ArrayList<>();
 
-    public Avaliador(int id, String nome, String login, String senha, String endereco, String cpf, List<Obra> obras) {
-        super(id, nome, login, senha);
+    public Avaliador(String nome, String login, String senha, String endereco, String cpf) {
+        super(nome, login, senha);
         setEndereco(endereco);
         setCpf(cpf);
-        setObras(obras);
     }
 
     public String getEndereco() {

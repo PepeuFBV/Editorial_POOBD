@@ -12,11 +12,11 @@ public class AvaliadorDAO extends UsersDAO {
             Connection con = BaseDAOImpl.getConnection();
             String sql = "INSERT INTO avaliador (nome, login, senha, endereco, cpf) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setString(2, avaliador.getNome());
-            statement.setString(3, avaliador.getLogin());
-            statement.setString(4, avaliador.getSenha());
-            statement.setString(5, avaliador.getEndereco());
-            statement.setString(6, avaliador.getCpf());
+            statement.setString(1, avaliador.getNome());
+            statement.setString(2, avaliador.getLogin());
+            statement.setString(3, avaliador.getSenha());
+            statement.setString(4, avaliador.getEndereco());
+            statement.setString(5, avaliador.getCpf());
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 throw new Exception("A inserção falhou. Nenhuma linha foi alterada.");
@@ -46,7 +46,7 @@ public class AvaliadorDAO extends UsersDAO {
             statement.setString(3, avaliador.getSenha());
             statement.setString(4, avaliador.getEndereco());
             statement.setString(5, avaliador.getCpf());
-            statement.setInt(4, avaliador.getId());
+            statement.setInt(6, avaliador.getId());
             statement.executeUpdate();
             statement.close();
             BaseDAOImpl.closeConnection();
@@ -54,7 +54,6 @@ public class AvaliadorDAO extends UsersDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public ResultSet buscarPorId(Avaliador avaliador) {
@@ -70,10 +69,84 @@ public class AvaliadorDAO extends UsersDAO {
             e.printStackTrace();
         }
         return rs;
-
     }
 
-    public ResultSet listarTodos() {
+    public ResultSet buscarPorLogin(String login) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM avaliador WHERE login = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, login);
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+        
+    public ResultSet buscarPorNome(Avaliador avaliador) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM avaliador WHERE nome LIKE ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, "%" + avaliador.getNome() + "%");
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet buscarPorEndereco(Avaliador avaliador) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM avaliador WHERE endereco LIKE ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, "%" + avaliador.getEndereco() + "%");
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+    
+    public ResultSet buscarPorCpf(Avaliador avaliador) {
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM avaliador WHERE cpf LIKE ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, "%" + avaliador.getCpf() + "%");
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet buscarPorObras(Avaliador avaliador) { //checar se está certo
+        ResultSet rs = null;
+        try {
+            Connection con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM avaliador WHERE id_avaliador IN (SELECT id_avaliador FROM obra_avaliador WHERE id_obra = ?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, avaliador.getId());
+            rs = statement.executeQuery();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet listar() {
         ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();
@@ -85,7 +158,6 @@ public class AvaliadorDAO extends UsersDAO {
             e.printStackTrace();
         }
         return rs;
-
     }
 
     public void excluir(Avaliador avaliador) {
@@ -101,7 +173,6 @@ public class AvaliadorDAO extends UsersDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 }

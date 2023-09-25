@@ -16,16 +16,14 @@ public class Obra {
 	private String status;
 	private Autor autor; //servirá para pegar o id do autor
 	private Avaliador avaliador; //servirá para pegar o id do avaliador
-	
-    public Obra(int id,String titulo, String genero, LocalDate ano, String status, Autor autor, Avaliador avaliador) {
-        setId(id);
-        setTitulo(titulo);
-        setGenero(genero);
-        setAno(ano);
+
+	public Obra(String titulo, String genero, LocalDate ano, String status, Autor autor) {
+		setTitulo(titulo);
+		setGenero(genero);
+		setAno(ano);
 		setStatus(status);
 		setAutor(autor);
-		setAvaliador(avaliador);
-    }
+	}
 
     public int getId() {
         return this.id;
@@ -61,7 +59,7 @@ public class Obra {
 		return this.ano;
 	}
 
-	public void setAno(LocalDate ano) {
+	public void setAno(LocalDate ano) { //checar se o ano é válido (não pode ser maior que o ano atual)
 		if (ano != null) {
 			this.ano = ano;
 		}
