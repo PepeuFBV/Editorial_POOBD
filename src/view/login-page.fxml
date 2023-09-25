@@ -30,7 +30,7 @@
             <Image url="@Logo-loginpage.png" />
          </image>
       </ImageView>
-      <Text layoutX="207.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editorial do Carlão">
+      <Text layoutX="207.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editorial do Paulão">
          <font>
             <Font name="System Italic" size="23.0" />
          </font>
