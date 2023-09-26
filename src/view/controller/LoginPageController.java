@@ -24,10 +24,7 @@ public class LoginPageController {
 
     @FXML
     private Button btnLogin;
-    
 
-
-    
     @FXML
     public void fazerLogin(ActionEvent event) throws ErroLoginException {
         String login = txtLogin.getText();
