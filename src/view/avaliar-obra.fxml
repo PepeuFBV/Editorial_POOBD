@@ -5,9 +5,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="319.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AvaliarObra">
    <children>
@@ -31,8 +31,11 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <RadioButton layoutX="187.0" layoutY="151.0" mnemonicParsing="false" text="Aceita" />
-      <RadioButton layoutX="261.0" layoutY="151.0" mnemonicParsing="false" text="Rejeitada" />
+      <RadioButton layoutX="187.0" layoutY="151.0" mnemonicParsing="false" text="Aceita">
+         <toggleGroup>
+            <ToggleGroup fx:id="radioavaliar" />
+         </toggleGroup></RadioButton>
+      <RadioButton layoutX="261.0" layoutY="151.0" mnemonicParsing="false" text="Rejeitada" toggleGroup="$radioavaliar" />
       <ChoiceBox layoutX="166.0" layoutY="101.0" prefHeight="25.0" prefWidth="199.0" />
       <PasswordField layoutX="166.0" layoutY="190.0" prefHeight="25.0" prefWidth="199.0" />
       <Button layoutX="164.0" layoutY="247.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
