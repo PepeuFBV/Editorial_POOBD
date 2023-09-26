@@ -10,6 +10,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<!-- Controller: ObraGerenteController -->
+
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TableView layoutX="38.0" layoutY="111.0" prefHeight="263.0" prefWidth="535.0" style="-fx-border-color: #01FFB3; -fx-border-radius: 10; -fx-border-width: 6; -fx-padding: 35 0 0 0;">

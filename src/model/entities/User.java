@@ -1,6 +1,6 @@
 package model.entities;
 
-public class User {
+public abstract class User {
 
     private int id;
     private String nome;

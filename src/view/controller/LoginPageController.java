@@ -1,6 +1,5 @@
-package Controller;
+package controller;
 
-import Exceptions.ErroLoginException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

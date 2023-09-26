@@ -1,20 +1,18 @@
-package model.BO;
-
 import java.util.List;
 
 //importar exceptions
 
 
-public interface BaseInterBO<VO> {
+public interface BaseInterBO<E> {
 
-    public void cadastrar(VO vo);
+    public void cadastrar(E entity);
 
-    public void buscarPorId(VO vo);
+    public void buscarPorId(E entity);
 
-    public List<VO> listarTodos();
+    public List<E> listarTodos();
 
-    public void alterar(VO vo);
+    public void alterar(E entity);
 
-    public void remover(VO vo);
+    public void remover(E entity);
 
 }

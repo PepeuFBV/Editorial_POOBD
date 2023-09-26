@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +22,19 @@ public class ObraGerenteController {
         HelloFX.telaObrasGerente();
     }
 
-    public void adicionar(ActionEvent event) {
+    public void adicionarNovaObra(ActionEvent event) {
+
+    }
+
+    public void removerObra(ActionEvent event) {
+
+    }
+
+    public void editarObra(ActionEvent event) {
+
+    }
+
+    public void gerarRelatorio(ActionEvent event) {
 
     }
 
