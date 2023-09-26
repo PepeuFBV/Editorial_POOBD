@@ -32,7 +32,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="300.0" layoutY="314.0" mnemonicParsing="false" onAction="#atualizar" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
-      <Button layoutX="188.0" layoutY="314.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
+      <Button layoutX="324.0" layoutY="314.0" mnemonicParsing="false" onAction="#atualizar" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
+      <Button layoutX="175.0" layoutY="314.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
    </children>
 </Pane>

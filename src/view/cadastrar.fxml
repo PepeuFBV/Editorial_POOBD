@@ -20,7 +20,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="56.0" layoutY="135.0" text="Email:">
+      <Label layoutX="56.0" layoutY="135.0" text="Login:">
          <font>
             <Font size="14.0" />
          </font>
@@ -35,12 +35,12 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="56.0" layoutY="305.0" text="Crie sua senha:">
+      <Label layoutX="56.0" layoutY="305.0" text="Crie a senha:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="57.0" layoutY="362.0" text="Confirme sua senha:">
+      <Label layoutX="57.0" layoutY="362.0" text="Confirme a senha:">
          <font>
             <Font size="14.0" />
          </font>
@@ -58,10 +58,17 @@
             <Font size="14.0" />
          </font>
          <toggleGroup>
+<<<<<<< Updated upstream
             <ToggleGroup fx:id="radiocadastro" />
          </toggleGroup>
       </RadioButton>
       <RadioButton layoutX="197.0" layoutY="458.0" mnemonicParsing="false" text="AVALIADOR" toggleGroup="$radiocadastro">
+=======
+            <ToggleGroup fx:id="userType" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="197.0" layoutY="458.0" mnemonicParsing="false" text="AVALIADOR" toggleGroup="$userType">
+>>>>>>> Stashed changes
          <font>
             <Font size="14.0" />
          </font>

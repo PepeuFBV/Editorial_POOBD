@@ -1,3 +1,5 @@
+package model.BO;
+
 import java.util.List;
 
 //importar exceptions

@@ -1,19 +1,25 @@
-package controller;
+package view.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class ObraGerenteController {
+public class TelaPrincipalController {
     
     @FXML
     private Button btnSair;
+
+    public void initialize() {
+        
+        //checar qual a class de user logado
+    }
 
     @FXML
     public void sair(ActionEvent event) throws Exception { //checar se método funciona
         HelloFX.telaLogin();
     }
 
+    @FXML
     public void paraAvaliadores(ActionEvent event) throws Exception {
         HelloFX.telaAvaliadoresGerente();
     }

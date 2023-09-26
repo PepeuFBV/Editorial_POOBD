@@ -1,5 +1,6 @@
-package controller;
+package view.controller;
 
+import exceptions.ErroLoginException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,6 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.entities.Avaliador;
+import model.BO.UserBO;
+import model.BO.GerenteBO;
+import model.BO.AvaliadorBO;
+import model.BO.AutorBO;
 
 public class LoginPageController {
 
@@ -26,7 +31,7 @@ public class LoginPageController {
     private Button btnLogin;
 
     @FXML
-    public void fazerLogin(ActionEvent event) throws ErroLoginException {
+    public String fazerLogin(ActionEvent event) throws ErroLoginException {
         String login = txtLogin.getText();
         String senha = txtSenha.getText();
 
@@ -44,24 +49,22 @@ public class LoginPageController {
             UserBO userBO = new UserBO();
             if (userBO.login(login)) { //metodo login do UserBO retorna true se o login existir
                 String tipo = userBO.getTipo();
-                boolean loginValido = false;
 
                 if (tipo.equals("Gerente")) {
                     GerenteBO gerenteBO = new GerenteBO();
                     gerenteBO.setLogin(login);
                     gerenteBO.setSenha(senha);
-                    loginValido = gerenteBO.login();
+
                 } else if (tipo.equals("Autor")) {
                     AutorBO autorBO = new AutorBO();
                     autorBO.setLogin(login);
                     autorBO.setSenha(senha);
-                    loginValido = autorBO.login();
                 } else {
                     AvaliadorBO avaliadorBO = new AvaliadorBO();
                     avaliadorBO.setLogin(login);
                     avaliadorBO.setSenha(senha);
-                    loginValido = avaliadorBO.login();
                 }
+                return tipo;
             } else {
                 txtLabel.setText("Erro ao fazer login. Verifique suas credenciais.");
                 lbLoginOuSenhaInvalidos.setLabelFor(txtLabel);

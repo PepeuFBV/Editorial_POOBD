@@ -1,8 +1,6 @@
 package model.entities;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 //TODO
 //Checar no setStatus se o status é válido (uma das 4 opções) (era um enum)
@@ -30,7 +28,7 @@ public class Obra {
     }
 
     public void setId(int id) {
-        if (id > 0 && id != null) {
+        if (id > 0) {
             this.id = id;
         }
     }
