@@ -15,13 +15,15 @@ public class Obra {
 	private Autor autor; //servirá para pegar o id do autor
 	private Avaliador avaliador; //servirá para pegar o id do avaliador
 
-	public Obra(String titulo, String genero, LocalDate ano, String status, Autor autor) {
-		setTitulo(titulo);
-		setGenero(genero);
-		setAno(ano);
-		setStatus(status);
-		setAutor(autor);
-	}
+    public Obra(String titulo, String genero, LocalDate ano, String status, Autor autor) {
+        setTitulo(titulo);
+        setGenero(genero);
+        setAno(ano);
+        setStatus(status);
+        setAutor(autor);
+    }
+    
+    public Obra() { }
 
     public int getId() {
         return this.id;

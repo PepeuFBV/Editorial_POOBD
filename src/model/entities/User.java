@@ -13,6 +13,8 @@ public abstract class User {
         setSenha(senha);
     }
 
+    public User() { }
+
     public int getId() {
         return this.id;
     }

@@ -15,6 +15,10 @@ public class Avaliador extends User {
         setCpf(cpf);
     }
 
+    public Avaliador() {
+        super();
+    }
+
     public String getEndereco() {
         return this.endereco;
     }

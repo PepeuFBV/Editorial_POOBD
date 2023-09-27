@@ -15,6 +15,10 @@ public class Autor extends User {
         setCpf(cpf);
     }
 
+    public Autor() {
+        super();
+    }
+
     public String getEndereco() {
         return this.endereco;
     }

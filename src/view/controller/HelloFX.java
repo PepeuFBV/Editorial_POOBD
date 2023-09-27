@@ -1,6 +1,5 @@
 package view.controller;
 
-
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -119,6 +118,12 @@ public class HelloFX extends Application {
 
     public static void telaNovoAvaliadorGerente() throws Exception {
         Parent root = FXMLLoader.load(HelloFX.class.getResource("editar-avaliador-gerente.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+    }
+
+    public static void telaRedefinirSenha() throws Exception {
+        Parent root = FXMLLoader.load(HelloFX.class.getResource("redefinir-senha.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
     }
