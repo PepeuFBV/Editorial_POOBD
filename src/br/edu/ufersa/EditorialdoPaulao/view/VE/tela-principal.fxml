@@ -12,7 +12,7 @@
 
 <!-- Controller: ObraGerenteController -->
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaPrincipalController">
    <children>
       <TableView layoutX="38.0" layoutY="111.0" prefHeight="263.0" prefWidth="535.0" style="-fx-border-color: #01FFB3; -fx-border-radius: 10; -fx-border-width: 6; -fx-padding: 35 0 0 0;">
         <columns>
@@ -28,12 +28,12 @@
       </TableView>
       <ImageView fitHeight="400.0" fitWidth="600.0">
          <image>
-            <Image url="@VE/Borda.png" />
+            <Image url="@Borda.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="74.0" fitWidth="111.0" layoutX="30.0" layoutY="26.0">
          <image>
-            <Image url="@VE/Espaco-de-nome.png" />
+            <Image url="@Espaco-de-nome.png" />
          </image>
       </ImageView>
       <Text fx:id="nomeUser" layoutX="31.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario" textAlignment="CENTER" wrappingWidth="110.78311729431152" />
@@ -44,26 +44,26 @@
       </Text>
       <ImageView fitHeight="38.0" fitWidth="44.0" layoutX="64.0" layoutY="66.0">
          <image>
-            <Image url="@VE/Logo.png" />
+            <Image url="@Logo.png" />
          </image>
       </ImageView>
       <Button layoutX="509.0" layoutY="25.0" mnemonicParsing="false" onAction="#sair" prefHeight="30.0" prefWidth="64.0" style="-fx-background-color: transparent; -fx-text-fill: black;" text="SAIR">
          <font>
             <Font name="High Tower Text" size="16.0" />
          </font></Button>
-      <ImageView fx:id="fundoAutores" fitHeight="30.0" fitWidth="120.0" layoutX="385.0" layoutY="85.0">
+      <ImageView fx:id="fundoBotaoAutores" fitHeight="30.0" fitWidth="120.0" layoutX="385.0" layoutY="85.0">
          <image>
-            <Image url="@VE/Opcao-nao-selecionada.png" />
+            <Image url="@Opcao-nao-selecionada.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="fundoAvaliadores" fitHeight="30.0" fitWidth="120.0" layoutX="265.0" layoutY="85.0">
+      <ImageView fx:id="fundoBotaoAvaliadores" fitHeight="30.0" fitWidth="120.0" layoutX="265.0" layoutY="85.0">
          <image>
-            <Image url="@VE/Opcao-nao-selecionada.png" />
+            <Image url="@Opcao-nao-selecionada.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="38.0" fitWidth="120.0" layoutX="145.0" layoutY="73.0">
          <image>
-            <Image url="@VE/Opcao-selecionada.png" />
+            <Image url="@Opcao-selecionada.png" />
          </image>
       </ImageView>
       <Text layoutX="184.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER">
@@ -84,7 +84,7 @@
       <TextField layoutX="47.0" layoutY="122.0" onAction="#buscar" prefHeight="13.0" prefWidth="196.0" />
       <ImageView fx:id="fundoAdicionar" fitHeight="22.0" fitWidth="104.0" layoutX="270.0" layoutY="124.0">
          <image>
-            <Image url="@VE/Botao-pequeno.png" />
+            <Image url="@Botao-pequeno.png" />
          </image>
       </ImageView>
       <Text fx:id="txtAdicionar" layoutX="286.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="adicionar nova" wrappingWidth="77.728515625">
@@ -92,9 +92,9 @@
             <Font name="High Tower Text" size="12.0" />
          </font>
       </Text>
-      <ImageView fx:id="fundoRelatorio" fitHeight="22.0" fitWidth="104.0" layoutX="430.0" layoutY="124.0">
+      <ImageView fx:id="fundoBotaoRelatorio" fitHeight="22.0" fitWidth="104.0" layoutX="430.0" layoutY="124.0">
          <image>
-            <Image url="@VE/Botao-pequeno.png" />
+            <Image url="@Botao-pequeno.png" />
          </image>
       </ImageView>
       <Text fx:id="txtRelatorio" layoutX="447.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="gerar relatório" wrappingWidth="77.728515625">
@@ -108,7 +108,7 @@
       <Button fx:id="botaoRelatorio" layoutX="435.0" layoutY="122.0" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="3.0" prefWidth="95.0" style="-fx-background-color: transparent;" />
       <ImageView fitHeight="19.0" fitWidth="20.0" layoutX="216.0" layoutY="125.0" onMouseClicked="#buscar">
          <image>
-            <Image url="@VE/Botao-search.png" />
+            <Image url="@Botao-search.png" />
          </image>
       </ImageView>
    </children>

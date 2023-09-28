@@ -1,4 +1,4 @@
-package controller;
+package br.edu.ufersa.EditorialdoPaulao.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,7 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import view.HelloFX;
+import br.edu.ufersa.EditorialdoPaulao.model.BO.UserBO;
+import br.edu.ufersa.EditorialdoPaulao.view.Telas;
 
 // TODO:
 // checar se o método visibleProperty().set() apenas tira da visão ou também desabilita o botão
@@ -17,73 +18,82 @@ public class TelaPrincipalController {
     private String tipoUsuario;
 
     @FXML
-    private TextField nomeUser;
+    private Text nomeUser;
 
     @FXML
-    private TextField tipoUser;
+    private Text tipoUser;
 
     @FXML
     private Button botaoRelatorio;
 
-    
+    @FXML
+    private ImageView fundoBotaoRelatorio;
 
-    public void inicializar(String tipoUsuario, String nomeUsuario) { //checar se está correto os argumentos
-        Scene scene = null;
-        try {
-            scene = HelloFX.telaPrincipal();
-        } catch (Exception e) {
-            e.printStackTrace(); //criar nova Exception para lidar com isso
-        }
-        
-        Text nomeDoUsuario = (Text) scene.lookup("#nomeUser");
-        nomeDoUsuario.setText(nomeUsuario);
+    @FXML
+    private Text txtRelatorio;
 
-        Text tipoDoUsuario = (Text) scene.lookup("#tipoUser");
-        tipoDoUsuario.setText(tipoUsuario);
+    @FXML
+    private Button botaoAvaliadores;
 
-        if (tipoUsuario.equals("gerente")) { //habilitar ações de gerente e visões de tabela de gerente
+    @FXML
+    private ImageView fundoBotaoAvaliadores;
+
+    @FXML
+    private Text txtAvaliadores;
+
+    @FXML
+    private Button botaoAutores;
+
+    @FXML
+    private ImageView fundoBotaoAutores;
+
+    @FXML
+    private Text txtAutores;
+
+    public void start() { }
+
+    public void start(UserBO userBO) { //checar se está correto os argumentos
+
+        String nomeUsuario = userBO.getNome();
+        String tipoUsuario = userBO.getTipo();
+        nomeUser.setText(nomeUsuario);
+        tipoUser.setText(tipoUsuario);
+
+        if (tipoUsuario.equals("Gerente")) { //habilitar ações de gerente e visões de tabela de gerente
             
-            //mudar a tabela para a de todas as obras (será recebido um ResultSet)
+          
 
         } else if (tipoUsuario.equals("autor")) { //habilitar ações de autor e visões de tabela de autor
 
-            Button botao = (Button) scene.lookup("#botaoRelatorio");
-            botao.visibleProperty().set(false);
-            ImageView fundoBotao = (ImageView) scene.lookup("#fundoRelatorio");
-            fundoBotao.visibleProperty().set(false);
-            Text textoBotao = (Text) scene.lookup("#txtRelatorio");
-            textoBotao.visibleProperty().set(false);
+            botaoRelatorio.visibleProperty().set(false);
+            fundoBotaoRelatorio.visibleProperty().set(false);
+            txtRelatorio.visibleProperty().set(false);
 
-            botao = (Button) scene.lookup("#botaoAvaliadores");
-            botao.visibleProperty().set(false);
-            fundoBotao = (ImageView) scene.lookup("#fundoAvaliadores");
-            fundoBotao.visibleProperty().set(false);
-            textoBotao = (Text) scene.lookup("#txtAvaliadores");
+            botaoAvaliadores.visibleProperty().set(false);
+            fundoBotaoAvaliadores.visibleProperty().set(false);
+            txtAvaliadores.visibleProperty().set(false);
 
-            botao = (Button) scene.lookup("#botaoAutores");
-            botao.visibleProperty().set(false);
-            fundoBotao = (ImageView) scene.lookup("#fundoAutores");
-            fundoBotao.visibleProperty().set(false);
-            textoBotao = (Text) scene.lookup("#txtAutores");
-            textoBotao.visibleProperty().set(false);
+            botaoAutores.visibleProperty().set(false);
+            fundoBotaoAutores.visibleProperty().set(false);
+            txtAutores.visibleProperty().set(false);
+
+            //lembrar de no botão adicionar obra checar o tipo de user para mostrar a tela correta
 
             //mudar a tabela para a das obras do próprio autor (será recebido um ResultSet)
 
-        } else { //habilitar ações de avaliador e visões de tabela de avaliador
+        } else if (tipoUsuario.equals("Avaliador")) { //habilitar ações de avaliador e visões de tabela de avaliador
             
-            Button botao = (Button) scene.lookup("#botaoAutores");
-            botao.visibleProperty().set(false);
-            ImageView fundoBotao = (ImageView) scene.lookup("#fundoAutores");
-            fundoBotao.visibleProperty().set(false);
-            Text textoBotao = (Text) scene.lookup("#txtAutores");
-            textoBotao.visibleProperty().set(false);
+            botaoRelatorio.visibleProperty().set(false);
+            fundoBotaoRelatorio.visibleProperty().set(false);
+            txtRelatorio.visibleProperty().set(false);
 
-            botao = (Button) scene.lookup("#botaoAvaliadores");
-            botao.visibleProperty().set(false);
-            fundoBotao = (ImageView) scene.lookup("#fundoAvaliadores");
-            fundoBotao.visibleProperty().set(false);
-            textoBotao = (Text) scene.lookup("#txtAvaliadores");
-            textoBotao.visibleProperty().set(false);
+            botaoAutores.visibleProperty().set(false);
+            fundoBotaoAutores.visibleProperty().set(false);
+            txtAutores.visibleProperty().set(false);
+
+            botaoAvaliadores.visibleProperty().set(false);
+            fundoBotaoAvaliadores.visibleProperty().set(false);
+            txtAvaliadores.visibleProperty().set(false);
 
             //mudar a tabela para a das obras que o avaliador deve avaliar (será recebido um ResultSet)
 
@@ -104,16 +114,16 @@ public class TelaPrincipalController {
 
     @FXML
     public void sair(ActionEvent event) throws Exception { //checar se método funciona
-        HelloFX.telaLogin();
+        Telas.telaLogin();
     }
 
     @FXML
     public void adicionarNovaObra(ActionEvent event) {
         try {
             if (tipoUsuario.equals("gerente")) {
-                HelloFX.telaNovaObraGerente();
+                Telas.telaNovaObraGerente();
             } else if (tipoUsuario.equals("autor")){
-                HelloFX.telaNovaObraAutor();
+                Telas.telaNovaObraAutor();
             }
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
@@ -124,9 +134,9 @@ public class TelaPrincipalController {
     public void deletarObra(ActionEvent event) {
         try {
             if (tipoUsuario.equals("gerente")) {
-                HelloFX.telaDeletarObra();
+                Telas.telaDeletarObra();
             } else if (tipoUsuario.equals("autor")){
-                HelloFX.telaDeletarObra();
+                Telas.telaDeletarObra();
             }
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
@@ -137,9 +147,9 @@ public class TelaPrincipalController {
     public void editarObra(ActionEvent event) {
         try {
             if (tipoUsuario.equals("gerente")) {
-                HelloFX.telaEditarObraGerente();
+                Telas.telaEditarObraGerente();
             } else if (tipoUsuario.equals("autor")) {
-                HelloFX.telaEditarObraAutor();
+                Telas.telaEditarObraAutor();
             }
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
@@ -149,7 +159,7 @@ public class TelaPrincipalController {
     @FXML
     public void adicionarNovoAutor(ActionEvent event) {
         try {
-            HelloFX.telaEditarAutor();
+            Telas.telaEditarAutor();
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
         }
@@ -158,7 +168,7 @@ public class TelaPrincipalController {
     @FXML
     public void editarAutor(ActionEvent event) {
         try {
-            HelloFX.telaEditarAutor();
+            Telas.telaEditarAutor();
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
         }
@@ -167,7 +177,7 @@ public class TelaPrincipalController {
     @FXML
     public void excluirAutor(ActionEvent event) {
         try {
-            HelloFX.telaDeletarAutor();
+            Telas.telaDeletarAutor();
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
         }
@@ -176,7 +186,7 @@ public class TelaPrincipalController {
     @FXML
     public void adicionarNovoAvaliador(ActionEvent event) {
         try {
-            HelloFX.telaEditarAvaliador();
+            Telas.telaEditarAvaliador();
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
         }
@@ -185,7 +195,7 @@ public class TelaPrincipalController {
     @FXML
     public void editarAvaliador(ActionEvent event) {
         try {
-            HelloFX.telaEditarAvaliador();
+            Telas.telaEditarAvaliador();
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
         }
@@ -194,7 +204,7 @@ public class TelaPrincipalController {
     @FXML
     public void excluirAvaliador(ActionEvent event) {
         try {
-            HelloFX.telaDeletarAvaliador();
+            Telas.telaDeletarAvaliador();
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
         }
@@ -203,7 +213,7 @@ public class TelaPrincipalController {
     @FXML
     public void gerarRelatorio(ActionEvent event) { //botão só está disponível para gerente
         try {
-            HelloFX.telaGerarRelatorio();
+            Telas.telaGerarRelatorio();
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
         }

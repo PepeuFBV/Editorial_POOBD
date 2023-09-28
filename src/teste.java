@@ -1,6 +1,6 @@
+import view.Telas;
 import javafx.application.Application;
 import javafx.stage.*;
-import view.HelloFX;
 
 public class teste extends Application {
     public static void main(String[] args) {
@@ -9,8 +9,8 @@ public class teste extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        HelloFX.setPrimaryStage(primaryStage);
-        HelloFX.telaLogin();
+        Telas.setPrimaryStage(primaryStage);
+        Telas.telaLogin();
     }
     
 }
