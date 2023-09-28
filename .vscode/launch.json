@@ -6,17 +6,11 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
             "name": "teste",
             "request": "launch",
             "mainClass": "teste",
             "projectName": "Trab-Banco-de-Dados-Editorial_36c84752",
-            "vmArgs": "--module-path \"C:/Program Files/javafx-sdk-17.0.8/lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"C:/Users/pedro/Documents/CC/javafx-sdk-21/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }

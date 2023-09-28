@@ -1,12 +1,11 @@
-package view.controller;
+package view;
 
-import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
-public class HelloFX extends Application {
+public class HelloFX {
     
     private static Stage primaryStage;
 
@@ -14,17 +13,12 @@ public class HelloFX extends Application {
         HelloFX.primaryStage = primaryStage;
     }
 
-    public void start(Stage primaryStage) throws Exception {
-        setPrimaryStage(primaryStage);
-        primaryStage.setTitle("Editorial do Paulão - Tela de Login");
-        primaryStage.show();
-    }  
-
-    public static Scene telaLogin() throws Exception {
-        Parent root = FXMLLoader.load(HelloFX.class.getResource("login-page.fxml"));
+    public static void telaLogin() throws Exception {
+        Parent root = FXMLLoader.load(HelloFX.class.getResource("VE/login-page.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        return scene;
+        primaryStage.setTitle("Editorial do Paulão - Tela de Login");
+        primaryStage.show();
     }
     
     public static Scene telaPrincipal() throws Exception {

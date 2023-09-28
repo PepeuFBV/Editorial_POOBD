@@ -1,11 +1,13 @@
-package view.controller;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import view.HelloFX;
 
 // TODO:
 // checar se o método visibleProperty().set() apenas tira da visão ou também desabilita o botão
@@ -13,6 +15,17 @@ import javafx.scene.text.Text;
 public class TelaPrincipalController {
 
     private String tipoUsuario;
+
+    @FXML
+    private TextField nomeUser;
+
+    @FXML
+    private TextField tipoUser;
+
+    @FXML
+    private Button botaoRelatorio;
+
+    
 
     public void inicializar(String tipoUsuario, String nomeUsuario) { //checar se está correto os argumentos
         Scene scene = null;
