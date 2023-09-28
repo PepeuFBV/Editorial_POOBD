@@ -14,7 +14,14 @@ public class TelaPrincipalController {
 
     private String tipoUsuario;
 
-    public void inicializar(Scene scene, String tipoUsuario, String nomeUsuario) { //checar se está correto
+    public void inicializar(String tipoUsuario, String nomeUsuario) { //checar se está correto os argumentos
+        Scene scene = null;
+        try {
+            scene = HelloFX.telaPrincipal();
+        } catch (Exception e) {
+            e.printStackTrace(); //criar nova Exception para lidar com isso
+        }
+        
         Text nomeDoUsuario = (Text) scene.lookup("#nomeUser");
         nomeDoUsuario.setText(nomeUsuario);
 
