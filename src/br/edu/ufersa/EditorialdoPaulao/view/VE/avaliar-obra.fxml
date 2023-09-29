@@ -31,14 +31,15 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <RadioButton layoutX="187.0" layoutY="151.0" mnemonicParsing="false" text="Aceita">
+      <RadioButton fx:id="buttonaceita" layoutX="187.0" layoutY="151.0" mnemonicParsing="false" text="Aceita">
          <toggleGroup>
             <ToggleGroup fx:id="radioavaliar" />
          </toggleGroup></RadioButton>
-      <RadioButton layoutX="261.0" layoutY="151.0" mnemonicParsing="false" text="Rejeitada" toggleGroup="$radioavaliar" />
-      <ChoiceBox layoutX="166.0" layoutY="101.0" prefHeight="25.0" prefWidth="199.0" />
-      <PasswordField layoutX="166.0" layoutY="190.0" prefHeight="25.0" prefWidth="199.0" />
-      <Button layoutX="164.0" layoutY="247.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
-      <Button layoutX="271.0" layoutY="247.0" mnemonicParsing="false" onAction="#atualizar" prefHeight="25.0" prefWidth="99.0" text="Enviar" textFill="#008009" />
+      <RadioButton fx:id="buttonrejeitada" layoutX="261.0" layoutY="151.0" mnemonicParsing="false" text="Rejeitada" toggleGroup="$radioavaliar" />
+      <ChoiceBox fx:id="choiceboxrelatorio" layoutX="166.0" layoutY="101.0" prefHeight="25.0" prefWidth="199.0" />
+      <PasswordField fx:id="senhaavaliarobra" layoutX="166.0" layoutY="190.0" prefHeight="25.0" prefWidth="199.0" />
+      <Button layoutX="164.0" layoutY="247.0" mnemonicParsing="false" onAction="#voltarTelaOBrasAvaliador" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
+      <Button layoutX="271.0" layoutY="247.0" mnemonicParsing="false" onAction="#enviar" prefHeight="25.0" prefWidth="99.0" text="Enviar" textFill="#008009" />
+      <Label fx:id="erroAut" layoutX="247.0" layoutY="126.0" text="Label" textFill="#d30000" visible="false" />
    </children>
 </Pane>
