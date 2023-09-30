@@ -1,8 +1,8 @@
-package br.edu.ufersa.EditorialdoPaulao.VO;
+package VO;
 
 import java.util.ArrayList;
 
-public class AutorVO extends UserVO{
+public class AutorVO extends UserVO {
 
     private int IDAutor;
     private ArrayList<ObraVO> obras;

@@ -1,67 +1,103 @@
-package br.edu.ufersa.EditorialdoPaulao.controller;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import br.edu.ufersa.EditorialdoPaulao.model.BO.UserBO;
-import br.edu.ufersa.EditorialdoPaulao.view.Telas;
-
-// TODO:
-// checar se o método visibleProperty().set() apenas tira da visão ou também desabilita o botão
+import model.BO.UserBO;
+import view.Telas;
 
 public class TelaPrincipalController {
 
+    private String visaoAtual = "obras"; //inicializa com a visão de obras
+
     private String tipoUsuario;
 
-    @FXML
-    private Text nomeUser;
+    private String nomeUsuario;
 
     @FXML
-    private Text tipoUser;
+    private TableColumn<?, ?> ano_obra;
 
     @FXML
-    private Button botaoRelatorio;
+    private TableColumn<?, ?> autor_obra;
 
     @FXML
-    private ImageView fundoBotaoRelatorio;
+    private TableColumn<?, ?> avaliador_obra;
 
     @FXML
-    private Text txtRelatorio;
-
-    @FXML
-    private Button botaoAvaliadores;
-
-    @FXML
-    private ImageView fundoBotaoAvaliadores;
-
-    @FXML
-    private Text txtAvaliadores;
+    private Button botaoAdicionar;
 
     @FXML
     private Button botaoAutores;
 
     @FXML
+    private Button botaoAvaliadores;
+
+    @FXML
+    private Button botaoRelatorio;
+
+    @FXML
+    private ImageView fundoAdicionar;
+
+    @FXML
     private ImageView fundoBotaoAutores;
 
     @FXML
+    private ImageView fundoBotaoAvaliadores;
+
+    @FXML
+    private ImageView fundoBotaoRelatorio;
+
+    @FXML
+    private TableColumn<?, ?> genero_obra;
+
+    @FXML
+    private TableColumn<?, ?> id_obra;
+
+    @FXML
+    private Label nomeUser;
+    
+    @FXML
+    private Label tipoUser;
+
+    @FXML
+    private TableColumn<?, ?> status_obra;
+
+    @FXML
+    private TableColumn<?, ?> titulo_obra;
+
+    @FXML
+    private Text txtAdicionar;
+
+    @FXML
     private Text txtAutores;
+
+    @FXML
+    private Text txtAvaliadores;
+
+    @FXML
+    private Text txtRelatorio;
+
+    @FXML
+    private TextField searchBar;
 
     public void start() { }
 
     public void start(UserBO userBO) { //checar se está correto os argumentos
 
-        String nomeUsuario = userBO.getNome();
-        String tipoUsuario = userBO.getTipo();
-        nomeUser.setText(nomeUsuario);
+        nomeUsuario = userBO.getNome();
+        tipoUsuario = userBO.getTipo();
+
+        nomeUser.setText(nomeUsuario); //nomeUser é null pointer ?????? (consertar) TODO
         tipoUser.setText(tipoUsuario);
 
         if (tipoUsuario.equals("Gerente")) { //habilitar ações de gerente e visões de tabela de gerente
             
-          
+          //mudar a tabela para a das obras (será recebido um ResultSet)
 
         } else if (tipoUsuario.equals("autor")) { //habilitar ações de autor e visões de tabela de autor
 
@@ -101,21 +137,37 @@ public class TelaPrincipalController {
     }
     
     @FXML
-    private void buscar(ActionEvent event) {
-        //lógica de busca aqui
+    private void buscar(ActionEvent event) { //ao apertar o botão de busca
+        String busca = searchBar.getText();
+
+        if (busca == null || busca.isEmpty()) {
+            //pop-up de campo vázio
+        } else {
+        //mudar a tabela para a das obras/autores/avaliadores que contém a string de busca (será recebido um ResultSet)
+            if (visaoAtual == "obras") {
+                
+            } else if (visaoAtual == "autores") {
+                
+            } else if (visaoAtual == "avaliadores") {
+                
+            }
+            
+        }
+
     }
     
 
     @FXML
     public void paraAvaliadores(ActionEvent event) throws Exception { //botão de avaliador é apertado por gerentes
-        
-        
+        //muda o conteúdo das tabelas e botões para o de avaliadores
+        visaoAtual = "avaliadores";
 
     }
 
     @FXML
     public void paraAutores(ActionEvent event) throws Exception { //botão de autor é apertado por gerentes
         //muda o conteúdo das tabelas e botões para o de autor
+        visaoAtual = "autores";
     }
 
     @FXML

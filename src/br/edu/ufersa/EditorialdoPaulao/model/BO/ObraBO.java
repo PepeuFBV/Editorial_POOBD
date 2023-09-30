@@ -1,4 +1,4 @@
-package br.edu.ufersa.EditorialdoPaulao.model.BO;
+package model.BO;
 
 public class ObraBO {
 

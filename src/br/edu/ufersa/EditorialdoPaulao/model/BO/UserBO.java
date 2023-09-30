@@ -1,4 +1,4 @@
-package br.edu.ufersa.EditorialdoPaulao.model.BO;
+package model.BO;
 
 public class UserBO {
 
@@ -7,13 +7,18 @@ public class UserBO {
     private String login;
     private String senha;
 
-    public void UserBO() { }
-
-    public boolean login(String login, String senha) {
-        // chama o dao e checa se é válido nas tabelas
-        setNome("Paulão"); // mudar
+    public UserBO(String nome, String login, String senha) {
+        setNome(nome);
         setLogin(login);
         setSenha(senha);
+    }
+
+    public UserBO() { }
+
+    public boolean login(String login, String senha) {//chama o dao e checa se é válido nas tabelas, se for válido, define o tipo e retorna true
+        setLogin("admin");
+        setNome("admin");
+        setSenha("admin");
         return true;
     }
 
@@ -24,7 +29,8 @@ public class UserBO {
     }
 
     public String getTipo() {
-        return "Gerente";
+        return "Gerente"; // temporário, só pra não dar erro de "tipo não inicializado
+        //return this.tipo;
     }
 
     public void setNome(String nome) {
@@ -34,7 +40,7 @@ public class UserBO {
     }
 
     public String getNome() {
-        return "Paulão";
+        return this.nome;
     }
 
     public void setLogin(String login) {
@@ -45,7 +51,7 @@ public class UserBO {
 
     public String getLogin() {
 
-        return "paulao";
+        return this.login;
     }
 
     public void setSenha(String senha) {
@@ -55,8 +61,7 @@ public class UserBO {
     }
 
     public String getSenha() {
-
-        return "123";
+        return this.senha;
     }
 
 }

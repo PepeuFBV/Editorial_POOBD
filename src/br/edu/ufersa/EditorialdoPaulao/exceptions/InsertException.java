@@ -1,4 +1,4 @@
-package br.edu.ufersa.EditorialdoPaulao.exceptions;
+package exceptions;
 import java.sql.SQLException;
 
 public class InsertException extends SQLException {

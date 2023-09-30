@@ -1,4 +1,4 @@
-package br.edu.ufersa.EditorialdoPaulao.VO;
+package VO;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,10 @@
-package br.edu.ufersa.EditorialdoPaulao.view;
+package view;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.BO.UserBO;
+import controller.TelaPrincipalController;
 import javafx.fxml.FXMLLoader;
 
 public class Telas {
@@ -21,7 +23,9 @@ public class Telas {
         primaryStage.show();
     }
     
-    public static void telaPrincipal() throws Exception {
+    public static void telaPrincipal(UserBO userBO) throws Exception {
+        TelaPrincipalController tela = new TelaPrincipalController();
+        tela.start(userBO);
         Parent root = FXMLLoader.load(Telas.class.getResource("VE/tela-principal.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

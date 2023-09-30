@@ -1,4 +1,4 @@
-import br.edu.ufersa.EditorialdoPaulao.view.Telas;
+import view.Telas;
 import javafx.application.Application;
 import javafx.stage.*;
 
@@ -7,6 +7,7 @@ public class teste extends Application {
         System.out.println("Hello World");
         launch();
     }
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
         Telas.setPrimaryStage(primaryStage);

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ufersa.EditorialdoPaulao.controller.NovoAutorGerenteController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NovoAutorGerenteController">
    <children>
       <TextField fx:id="cpf" layoutX="175.0" layoutY="115.0" prefHeight="25.0" prefWidth="298.0" />
       <Label alignment="CENTER" layoutX="206.0" layoutY="44.0" prefHeight="32.0" prefWidth="189.0" text="Novo Autor">

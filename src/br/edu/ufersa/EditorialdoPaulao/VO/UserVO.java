@@ -1,4 +1,4 @@
-package br.edu.ufersa.EditorialdoPaulao.VO;
+package VO;
 
 public class UserVO {
 

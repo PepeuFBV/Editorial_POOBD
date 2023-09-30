@@ -1,9 +1,9 @@
-package br.edu.ufersa.EditorialdoPaulao.model.BO;
+package model.BO;
 
 import java.util.List;
 
-import br.edu.ufersa.EditorialdoPaulao.exceptions.InsertException;
-import br.edu.ufersa.EditorialdoPaulao.exceptions.NotFoundException;
+import exceptions.InsertException;
+import exceptions.NotFoundException;
 
 public interface BaseInterBO<VO> {
 	

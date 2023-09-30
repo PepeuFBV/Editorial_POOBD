@@ -1,4 +1,4 @@
-package br.edu.ufersa.EditorialdoPaulao.exceptions;
+package exceptions;
 
 public class ErroLoginException extends Exception {
 	

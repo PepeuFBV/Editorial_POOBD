@@ -1,6 +1,6 @@
-package br.edu.ufersa.EditorialdoPaulao.controller;
+package controller;
 
-import br.edu.ufersa.EditorialdoPaulao.view.Telas;
+import view.Telas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

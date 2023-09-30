@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ufersa.EditorialdoPaulao.controller.EditarObraGerenteController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditarObraGerenteController">
    <children>
       <TextField fx:id="titulo" layoutX="175.0" layoutY="106.0" prefHeight="25.0" prefWidth="298.0" />
       <Label layoutX="238.0" layoutY="17.0" prefHeight="17.0" prefWidth="113.0" text="Editar Obra">
