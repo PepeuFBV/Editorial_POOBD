@@ -1,5 +1,6 @@
 package br.edu.ufersa.EditorialdoPaulao.controller;
 
+import br.edu.ufersa.EditorialdoPaulao.view.Telas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -44,18 +45,20 @@ public class AvaliarObraController {
 	        if (senha.equals(senha_do_avaliador)) {
 	            // obras_avaliadas.relatorios = choiceboxrelatorio.getValue();
 	        } else {
+	        	Telas.telaAvaliarObra();
 	            erroAut.setText("Senha incorreta.");
 	            erroAut.setVisible(true);
-	            return;
+	            
 	        }
 	        	
 	        String selecao = (String) choiceboxrelatorio.getValue(); //caminho do arquivo de texto
             if (selecao != null) {
                 // obra.relatorios = selecao; 
             } else {
+            	Telas.telaAvaliarObra();
                 erroAut.setText("Você deve selecionar um relatório.");
                 erroAut.setVisible(true);
-                return;
+                
             }
 	        	
             if (buttonaceita.isSelected()) {
@@ -65,9 +68,10 @@ public class AvaliarObraController {
                 // obra.setStatus("Rejeitada");
             	System.out.println("Avaliação bem-sucedida.");
             } else {
+            	Telas.telaAvaliarObra();
                 erroAut.setText("Você deve selecionar uma situação.");
                 erroAut.setVisible(true);
-                return;
+                
             }
             
 
@@ -77,7 +81,11 @@ public class AvaliarObraController {
 	}
 	
 	public void voltarTelaOBrasAvaliador(ActionEvent event) {
-		//Telas.voltarTelaOBrasAvaliador();
+		try {
+			Telas.telaPrincipal();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

@@ -7,17 +7,19 @@
 
 <Pane fx:id="deletarobra" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="202.0" prefWidth="385.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DeletarAvaliador">
    <children>
-      <Label alignment="CENTER" layoutX="50.0" layoutY="34.0" prefHeight="19.0" prefWidth="286.0" text="Tem certeza que deseja excluir esse avaliador?">
+      <Label fx:id="label1" alignment="CENTER" layoutX="50.0" layoutY="34.0" prefHeight="19.0" prefWidth="286.0" text="Tem certeza que deseja excluir esse avaliador?">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
       <Button fx:id="buttonSim" layoutX="113.0" layoutY="76.0" mnemonicParsing="false" onAction="#handleSimButtonAction" prefHeight="25.0" prefWidth="161.0" text="Sim" />
       <Button fx:id="buttonNao" layoutX="113.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleNaoButtonAction" prefHeight="25.0" prefWidth="161.0" text="Não" />
-      <Label layoutX="101.0" layoutY="156.0" text="ESTA AÇÃO NÃO PODE SER DESFEITA" textFill="RED">
+      <Label fx:id="label2" layoutX="101.0" layoutY="156.0" text="ESTA AÇÃO NÃO PODE SER DESFEITA" textFill="RED">
          <font>
             <Font size="11.0" />
          </font>
       </Label>
+      <Label fx:id="label3" layoutX="179.0" layoutY="93.0" text="Label" visible="false" />
+      <Button fx:id="botao" layoutX="170.0" layoutY="152.0" mnemonicParsing="false" onAction="#voltar" text="Voltar" visible="false" />
    </children>
 </Pane>

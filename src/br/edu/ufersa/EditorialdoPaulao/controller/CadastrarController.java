@@ -1,5 +1,6 @@
 package br.edu.ufersa.EditorialdoPaulao.controller;
 
+import br.edu.ufersa.EditorialdoPaulao.view.Telas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -52,23 +53,42 @@ public class CadastrarController {
         String tipoUsuario = (selectedRadioButton != null) ? selectedRadioButton.getText() : "";
 
         if (tipoUsuario.isEmpty()) {
-        	mensagemLabel.setText("Selecione o tipo de usuário.");
-        	mensagemLabel.setVisible(true);
-        	return;
+        	try {
+            	mensagemLabel.setText("Selecione o tipo de usuário.");
+            	mensagemLabel.setVisible(true);
+				Telas.telaCadastrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        	
         }
 
         if (username.isEmpty() || email.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || senha.isEmpty() || confirmaSenha.isEmpty() || tipoUsuario.isEmpty()) {
+            try {
+				Telas.telaCadastrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
             mensagemLabel.setText("Por favor, preencha todos os campos.");
             mensagemLabel.setVisible(true);
-            return;
+
         } else if (!senha.equals(confirmaSenha)) {
+            try {
+				Telas.telaCadastrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
             mensagemLabel.setText("As senhas não coincidem.");
             mensagemLabel.setVisible(true);
-            return;
+            
         } else {
-            //cadastrar usuário
-        	// ir para tela do tipo do usuário
         	System.out.println("Cadastro realizado com sucesso.");
+            //cadastrar usuário
+        	try {
+				Telas.telaLogin();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         }
     }
 }

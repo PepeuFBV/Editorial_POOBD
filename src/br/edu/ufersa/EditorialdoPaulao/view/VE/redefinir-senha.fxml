@@ -8,20 +8,20 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RedefinirSenhaController">
    <children>
-      <Label alignment="CENTER" layoutX="82.0" layoutY="33.0" text="Insira seu endereço de email abaixo.">
+      <Label fx:id="label1" alignment="CENTER" layoutX="82.0" layoutY="33.0" text="Insira seu endereço de email abaixo.">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <TextField fx:id="emailrecuperacao" layoutX="40.0" layoutY="61.0" prefHeight="25.0" prefWidth="308.0" />
-      <Label alignment="CENTER" layoutX="57.0" layoutY="133.0" prefHeight="25.0" prefWidth="274.0" text="Vamos enviar um e‑mail com seu nome de usuário" />
-      <Label alignment="CENTER" layoutX="153.0" layoutY="158.0" text="e a senha atual." />
-      <Button alignment="CENTER" layoutX="167.0" layoutY="100.0" mnemonicParsing="false" onAction="#enviar" prefHeight="25.0" prefWidth="54.0" text="Enviar" />
+      <Label fx:id="label2" alignment="CENTER" layoutX="57.0" layoutY="133.0" prefHeight="25.0" prefWidth="274.0" text="Vamos enviar um e‑mail com seu nome de usuário" />
+      <Label fx:id="label3" alignment="CENTER" layoutX="153.0" layoutY="158.0" text="e a senha atual." />
+      <Button fx:id="botao" alignment="CENTER" layoutX="167.0" layoutY="100.0" mnemonicParsing="false" onAction="#enviar" prefHeight="25.0" prefWidth="54.0" text="Enviar" />
       <Button alignment="CENTER" layoutX="331.0" layoutY="171.0" mnemonicParsing="false" onAction="#voltar" prefHeight="17.0" prefWidth="48.0" text="Voltar">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Label layoutX="180.0" layoutY="86.0" text="Label" visible="false" />
+      <Label fx:id="mensagemLabel" layoutX="47.0" layoutY="65.0" prefHeight="17.0" prefWidth="296.0" text="Label" visible="false" />
    </children>
 </Pane>
