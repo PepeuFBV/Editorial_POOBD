@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 public class DeletarObraController {
 	
@@ -16,7 +17,7 @@ public class DeletarObraController {
 	private Label label2;
 	
 	@FXML
-	private Label label3;
+	private Label erroDeletarObra;
 	
     @FXML
     private Button buttonSim;
@@ -29,13 +30,14 @@ public class DeletarObraController {
 
     @FXML
     private void handleSimButtonAction(ActionEvent event) {
+    	//lógica para deletar obra
     	System.out.println("Obra excluída com sucesso.");
     	label1.setVisible(false);
     	label2.setVisible(false);
     	buttonSim.setVisible(false);
     	buttonSim.setVisible(false);
-    	label3.setText("Obra excluída com sucesso.");
-    	label3.setVisible(true);
+    	erroDeletarObra.setText("Obra excluída com sucesso.");
+    	erroDeletarObra.setVisible(true);
     	botao.setVisible(true);
     	try {
 			Telas.telaPrincipal();
@@ -43,24 +45,12 @@ public class DeletarObraController {
 			e.printStackTrace();
 		}
     	
-    }
-
-    @FXML
-    private void handleNaoButtonAction(ActionEvent event) {
-    	try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
     } 
     
     @FXML
     private void voltar(ActionEvent event) {
-    	try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    Stage stage = (Stage) erroDeletarObra.getScene().getWindow();
+	    stage.close();
     }
 }
 

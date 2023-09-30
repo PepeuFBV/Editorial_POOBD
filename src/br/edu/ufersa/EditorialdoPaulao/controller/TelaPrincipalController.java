@@ -275,11 +275,11 @@ public class TelaPrincipalController {
 
     @FXML
     public void gerarRelatorio(ActionEvent event) { //botão só está disponível para gerente
-        try {
-            Telas.telaGerarRelatorio();
-        } catch (Exception e) {
-            e.printStackTrace(); //criar nova Exception para lidar com isso
-        }
+    	try {
+			Telas.telaGerarRelatorio();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
 }

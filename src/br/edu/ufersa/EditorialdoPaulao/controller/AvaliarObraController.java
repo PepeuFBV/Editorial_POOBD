@@ -1,6 +1,5 @@
-package controller;
+package br.edu.ufersa.EditorialdoPaulao.controller;
 
-import view.Telas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Stage;
 
 public class AvaliarObraController {
 	
@@ -78,11 +78,8 @@ public class AvaliarObraController {
 	}
 	
 	public void voltarTelaOBrasAvaliador(ActionEvent event) {
-		try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    Stage stage = (Stage) senhaavaliarobra.getScene().getWindow();
+	    stage.close();
 	}
 	
 }

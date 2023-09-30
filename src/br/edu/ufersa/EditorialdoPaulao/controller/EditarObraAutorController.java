@@ -1,6 +1,5 @@
-package controller;
+package br.edu.ufersa.EditorialdoPaulao.controller;
 
-import view.Telas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class EditarObraAutorController {
 
@@ -27,7 +27,7 @@ public class EditarObraAutorController {
 	private TextField ano;
 	
 	@FXML
-	private Label mensagemLabel;
+	private Label erroEditarObraAutor;
 	
 	@FXML
 	private Button btncancelar;
@@ -43,8 +43,8 @@ public class EditarObraAutorController {
         if (selecao != null) {
             // editar obra 
         } else {
-        	mensagemLabel.setText("Você deve selecionar uma obra.");
-        	mensagemLabel.setVisible(true);
+        	erroEditarObraAutor.setText("Você deve selecionar uma obra.");
+        	erroEditarObraAutor.setVisible(true);
             return;
         }
         
@@ -52,22 +52,35 @@ public class EditarObraAutorController {
 	    String generoText = genero.getText();
 	    String anoText = ano.getText();
 	    if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty()) {
-	        mensagemLabel.setText("Por favor, preencha todos os campos.");
-	        mensagemLabel.setVisible(true);
+	    	erroEditarObraAutor.setText("Por favor, preencha todos os campos.");
+	    	erroEditarObraAutor.setVisible(true);
 	        return;
 	    } else {
 	        System.out.println("Edição bem-sucedida.");
-	        mensagemLabel.setText("Edição bem-sucedida.");
-	        mensagemLabel.setVisible(true);
+	        erroEditarObraAutor.setText("Edição bem-sucedida.");
+	        erroEditarObraAutor.setVisible(true);
 	        btncancelar.setText("Fechar");
 	    }
 	}
 	
 	public void cancelar(ActionEvent event) {
-		try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Stage stage = (Stage) erroEditarObraAutor.getScene().getWindow();
+	    stage.close();
+	}
+	
+	public void excluirObra(ActionEvent event) {
+		
+	    String obraSelecionada = obra.getValue();
+	    if (obraSelecionada != null) { //criar pop up para confirmar a exclusão
+	        obras.remove(obraSelecionada);
+	        //lógica para excluir a obra no banco de dados
+	        System.out.println("Obra excluída: " + obraSelecionada);
+	        //atualiza o ChoiceBox após a exclusão
+	        obra.setItems(obras);
+	        obra.getSelectionModel().clearSelection();
+	    } else {
+	        erroEditarObraAutor.setText("Você deve selecionar uma obra para excluir.");
+	        erroEditarObraAutor.setVisible(true);
+	    }
 	}
 }

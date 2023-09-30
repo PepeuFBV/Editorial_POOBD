@@ -1,11 +1,11 @@
-package controller;
+package br.edu.ufersa.EditorialdoPaulao.controller;
 
-import view.Telas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class RedefinirSenhaController {
 
@@ -50,10 +50,7 @@ public class RedefinirSenhaController {
     
     @FXML
     private void voltar(ActionEvent event) {
-    	try {
-			Telas.telaLogin();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	Stage stage = (Stage) emailrecuperacao.getScene().getWindow();
+	    stage.close();
     }
 }

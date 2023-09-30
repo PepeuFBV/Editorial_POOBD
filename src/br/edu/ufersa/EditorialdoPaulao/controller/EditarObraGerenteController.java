@@ -1,6 +1,5 @@
-package controller;
+package br.edu.ufersa.EditorialdoPaulao.controller;
 
-import view.Telas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class EditarObraGerenteController {
 
@@ -39,7 +39,7 @@ public class EditarObraGerenteController {
 	private TextField ano;
 	
 	@FXML
-	private Label mensagemLabel;
+	private Label erroEditarObraGerente;
 	
 	@FXML
 	private Button btncancelar;
@@ -59,58 +59,54 @@ public class EditarObraGerenteController {
         if (selecao != null) {
             // editar obra 
         } else {
-        	mensagemLabel.setText("Você deve selecionar uma obra.");
-        	mensagemLabel.setVisible(true);
+        	erroEditarObraGerente.setText("Você deve selecionar uma obra.");
+        	erroEditarObraGerente.setVisible(true);
             return;
         }
         
-        selecao = (String) autor.getValue(); 
-        if (selecao != null) {
-            // editar autor 
-        } else {
-        	mensagemLabel.setText("Você deve selecionar um autor.");
-        	mensagemLabel.setVisible(true);
-            return;
-        }
-        
-        selecao = (String) avaliador.getValue(); 
-        if (selecao != null) {
-            // editar avaliador 
-        } else {
-        	mensagemLabel.setText("Você deve selecionar um avaliador.");
-        	mensagemLabel.setVisible(true);
-            return;
-        }
-        
-        selecao = (String) stts.getValue(); 
-        if (selecao != null) {
-            // editar status 
-        } else {
-        	mensagemLabel.setText("Você deve selecionar um status.");
-        	mensagemLabel.setVisible(true);
-            return;
-        }
-        
-	    String tituloText = titulo.getText();
+        String tituloText = titulo.getText();
 	    String generoText = genero.getText();
 	    String anoText = ano.getText();
 	    if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty()) {
-	        mensagemLabel.setText("Por favor, preencha todos os campos.");
-	        mensagemLabel.setVisible(true);
-	        return;
+	    	erroEditarObraGerente.setText("Por favor, preencha todos os campos.");
+	    	erroEditarObraGerente.setVisible(true);
 	    } else {
+	        selecao = (String) autor.getValue(); 
+	        if (selecao != null) {
+	            // editar autor 
+	        } else {
+	        	erroEditarObraGerente.setText("Você deve selecionar um autor.");
+	        	erroEditarObraGerente.setVisible(true);
+	            return;
+	        }
+	        
+	        selecao = (String) avaliador.getValue(); 
+	        if (selecao != null) {
+	            // editar avaliador 
+	        } else {
+	        	erroEditarObraGerente.setText("Você deve selecionar um avaliador.");
+	        	erroEditarObraGerente.setVisible(true);
+	            return;
+	        }
+	        
+	        selecao = (String) stts.getValue(); 
+	        if (selecao != null) {
+	            // editar status 
+	        } else {
+	        	erroEditarObraGerente.setText("Você deve selecionar um status.");
+	        	erroEditarObraGerente.setVisible(true);
+	            return;
+	        }
 	        System.out.println("Edição bem-sucedida.");
-	        mensagemLabel.setText("Edição bem-sucedida.");
-	        mensagemLabel.setVisible(true);
+	        erroEditarObraGerente.setText("Edição bem-sucedida.");
+	        erroEditarObraGerente.setVisible(true);
 	        btncancelar.setText("Fechar");
 	    }
+       
 	}
 	
 	public void cancelar(ActionEvent event) {
-		try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Stage stage = (Stage) erroEditarObraGerente.getScene().getWindow();
+	    stage.close();
 	}
 }

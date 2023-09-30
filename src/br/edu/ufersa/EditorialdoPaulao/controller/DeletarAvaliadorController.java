@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 public class DeletarAvaliadorController {
 	
@@ -16,7 +17,7 @@ public class DeletarAvaliadorController {
 	private Label label2;
 	
 	@FXML
-	private Label label3;
+	private Label erroDeletarAvaliador;
 	
     @FXML
     private Button buttonSim;
@@ -34,8 +35,8 @@ public class DeletarAvaliadorController {
     	label2.setVisible(false);
     	buttonSim.setVisible(false);
     	buttonSim.setVisible(false);
-    	label3.setText("Avaliador excluído com sucesso.");
-    	label3.setVisible(true);
+    	erroDeletarAvaliador.setText("Avaliador excluído com sucesso.");
+    	erroDeletarAvaliador.setVisible(true);
     	botao.setVisible(true);
     	try {
 			Telas.telaPrincipal();
@@ -44,23 +45,11 @@ public class DeletarAvaliadorController {
 		}
     	
     }
-
-    @FXML
-    private void handleNaoButtonAction(ActionEvent event) {
-    	try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    } 
     
     @FXML
     private void voltar(ActionEvent event) {
-    	try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    Stage stage = (Stage) erroDeletarAvaliador.getScene().getWindow();
+	    stage.close();
     }
 }
 
