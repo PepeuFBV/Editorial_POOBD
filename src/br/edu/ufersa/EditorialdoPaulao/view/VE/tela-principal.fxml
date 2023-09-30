@@ -76,7 +76,7 @@
             <Font name="High Tower Text" size="19.0" />
          </font>
       </Text>
-      <TextField layoutX="47.0" layoutY="122.0" onAction="#buscar" prefHeight="13.0" prefWidth="196.0" />
+      <TextField fx:id="searchBar" layoutX="47.0" layoutY="122.0" onAction="#buscar" prefHeight="13.0" prefWidth="196.0" />
       <ImageView fx:id="fundoAdicionar" fitHeight="22.0" fitWidth="104.0" layoutX="270.0" layoutY="124.0">
          <image>
             <Image url="@Botao-pequeno.png" />
