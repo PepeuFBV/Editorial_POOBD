@@ -1,16 +1,12 @@
 package view;
 
 import java.io.IOException;
-
-import br.edu.ufersa.EditorialdoPaulao.controller.EditarObraAutorController;
-import br.edu.ufersa.EditorialdoPaulao.controller.TelaPrincipalController;
+import controller.TelaPrincipalController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.BO.UserBO;
-import controller.TelaPrincipalController;
-import javafx.fxml.FXMLLoader;
 
 public class Telas {
     

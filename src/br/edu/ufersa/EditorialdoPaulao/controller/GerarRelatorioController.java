@@ -1,4 +1,4 @@
-package br.edu.ufersa.EditorialdoPaulao.controller;
+package controller;
 
 import java.time.LocalDate;
 

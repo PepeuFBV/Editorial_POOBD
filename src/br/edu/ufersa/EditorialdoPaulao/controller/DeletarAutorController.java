@@ -1,6 +1,5 @@
 package controller;
 
-
 import view.Telas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
