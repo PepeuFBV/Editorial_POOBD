@@ -45,20 +45,18 @@ public class AvaliarObraController {
 	        if (senha.equals(senha_do_avaliador)) {
 	            // obras_avaliadas.relatorios = choiceboxrelatorio.getValue();
 	        } else {
-	        	Telas.telaAvaliarObra();
 	            erroAut.setText("Senha incorreta.");
 	            erroAut.setVisible(true);
-	            
+	            return;
 	        }
 	        	
 	        String selecao = (String) choiceboxrelatorio.getValue(); //caminho do arquivo de texto
             if (selecao != null) {
                 // obra.relatorios = selecao; 
             } else {
-            	Telas.telaAvaliarObra();
                 erroAut.setText("Você deve selecionar um relatório.");
                 erroAut.setVisible(true);
-                
+                return;
             }
 	        	
             if (buttonaceita.isSelected()) {
@@ -68,10 +66,9 @@ public class AvaliarObraController {
                 // obra.setStatus("Rejeitada");
             	System.out.println("Avaliação bem-sucedida.");
             } else {
-            	Telas.telaAvaliarObra();
                 erroAut.setText("Você deve selecionar uma situação.");
                 erroAut.setVisible(true);
-                
+                return;
             }
             
 

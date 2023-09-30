@@ -19,15 +19,25 @@ public class GerarRelatorioController {
 	@FXML
 	private Label mensagemLabel;
 	
-	LocalDate dataInicio = (datainicio.getValue());
-	LocalDate dataFinal = (datainicio.getValue());
-	
 	public void baixar(ActionEvent event) {
-		//lógica para baixar o relatório
-    	mensagemLabel.setText("Relatório baixado com sucesso.");
-        mensagemLabel.setVisible(true);
-		System.out.println("Relatório baixado com sucesso.");
+	    LocalDate dataInicio = datainicio.getValue();
+	    LocalDate dataFinal = datafinal.getValue();
+	    
+	    if (dataInicio == null || dataFinal == null) {
+	        mensagemLabel.setText("Por favor, selecione as datas.");
+	        mensagemLabel.setVisible(true);
+	    } else if (dataFinal.isBefore(dataInicio)) {
+	        mensagemLabel.setText("A data final deve ser maior ou igual à data inicial.");
+	        mensagemLabel.setVisible(true);
+	    } else {
+	        // Lógica para baixar o relatório com as datas selecionadas
+	        mensagemLabel.setText("Relatório baixado com sucesso.");
+	        mensagemLabel.setVisible(true);
+	        System.out.println("Relatório baixado com sucesso.");
+	    }
 	}
+
+
 	
 	public void fechar(ActionEvent event) {
 		try {

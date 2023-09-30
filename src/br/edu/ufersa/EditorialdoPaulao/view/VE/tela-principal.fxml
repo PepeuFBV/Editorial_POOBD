@@ -12,7 +12,7 @@
 
 <!-- Controller: ObraGerenteController -->
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaPrincipalController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ufersa.EditorialdoPaulao.controller.TelaPrincipalController">
    <children>
       <TableView layoutX="38.0" layoutY="111.0" prefHeight="263.0" prefWidth="535.0" style="-fx-border-color: #01FFB3; -fx-border-radius: 10; -fx-border-width: 6; -fx-padding: 35 0 0 0;">
         <columns>
@@ -104,7 +104,7 @@
       </Text>
       <Button fx:id="botaoAvaliadores" layoutX="273.0" layoutY="88.0" mnemonicParsing="false" onAction="#paraAvaliadores" prefHeight="22.0" prefWidth="104.0" style="-fx-background-color: transparent;" />
       <Button fx:id="botaoAutores" layoutX="393.0" layoutY="88.0" mnemonicParsing="false" onAction="#paraAutores" prefHeight="22.0" prefWidth="104.0" style="-fx-background-color: transparent;" />
-      <Button fx:id="botaoAdicionar" layoutX="273.0" layoutY="123.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="3.0" prefWidth="95.0" style="-fx-background-color: transparent;" />
+      <Button fx:id="botaoAdicionar" layoutX="273.0" layoutY="123.0" mnemonicParsing="false" onAction="#adicionarNovaObra" prefHeight="3.0" prefWidth="95.0" style="-fx-background-color: transparent;" />
       <Button fx:id="botaoRelatorio" layoutX="435.0" layoutY="122.0" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="3.0" prefWidth="95.0" style="-fx-background-color: transparent;" />
       <ImageView fitHeight="19.0" fitWidth="20.0" layoutX="216.0" layoutY="125.0" onMouseClicked="#buscar">
          <image>

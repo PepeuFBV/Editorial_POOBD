@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EditarObraAutor">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ufersa.EditorialdoPaulao.controller.EditarObraAutorController">
    <children>
-      <TextField layoutX="175.0" layoutY="188.0" prefHeight="25.0" prefWidth="238.0" />
+      <TextField fx:id="titulo" layoutX="175.0" layoutY="188.0" prefHeight="25.0" prefWidth="238.0" />
       <Label layoutX="238.0" layoutY="63.0" prefHeight="17.0" prefWidth="113.0" text="Editar Obra">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <TextField layoutX="175.0" layoutY="230.0" prefHeight="25.0" prefWidth="238.0" />
-      <TextField layoutX="175.0" layoutY="273.0" prefHeight="25.0" prefWidth="238.0" />
+      <TextField fx:id="genero" layoutX="175.0" layoutY="230.0" prefHeight="25.0" prefWidth="238.0" />
+      <TextField fx:id="ano" layoutX="175.0" layoutY="273.0" prefHeight="25.0" prefWidth="238.0" />
       <Label />
       <Label layoutX="106.0" layoutY="190.0" prefHeight="21.0" prefWidth="45.0" text="Título:">
          <font>
@@ -39,8 +39,9 @@
          </font>
       </Label>
       <Button layoutX="487.0" layoutY="362.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Excluir Obra" textFill="RED" />
-      <Button layoutX="308.0" layoutY="337.0" mnemonicParsing="false" onAction="#atualizar" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
-      <Button layoutX="195.0" layoutY="337.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
-      <ChoiceBox layoutX="175.0" layoutY="139.0" prefHeight="25.0" prefWidth="238.0" />
+      <Button layoutX="308.0" layoutY="337.0" mnemonicParsing="false" onAction="#concluir" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
+      <Button fx:id="btncancelar" layoutX="195.0" layoutY="337.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
+      <ChoiceBox fx:id="obra" layoutX="175.0" layoutY="139.0" prefHeight="25.0" prefWidth="238.0" />
+      <Label fx:id="mensagemLabel" layoutX="280.0" layoutY="307.0" text="Label" visible="false" />
    </children>
 </Pane>

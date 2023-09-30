@@ -24,8 +24,12 @@ public class LoginPageController {
 
     @FXML
     void fazerLogin(ActionEvent event) { //fazer pop-up de erro caso login ou senha estejam errados
-
-        String loginUser = txtLogin.getText();
+    	try {
+			Telas.telaPrincipal();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        /*String loginUser = txtLogin.getText();
         String senhaUser = txtPassword.getText();
 
         if (loginUser == null || loginUser == "" || senhaUser == null || senhaUser == "") {
@@ -57,7 +61,7 @@ public class LoginPageController {
                 //pop-up de user não existe
             }
 
-        }
+        }*/
         
     }
 

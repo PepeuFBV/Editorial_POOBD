@@ -22,119 +22,119 @@ public class Telas {
     }
     
     public static void telaPrincipal() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("principal-page.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/tela-principal.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaAvaliarObra() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("avaliar-obra.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/avaliar-obra.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     
     public static void telaCadastrar() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("cadastrar.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/cadastrar.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaDeletarAutor() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("deletar-autor.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/deletar-autor.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaDeletarAvaliador() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("deletar-avaliador.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/deletar-avaliador.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaDeletarObra() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("deletar-obra.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/deletar-obra.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     
     public static void telaDownload() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("download.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/download.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     
     public static void telaEditarAvaliador() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("editar-avaliador-gerente.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/editar-avaliador-gerente.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     
     public static void telaEditarAutor() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("editar-autor-gerente.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/editar-autor-gerente.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     
     public static void telaEditarObraGerente() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("editar-obra-gerente.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/editar-obra-gerente.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaEditarObraAutor() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("editar-obra-autor.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/editar-obra-autor.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaGerarRelatorio() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("gerar-relatorio.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/gerar-relatorio.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaNovaObraAutor() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("editar-obra-autor.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/editar-obra-autor.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaNovaObraGerente() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("nova-obra-gerente.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/nova-obra-gerente.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaNovoAutorGerente() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("editar-autor-gerente.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/editar-autor-gerente.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaNovoAvaliadorGerente() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("editar-avaliador-gerente.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/editar-avaliador-gerente.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaRedefinirSenha() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("redefinir-senha.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("VE/redefinir-senha.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

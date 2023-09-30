@@ -1,4 +1,4 @@
-import view.Telas;
+import br.edu.ufersa.EditorialdoPaulao.view.Telas;
 import javafx.application.Application;
 import javafx.stage.*;
 

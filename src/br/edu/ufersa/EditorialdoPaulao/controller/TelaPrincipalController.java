@@ -99,6 +99,12 @@ public class TelaPrincipalController {
 
         }
     }
+    
+    @FXML
+    private void buscar(ActionEvent event) {
+        //lógica de busca aqui
+    }
+    
 
     @FXML
     public void paraAvaliadores(ActionEvent event) throws Exception { //botão de avaliador é apertado por gerentes
@@ -119,7 +125,12 @@ public class TelaPrincipalController {
 
     @FXML
     public void adicionarNovaObra(ActionEvent event) {
-        try {
+    	try {
+			Telas.telaNovaObraGerente();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        /*try {
             if (tipoUsuario.equals("gerente")) {
                 Telas.telaNovaObraGerente();
             } else if (tipoUsuario.equals("autor")){
@@ -127,7 +138,7 @@ public class TelaPrincipalController {
             }
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
-        }
+        }*/
     }
 
     @FXML
