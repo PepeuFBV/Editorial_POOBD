@@ -1,6 +1,5 @@
 package br.edu.ufersa.EditorialdoPaulao.controller;
 
-import br.edu.ufersa.EditorialdoPaulao.view.Telas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class NovaObraGerenteController {
 
@@ -39,7 +39,7 @@ public class NovaObraGerenteController {
 	private TextField ano;
 	
 	@FXML
-	private Label mensagemLabel;
+	private Label erroNovaObraGerente;
 	
 	@FXML
 	private Button btncancelar;
@@ -58,16 +58,16 @@ public class NovaObraGerenteController {
 	    String generoText = genero.getText();
 	    String anoText = ano.getText();
 	    if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty()) {
-	        mensagemLabel.setText("Por favor, preencha todos os campos.");
-	        mensagemLabel.setVisible(true);
+	    	erroNovaObraGerente.setText("Por favor, preencha todos os campos.");
+	    	erroNovaObraGerente.setVisible(true);
 	        return;
 	    } else {
 	        String selecao = (String) autor.getValue(); 
 	        if (selecao != null) {
 	            // adicionar autor 
 	        } else {
-	        	mensagemLabel.setText("Você deve selecionar um autor.");
-	        	mensagemLabel.setVisible(true);
+	        	erroNovaObraGerente.setText("Você deve selecionar um autor.");
+	        	erroNovaObraGerente.setVisible(true);
 	            return;
 	        }
 	        
@@ -75,8 +75,8 @@ public class NovaObraGerenteController {
 	        if (selecao != null) {
 	            // adicionar avaliador 
 	        } else {
-	        	mensagemLabel.setText("Você deve selecionar um avaliador.");
-	        	mensagemLabel.setVisible(true);
+	        	erroNovaObraGerente.setText("Você deve selecionar um avaliador.");
+	        	erroNovaObraGerente.setVisible(true);
 	            return;
 	        }
 	        
@@ -84,8 +84,8 @@ public class NovaObraGerenteController {
 	        if (selecao != null) {
 	            // adicionar status 
 	        } else {
-	        	mensagemLabel.setText("Você deve selecionar um status.");
-	        	mensagemLabel.setVisible(true);
+	        	erroNovaObraGerente.setText("Você deve selecionar um status.");
+	        	erroNovaObraGerente.setVisible(true);
 	            return;
 	        }
 	        
@@ -93,14 +93,14 @@ public class NovaObraGerenteController {
 	        if (selecao != null) {
 	            // adicionar obra 
 	        } else {
-	        	mensagemLabel.setText("Você deve selecionar uma obra.");
-	        	mensagemLabel.setVisible(true);
+	        	erroNovaObraGerente.setText("Você deve selecionar uma obra.");
+	        	erroNovaObraGerente.setVisible(true);
 	            return;
 	        }
 	        
 	        System.out.println("Edição bem-sucedida.");
-	        mensagemLabel.setText("Edição bem-sucedida.");
-	        mensagemLabel.setVisible(true);
+	        erroNovaObraGerente.setText("Edição bem-sucedida.");
+	        erroNovaObraGerente.setVisible(true);
 	        btncancelar.setText("Fechar");
 	        
 	    }
@@ -109,10 +109,7 @@ public class NovaObraGerenteController {
 	}
 	
 	public void cancelar(ActionEvent event) {
-		try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    Stage stage = (Stage) erroNovaObraGerente.getScene().getWindow();
+	    stage.close();
 	}
 }

@@ -34,6 +34,6 @@
       </Label>
       <Button layoutX="324.0" layoutY="314.0" mnemonicParsing="false" onAction="#concluir" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
       <Button fx:id="btncancelar" layoutX="175.0" layoutY="314.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
-      <Label fx:id="mensagemLabel" layoutX="286.0" layoutY="277.0" text="Label" visible="false" />
+      <Label fx:id="erroEditarAvaliadorGerente" layoutX="286.0" layoutY="277.0" text="Label" visible="false" />
    </children>
 </Pane>

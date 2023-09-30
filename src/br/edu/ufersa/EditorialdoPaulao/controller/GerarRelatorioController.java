@@ -2,13 +2,13 @@ package br.edu.ufersa.EditorialdoPaulao.controller;
 
 import java.time.LocalDate;
 
-import br.edu.ufersa.EditorialdoPaulao.view.Telas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
-public class GerarRelatorioController {
+public class GerarRelatorioController{
 
 	@FXML
 	private DatePicker datainicio;
@@ -30,20 +30,16 @@ public class GerarRelatorioController {
 	        mensagemLabel.setText("A data final deve ser maior ou igual à data inicial.");
 	        mensagemLabel.setVisible(true);
 	    } else {
-	        // Lógica para baixar o relatório com as datas selecionadas
+	        //lógica para baixar o relatório com as datas selecionadas
 	        mensagemLabel.setText("Relatório baixado com sucesso.");
 	        mensagemLabel.setVisible(true);
 	        System.out.println("Relatório baixado com sucesso.");
 	    }
 	}
 
-
-	
 	public void fechar(ActionEvent event) {
-		try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    Stage stage = (Stage) datainicio.getScene().getWindow();
+	    stage.close();
 	}
+
 }

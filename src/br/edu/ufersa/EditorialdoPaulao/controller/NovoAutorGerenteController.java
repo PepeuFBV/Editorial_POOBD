@@ -1,11 +1,11 @@
 package br.edu.ufersa.EditorialdoPaulao.controller;
 
-import br.edu.ufersa.EditorialdoPaulao.view.Telas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class NovoAutorGerenteController {
 
@@ -19,7 +19,7 @@ public class NovoAutorGerenteController {
 	private TextField endereco;
 	
 	@FXML
-	private Label mensagemLabel;
+	private Label erroNovoAutorGerente;
 	
 	@FXML
 	private Button btncancelar;
@@ -29,22 +29,19 @@ public class NovoAutorGerenteController {
 	    String nomeText = nome.getText();
 	    String enderecoText = endereco.getText();
 	    if (cpfText.isEmpty() || nomeText.isEmpty() || enderecoText.isEmpty()) {
-	        mensagemLabel.setText("Por favor, preencha todos os campos.");
-	        mensagemLabel.setVisible(true);
+	    	erroNovoAutorGerente.setText("Por favor, preencha todos os campos.");
+	        erroNovoAutorGerente.setVisible(true);
 	    } else {
 	        System.out.println("Autor adicionado com sucesso");
-	        mensagemLabel.setText("Autor adicionado com sucesso");
-	        mensagemLabel.setVisible(true);
+	        erroNovoAutorGerente.setText("Autor adicionado com sucesso");
+	        erroNovoAutorGerente.setVisible(true);
 	        btncancelar.setText("Fechar");
 	    }
 	}
 	
 	public void cancelar(ActionEvent event) {
-		try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Stage stage = (Stage) erroNovoAutorGerente.getScene().getWindow();
+	    stage.close();
 	}
 	
 }

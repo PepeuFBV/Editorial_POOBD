@@ -59,6 +59,6 @@
          </font>
       </Label>
       <ChoiceBox fx:id="stts" layoutX="175.0" layoutY="297.0" prefHeight="25.0" prefWidth="298.0" />
-      <Label fx:id="mensagemLabel" layoutX="286.0" layoutY="335.0" text="Label" visible="false" />
+      <Label fx:id="erroEditarObraGerente" layoutX="286.0" layoutY="335.0" text="Label" visible="false" />
    </children>
 </Pane>

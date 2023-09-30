@@ -34,7 +34,7 @@
       <Button layoutX="302.0" layoutY="335.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="25.0" prefWidth="99.0" text="Adicionar" textFill="#008009" />
       <Button fx:id="btncancelar" layoutX="174.0" layoutY="335.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
       <TextField fx:id="titulo" layoutX="175.0" layoutY="139.0" prefHeight="25.0" prefWidth="238.0" />
-      <Label fx:id="mensagemLabel" layoutX="273.0" layoutY="310.0" text="Label" visible="false" />
+      <Label fx:id="erroNovaObraAutor" layoutX="273.0" layoutY="310.0" text="Label" visible="false" />
       <Label layoutX="106.0" layoutY="275.0" prefHeight="21.0" prefWidth="58.0" text="Obra:">
          <font>
             <Font size="15.0" />

@@ -1,14 +1,12 @@
 package br.edu.ufersa.EditorialdoPaulao.controller;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 import br.edu.ufersa.EditorialdoPaulao.model.BO.UserBO;
 import br.edu.ufersa.EditorialdoPaulao.view.Telas;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 
 // TODO:
 // checar se o método visibleProperty().set() apenas tira da visão ou também desabilita o botão
@@ -223,11 +221,11 @@ public class TelaPrincipalController {
 
     @FXML
     public void gerarRelatorio(ActionEvent event) { //botão só está disponível para gerente
-        try {
-            Telas.telaGerarRelatorio();
-        } catch (Exception e) {
-            e.printStackTrace(); //criar nova Exception para lidar com isso
-        }
+    	try {
+			Telas.telaGerarRelatorio();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
 }

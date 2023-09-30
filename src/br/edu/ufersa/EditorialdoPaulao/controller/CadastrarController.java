@@ -53,31 +53,16 @@ public class CadastrarController {
         String tipoUsuario = (selectedRadioButton != null) ? selectedRadioButton.getText() : "";
 
         if (tipoUsuario.isEmpty()) {
-        	try {
-            	mensagemLabel.setText("Selecione o tipo de usuário.");
-            	mensagemLabel.setVisible(true);
-				Telas.telaCadastrar();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-        	
+        	mensagemLabel.setText("Selecione o tipo de usuário.");
+        	mensagemLabel.setVisible(true);
+        	return;
         }
 
         if (username.isEmpty() || email.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || senha.isEmpty() || confirmaSenha.isEmpty() || tipoUsuario.isEmpty()) {
-            try {
-				Telas.telaCadastrar();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
             mensagemLabel.setText("Por favor, preencha todos os campos.");
             mensagemLabel.setVisible(true);
 
         } else if (!senha.equals(confirmaSenha)) {
-            try {
-				Telas.telaCadastrar();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
             mensagemLabel.setText("As senhas não coincidem.");
             mensagemLabel.setVisible(true);
             

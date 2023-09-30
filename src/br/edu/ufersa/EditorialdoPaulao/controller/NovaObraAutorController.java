@@ -1,6 +1,5 @@
 package br.edu.ufersa.EditorialdoPaulao.controller;
 
-import br.edu.ufersa.EditorialdoPaulao.view.Telas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class NovaObraAutorController {
 	
@@ -27,7 +27,7 @@ public class NovaObraAutorController {
 	private TextField ano;
 	
 	@FXML
-	private Label mensagemLabel;
+	private Label erroNovaObraAutor;
 	
 	@FXML
 	private Button btncancelar;
@@ -39,8 +39,8 @@ public class NovaObraAutorController {
         if (selecao != null) {
             // adicionar obra 
         } else {
-        	mensagemLabel.setText("Você deve selecionar uma obra.");
-        	mensagemLabel.setVisible(true);
+        	erroNovaObraAutor.setText("Você deve selecionar uma obra.");
+        	erroNovaObraAutor.setVisible(true);
             return;
         }
         
@@ -48,23 +48,20 @@ public class NovaObraAutorController {
 	    String generoText = genero.getText();
 	    String anoText = ano.getText();
 	    if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty()) {
-	        mensagemLabel.setText("Por favor, preencha todos os campos.");
-	        mensagemLabel.setVisible(true);
+	    	erroNovaObraAutor.setText("Por favor, preencha todos os campos.");
+	    	erroNovaObraAutor.setVisible(true);
 	        return;
 	    } else {
 	        System.out.println("Obra adicionada com sucesso.");
-	        mensagemLabel.setText("Obra adicionada com sucesso.");
-	        mensagemLabel.setVisible(true);
+	        erroNovaObraAutor.setText("Obra adicionada com sucesso.");
+	        erroNovaObraAutor.setVisible(true);
 	        btncancelar.setText("Fechar");
 	    }
 	}
 	
 	public void cancelar(ActionEvent event) {
-		try {
-			Telas.telaPrincipal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Stage stage = (Stage) erroNovaObraAutor.getScene().getWindow();
+	    stage.close();
 	}
 }
 
