@@ -22,6 +22,6 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <Label fx:id="mensagemLabel" contentDisplay="CENTER" layoutX="47.0" layoutY="65.0" prefHeight="17.0" prefWidth="296.0" text="Label" visible="false" />
+      <Label fx:id="mensagemLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="100.0" prefHeight="17.0" prefWidth="296.0" text="Label" visible="false" />
    </children>
 </Pane>

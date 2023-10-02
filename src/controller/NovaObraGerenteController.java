@@ -98,8 +98,8 @@ public class NovaObraGerenteController {
 	            return;
 	        }
 	        
-	        System.out.println("Edição bem-sucedida.");
-	        erroNovaObraGerente.setText("Edição bem-sucedida.");
+	        System.out.println("Obra adicionada com sucesso.");
+	        erroNovaObraGerente.setText("Obra adicionada com sucesso.");
 	        erroNovaObraGerente.setVisible(true);
 	        btncancelar.setText("Fechar");
 	        

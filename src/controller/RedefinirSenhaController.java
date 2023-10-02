@@ -32,8 +32,7 @@ public class RedefinirSenhaController {
         String email = emailrecuperacao.getText();
 
         if (email.isEmpty()) {
-            mensagemLabel.setText("Preencha o campo de e-mail.");
-            mensagemLabel.setVisible(true);
+        	emailrecuperacao.setPromptText("Preencha o campo de e-mail.");
         } else {
         	System.out.println("E-mail enviado com sucesso.");
             //lógica para enviar o e-mail de recuperação de senha aqui

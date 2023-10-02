@@ -88,7 +88,7 @@ public class TelaPrincipalController {
     public void start() { }
 
     public void start(UserBO userBO) { //checar se está correto os argumentos
-
+    	
         nomeUsuario = userBO.getNome();
         tipoUsuario = userBO.getTipo();
 
