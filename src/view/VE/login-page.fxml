@@ -30,6 +30,12 @@
       </Text>
       <TextField fx:id="txtLogin" layoutX="177.0" layoutY="260.0" promptText="login" />
       <PasswordField fx:id="txtPassword" layoutX="251.0" layoutY="297.0" promptText="senha" />
-      <Button fx:id="entrarButton" layoutX="271.0" layoutY="337.0" mnemonicParsing="false" onAction="#fazerLogin" prefHeight="31.0" prefWidth="58.0" style="-fx-background-color: lightgreen; -fx-background-radius: 8.5;" text="Entrar" />
+      <Button fx:id="entrarButton" layoutX="301.0" layoutY="337.0" mnemonicParsing="false" onAction="#fazerLogin" prefHeight="31.0" prefWidth="58.0" style="-fx-background-color: lightgreen; -fx-background-radius: 8.5;" text="Entrar" />
+      <Button layoutX="463.0" layoutY="356.0" mnemonicParsing="false" onAction="#redefinir" prefHeight="16.0" prefWidth="117.0" style="-fx-background-color: black; -fx-background-radius: 8.5;" text="Esqueci minha senha" textFill="WHITE">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
+      <Button layoutX="200.0" layoutY="337.0" mnemonicParsing="false" onAction="#registrar" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: lightgreen; -fx-background-radius: 8.5;" text="Registrar-se" />
    </children>
 </Pane>

@@ -1,6 +1,8 @@
 package view;
 
 import java.io.IOException;
+
+import controller.LoginPageController;
 import controller.TelaPrincipalController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,24 +19,26 @@ public class Telas {
     }
 
     public static void telaLogin() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("VE/login-page.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("/view/VE/login-page.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Editorial do Paulão - Tela de Login");
         primaryStage.show();
     }
     
-    public static void telaPrincipal(UserBO userBO) throws Exception {
+    public static void telaPrincipal() throws Exception {
+    //public static void telaPrincipal(UserBO userBO) throws Exception {
         TelaPrincipalController tela = new TelaPrincipalController();
-        tela.start(userBO);
-        Parent root = FXMLLoader.load(Telas.class.getResource("VE/tela-principal.fxml"));
+        tela.start();
+        //tela.start(userBO);
+        Parent root = FXMLLoader.load(Telas.class.getResource("/view/VE/tela-principal.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaAvaliarObra() throws Exception { //mudar a classe
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/avaliar-obra.fxml"));
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/avaliar-obra.fxml"));
     	try {
 			Scene s = new Scene(fx.load());
 			Stage st = new Stage();
@@ -48,14 +52,14 @@ public class Telas {
     }
     
     public static void telaCadastrar() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("VE/cadastrar.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("/view/VE/cadastrar.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void telaDeletarAutor() throws Exception {
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/deletar-autor.fxml"));
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/deletar-autor.fxml"));
     	try {
 			Scene s = new Scene(fx.load());
 			Stage st = new Stage();
@@ -69,7 +73,7 @@ public class Telas {
     }
 
     public static void telaDeletarAvaliador() throws Exception {
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/deletar-avaliador.fxml"));
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/deletar-avaliador.fxml"));
     	try {
 			Scene s = new Scene(fx.load());
 			Stage st = new Stage();
@@ -83,7 +87,7 @@ public class Telas {
     }
 
     public static void telaDeletarObra() throws Exception {
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/deletar-obra.fxml"));
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/deletar-obra.fxml"));
     	try {
 			Scene s = new Scene(fx.load());
 			Stage st = new Stage();
@@ -97,14 +101,14 @@ public class Telas {
     }
     
     public static void telaDownload() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("VE/download.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("/view/VE/download.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     
     public static void telaEditarAvaliador() throws Exception {
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/editar-avaliador-gerente.fxml"));
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/editar-avaliador-gerente.fxml"));
     	try {
 			Scene s = new Scene(fx.load());
 			Stage st = new Stage();
@@ -118,14 +122,14 @@ public class Telas {
     }
     
     public static void telaEditarAutor() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("VE/editar-autor-gerente.fxml"));
+        Parent root = FXMLLoader.load(Telas.class.getResource("/viewVE/editar-autor-gerente.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     
     public static void telaEditarObraGerente() throws Exception {
-        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/editar-obra-gerente.fxml"));
+        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/editar-obra-gerente.fxml"));
         try {
             Scene s = new Scene(fx.load());
             Stage st = new Stage();
@@ -138,7 +142,7 @@ public class Telas {
     }
 
     public static void telaEditarObraAutor() throws Exception {
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/editar-obra-autor.fxml"));
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/editar-obra-autor.fxml"));
     	try {
 			Scene s = new Scene(fx.load());
 			Stage st = new Stage();
@@ -152,7 +156,7 @@ public class Telas {
     }
 
     public static void telaGerarRelatorio() throws Exception {
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/gerar-relatorio.fxml"));
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/gerar-relatorio.fxml"));
     	try {
 			Scene s = new Scene(fx.load());
 			Stage st = new Stage();
@@ -166,7 +170,7 @@ public class Telas {
     }
 
     public static void telaNovaObraAutor() throws Exception {
-        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/nova-obra-autor.fxml"));
+        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/nova-obra-autor.fxml"));
         try {
             Scene s = new Scene(fx.load());
             Stage st = new Stage();
@@ -179,7 +183,7 @@ public class Telas {
     }
 
     public static void telaNovaObraGerente() throws Exception {
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/nova-obra-gerente.fxml"));
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/nova-obra-gerente.fxml"));
     	try {
 			Scene s = new Scene(fx.load());
 			Stage st = new Stage();
@@ -193,7 +197,7 @@ public class Telas {
     }
 
     public static void telaNovoAutorGerente() throws Exception {
-        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/editar-autor-gerente.fxml"));
+        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/editar-autor-gerente.fxml"));
         try {
             Scene s = new Scene(fx.load());
             Stage st = new Stage();
@@ -206,7 +210,7 @@ public class Telas {
     }
 
     public static void telaNovoAvaliadorGerente() throws Exception {
-        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/editar-avaliador-gerente.fxml"));
+        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/editar-avaliador-gerente.fxml"));
         try {
             Scene s = new Scene(fx.load());
             Stage st = new Stage();
@@ -219,7 +223,7 @@ public class Telas {
     }
 
     public static void telaRedefinirSenha() throws Exception {
-        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/br/edu/ufersa/EditorialdoPaulao/view/VE/redefinir-senha.fxml"));
+        FXMLLoader fx = new FXMLLoader(LoginPageController.class.getResource("/view/VE/redefinir-senha.fxml"));
         try {
             Scene s = new Scene(fx.load());
             Stage st = new Stage();

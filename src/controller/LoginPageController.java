@@ -5,9 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import model.BO.AutorBO;
-import model.BO.AvaliadorBO;
-import model.BO.GerenteBO;
 import model.BO.UserBO;
 import view.Telas;
 
@@ -24,7 +21,8 @@ public class LoginPageController {
 
     @FXML
     void fazerLogin(ActionEvent event) throws Exception { //fazer pop-up de erro caso login ou senha estejam errados
-        String loginUser = txtLogin.getText();
+    	Telas.telaPrincipal();
+        /*String loginUser = txtLogin.getText();
         String senhaUser = txtPassword.getText();
 
         if (loginUser == null || loginUser.isEmpty() || senhaUser == null || senhaUser.isEmpty()) {
@@ -56,8 +54,26 @@ public class LoginPageController {
                 //pop-up de user não existe
             }
 
-        }
+        }*/
         
+    }
+    
+    @FXML
+    public void registrar(ActionEvent event) {
+    	try {
+			Telas.telaCadastrar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    @FXML
+    public void redefinir (ActionEvent event) {
+    	try {
+			Telas.telaRedefinirSenha();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
 }

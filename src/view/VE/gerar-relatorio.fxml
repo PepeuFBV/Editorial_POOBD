@@ -11,8 +11,8 @@
       <DatePicker fx:id="datainicio" layoutX="124.0" layoutY="19.0" prefHeight="25.0" prefWidth="125.0" />
       <Label layoutX="264.0" layoutY="23.0" text="-" />
       <DatePicker fx:id="datafinal" layoutX="282.0" layoutY="19.0" prefHeight="25.0" prefWidth="125.0" />
-      <Button layoutX="233.0" layoutY="72.0" mnemonicParsing="false" onAction="#baixar" prefHeight="25.0" prefWidth="99.0" text="Baixar" textFill="#008009" />
-      <Button layoutX="124.0" layoutY="72.0" mnemonicParsing="false" onAction="#fechar" prefHeight="25.0" prefWidth="99.0" text="Fechar" />
-      <Label fx:id="mensagemLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="79.0" layoutY="52.0" prefHeight="17.0" prefWidth="292.0" text="Label" visible="false" />
+      <Button layoutX="233.0" layoutY="81.0" mnemonicParsing="false" onAction="#baixar" prefHeight="25.0" prefWidth="99.0" text="Baixar" textFill="#008009" />
+      <Button layoutX="124.0" layoutY="81.0" mnemonicParsing="false" onAction="#fechar" prefHeight="25.0" prefWidth="99.0" text="Fechar" />
+      <Label fx:id="mensagemLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="48.0" layoutY="52.0" prefHeight="17.0" prefWidth="370.0" text="Label" textFill="#cd0000" visible="false" />
    </children>
 </Pane>

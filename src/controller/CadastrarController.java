@@ -41,7 +41,7 @@ public class CadastrarController {
     private Label mensagemLabel;
 
     @FXML
-    private void cadastrar(ActionEvent event) {
+    public void cadastrar(ActionEvent event) {
         String username = usernameField.getText();
         String email = emailField.getText();
         String cpf = cpfField.getText();
@@ -52,13 +52,7 @@ public class CadastrarController {
         RadioButton selectedRadioButton = (RadioButton) radiocadastro.getSelectedToggle();
         String tipoUsuario = (selectedRadioButton != null) ? selectedRadioButton.getText() : "";
 
-        if (tipoUsuario.isEmpty()) {
-        	mensagemLabel.setText("Selecione o tipo de usuário.");
-        	mensagemLabel.setVisible(true);
-        	return;
-        }
-
-        if (username.isEmpty() || email.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || senha.isEmpty() || confirmaSenha.isEmpty() || tipoUsuario.isEmpty()) {
+        if (username.isEmpty() || email.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || senha.isEmpty() || confirmaSenha.isEmpty()) {
             mensagemLabel.setText("Por favor, preencha todos os campos.");
             mensagemLabel.setVisible(true);
 
@@ -67,6 +61,12 @@ public class CadastrarController {
             mensagemLabel.setVisible(true);
             
         } else {
+        	
+            if (tipoUsuario.isEmpty()) {
+            	mensagemLabel.setText("Você deve selecionar o tipo de usuário.");
+            	mensagemLabel.setVisible(true);
+            	return;
+            }
         	System.out.println("Cadastro realizado com sucesso.");
             //cadastrar usuário
         	try {
@@ -75,6 +75,15 @@ public class CadastrarController {
 				e.printStackTrace();
 			}
         }
+    }
+    
+    @FXML
+    public void voltar(ActionEvent event) {
+    	try {
+			Telas.telaLogin();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 }
 
