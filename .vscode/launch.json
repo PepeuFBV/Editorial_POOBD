@@ -9,7 +9,7 @@
             "name": "teste",
             "request": "launch",
             "mainClass": "teste",
-            "projectName": "Trab-Banco-de-Dados-Editorial_36c84752",
+            "projectName": "TrabalhoPOOBD",
             "vmArgs": "--module-path \"C:/Users/pedro/Documents/CC/javafx-sdk-21/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
