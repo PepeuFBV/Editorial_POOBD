@@ -1,6 +1,6 @@
 /bin/
-*.classpath
-*.project
-*.pdf
-/.vscode/
-/.settings/
+.classpath
+.project
+Trabalhos_finais_-_SP.pdf
+.vscode/
+.settings/
