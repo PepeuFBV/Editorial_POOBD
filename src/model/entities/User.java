@@ -1,21 +1,19 @@
 package model.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class User {
+public abstract class User {
 
     private int id;
     private String nome;
     private String login;
     private String senha;
 
-    public User(int id, String nome, String login, String senha) {
-        setId(id);
+    public User(String nome, String login, String senha) {
         setNome(nome);
         setLogin(login);
         setSenha(senha);
     }
+
+    public User() { }
 
     public int getId() {
         return this.id;

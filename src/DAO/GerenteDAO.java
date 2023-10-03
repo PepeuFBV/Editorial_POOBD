@@ -50,26 +50,24 @@ public class GerenteDAO extends UsersDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    public ResultSet buscarPorId(Gerente gerente) {
+    public ResultSet buscarPorLogin(Gerente gerente) {
         ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();
-            String sql = "SELECT * FROM gerente WHERE id_gerente = ?";
+            String sql = "SELECT * FROM gerente WHERE login = ?";
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, gerente.getId());
+            statement.setString(1, gerente.getLogin());
             rs = statement.executeQuery();
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return rs;
-
     }
 
-    public ResultSet listarTodos() {
+    public ResultSet listar() {
         ResultSet rs = null;
         try {
             Connection con = BaseDAOImpl.getConnection();
@@ -81,7 +79,6 @@ public class GerenteDAO extends UsersDAO {
             e.printStackTrace();
         }
         return rs;
-
     }
 
     public void excluir(Gerente gerente) {

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NovoAutorGerenteController">
+   <children>
+      <TextField fx:id="cpf" layoutX="175.0" layoutY="115.0" prefHeight="25.0" prefWidth="298.0" />
+      <Label alignment="CENTER" layoutX="206.0" layoutY="44.0" prefHeight="32.0" prefWidth="189.0" text="Novo Autor">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nome" layoutX="175.0" layoutY="175.0" prefHeight="25.0" prefWidth="298.0" />
+      <TextField fx:id="endereco" layoutX="175.0" layoutY="239.0" prefHeight="25.0" prefWidth="298.0" />
+      <Label layoutX="94.0" layoutY="115.0" prefHeight="25.0" prefWidth="45.0" text="CPF:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="94.0" layoutY="177.0" prefHeight="21.0" prefWidth="58.0" text="Nome:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="90.0" layoutY="241.0" prefHeight="21.0" prefWidth="66.0" text="Endereço:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="300.0" layoutY="314.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="25.0" prefWidth="99.0" text="Adicionar" textFill="#008009" />
+      <Button fx:id="btncancelar" layoutX="188.0" layoutY="314.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
+      <Label fx:id="erroNovoAutorGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="281.0" prefHeight="17.0" prefWidth="420.0" text="Label" visible="false" />
+   </children>
+</Pane>

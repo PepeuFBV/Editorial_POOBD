@@ -1,9 +1,6 @@
 package model.entities;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 //TODO
 //Checar no setStatus se o status é válido (uma das 4 opções) (era um enum)
@@ -17,16 +14,16 @@ public class Obra {
 	private String status;
 	private Autor autor; //servirá para pegar o id do autor
 	private Avaliador avaliador; //servirá para pegar o id do avaliador
-	
-    public Obra(int id,String titulo, String genero, LocalDate ano, String status, Autor autor, Avaliador avaliador) {
-        setId(id);
+
+    public Obra(String titulo, String genero, LocalDate ano, String status, Autor autor) {
         setTitulo(titulo);
         setGenero(genero);
         setAno(ano);
-		setStatus(status);
-		setAutor(autor);
-		setAvaliador(avaliador);
+        setStatus(status);
+        setAutor(autor);
     }
+    
+    public Obra() { }
 
     public int getId() {
         return this.id;
@@ -62,20 +59,24 @@ public class Obra {
 		return this.ano;
 	}
 
-	public void setAno(LocalDate ano) {
-		if (ano != null) {
-			this.ano = ano;
-		}
+    public void setAno(LocalDate ano) {
+        LocalDate hoje = LocalDate.now();
+        if (ano != null && ano.isBefore(hoje)) {
+            this.ano = ano;
+        }
 	}
 
 	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(String status) {
-		if (status != null && !status.isEmpty()) {
-			this.status = status;
-		}
+    public void setStatus(String status) {
+        String opcoes[] = { "Em avaliação", "Aprovado", "Reprovado", "Em revisão" };
+        for (String opcao : opcoes) {
+            if (status == opcao) {
+                this.status = status;
+            }
+        }
 	}
 
 	public Autor getAutor() {
@@ -98,92 +99,4 @@ public class Obra {
 		}
 	}
 
-	public List<Obra> getObras() {
-		return this.obras;
-	}
-
-	public void setObras(List<Obra> obras) {
-		if (obras != null) {
-			this.obras = obras;
-		}
-	}
-
-
-
-
-
-	//alterar metódos depois
-	public void cadastrar(Obra obra) {
-		System.out.printf(obra.getTitulo() + " foi cadastrada!\n");
-	}
-
-	public void alterar(Obra obra) {
-		System.out.printf(obra.getTitulo() + " foi alterada!\n");
-	}
-
-	public void excluir(Obra obra) {
-		System.out.printf(obra.getTitulo() + " foi excluida!\n");
-	}
-
-	public List<Obra> buscarPorTitulo(String titulo) {
-        List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) {
-            if (obra.getTitulo().equalsIgnoreCase(titulo)) {
-                obrasEncontradas.add(obra);
-            }
-        }
-        return obrasEncontradas;
-    }
-
-    public List<Obra> buscarPorGenero(String genero) {
-        List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) {
-            if (obra.getGenero().equalsIgnoreCase(genero)) {
-                obrasEncontradas.add(obra);
-            }
-        }
-        return obrasEncontradas;
-    }
-
-    public List<Obra> buscarPorAno(LocalDate ano) {
-        List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) {
-            if (obra.getAno().equals(ano)) {
-                obrasEncontradas.add(obra);
-            }
-        }
-        return obrasEncontradas;
-    }
-
-    public List<Obra> buscarPorAutor(Autor autor) {
-        List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) {
-            if (obra.getAutor().equals(autor)) {
-                obrasEncontradas.add(obra);
-            }
-        }
-        return obrasEncontradas;
-    }
-
-    public List<Obra> buscarPorStatus(StatusObra status) {
-        List<Obra> obrasEncontradas = new ArrayList<>();
-        for (Obra obra : obras) {
-            if (obra.getStatus().equals(status)) {
-                obrasEncontradas.add(obra);
-            }
-        }
-        return obrasEncontradas;
-    }
-
-	public void definirAvaliador(Obra obra, Avaliador avaliador) {
-		obra.setAvaliador(avaliador);
-	}
-
-	/*public StatusObra avaliarObra(Obra obra, Avaliador avaliador) {
-		return; //?
-	}
-	
-	public List<Obra> gerarRelatorio(LocalDate inicio, LocalDate fim) {
-		return; //?
-	}*/
 }

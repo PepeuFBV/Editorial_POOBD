@@ -9,11 +9,14 @@ public class Autor extends User {
     private String cpf;
     private List<Obra> obras = new ArrayList<>();
 
-    public Autor(int id, String nome, String login, String senha, String endereco, String cpf, List<Obra> obras) {
-        super(id, nome, login, senha);
+    public Autor(String nome, String login, String senha, String endereco, String cpf) {
+        super(nome, login, senha);
         setEndereco(endereco);
         setCpf(cpf);
-        setObras(obras);
+    }
+
+    public Autor() {
+        super();
     }
 
     public String getEndereco() {
