@@ -19,6 +19,7 @@ public class UserBO {
         setLogin("admin");
         setNome("admin");
         setSenha("admin");
+        setTipo("Gerente");
         return true;
     }
 
