@@ -1,4 +1,4 @@
-package DAO;
+package model.DAO;
 
 import java.sql.ResultSet;
 

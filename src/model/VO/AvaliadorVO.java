@@ -1,26 +1,26 @@
-package VO;
+package model.VO;
 
 import java.util.ArrayList;
 
-public class AvaliadorVO extends UserVO{
+public class AvaliadorVO extends UsuarioVO{
 
-    private int IDAvaliador;
+    private Long IDAvaliador;
     private ArrayList<ObraVO> obras;
 
-    public AvaliadorVO(int iDAvaliador, ArrayList<ObraVO> obras) {
-        super();
-        IDAvaliador = iDAvaliador;
-        this.obras = obras;
+    public AvaliadorVO(Long iDAvaliador, ArrayList<ObraVO> obras, Long iDUsuario, String nome, String endereco, String cpf, String email, String senha, String tipo) {
+        super(iDUsuario, nome, endereco, cpf, email, senha, tipo);
+        setIDAvaliador(iDAvaliador);;
+        setObras(obras);
     }
     
     public AvaliadorVO() {
     }
 
-    public int getIDAvaliador() {
+    public Long getIDAvaliador() {
         return IDAvaliador;
     }
 
-    public void setIDAvaliador(int iDAvaliador) {
+    public void setIDAvaliador(Long iDAvaliador) {
         if (iDAvaliador > 0) {
             IDAvaliador = iDAvaliador;
         } else {
@@ -39,4 +39,6 @@ public class AvaliadorVO extends UserVO{
             throw new IllegalArgumentException("A lista de obras não pode ser nula.");
         }
     }
+    
+
 }

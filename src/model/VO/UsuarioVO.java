@@ -1,45 +1,47 @@
-package VO;
+package model.VO;
 
-public class UserVO {
+public class UsuarioVO {
 
-    private int IDUsuario;
-    private String Nome;
+    private Long IDUsuario;
+    private String nome;
     private String endereco;
     private String cpf;
     private String email;
     private String senha;
+    private String tipo;
 
-    public UserVO(int iDUsuario, String nome, String endereco, String cpf, String email, String senha) {
+    public UsuarioVO(Long iDUsuario, String nome, String endereco, String cpf, String email, String senha, String tipo) {
         setIDUsuario(iDUsuario);
         setNome(nome);
         setEndereco(endereco);
         setCpf(cpf);
         setEmail(email);
         setSenha(senha);
+        setTipo(tipo);
     }
     
-    public UserVO() {
+    public UsuarioVO() {
     }
 
-    public int getIDUsuario() {
+    public Long getIDUsuario() {
         return IDUsuario;
     }
 
-    public void setIDUsuario(int iDUsuario) {
+    public void setIDUsuario(Long iDUsuario) {
         if (iDUsuario > 0) {
-            IDUsuario = iDUsuario;
+            this.IDUsuario = iDUsuario;
         } else {
             throw new IllegalArgumentException("ID de usuário deve ser maior que zero.");
         }
     }
 
     public String getNome() {
-        return Nome;
+        return nome;
     }
 
     public void setNome(String nome) {
         if (nome != null && !nome.isEmpty()) {
-            Nome = nome;
+            this.nome = nome;
         } else {
             throw new IllegalArgumentException("Nome não pode ser nulo ou vazio.");
         }
@@ -90,6 +92,18 @@ public class UserVO {
             this.senha = senha;
         } else {
             throw new IllegalArgumentException("Senha não pode ser nula ou vazia.");
+        }
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        if (tipo != null && !tipo.isEmpty()) {
+            this.tipo = tipo;
+        } else {
+            throw new IllegalArgumentException("Tipo não pode ser nulo ou vazio.");
         }
     }
 }
