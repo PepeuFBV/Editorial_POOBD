@@ -86,24 +86,32 @@ public class TelaPrincipalController {
     @FXML
     private Text txtRelatorio;
 
-    public void initialize(UserBO userBO) { //checar se está correto os argumentos
+    @FXML
+    public void initialize() {
+        initialize(UserBO userbo);
+    }
 
+    @FXML
+    public void initialize(UserBO userbo) { //checar se está correto os argumentos
+
+        UserBO userBO = new UserBO();
+        userBO.setNome("Jorge");
+        userBO.setTipo("autor");
+        
         String nomeUsuario = userBO.getNome();
-        String tipoUsuario = "autor";
-        //tipoUsuario = userBO.getTipo();
-
-        /*
-        nomeUser.setText(nomeUsuario); //fix
+        String tipoUsuario = userBO.getTipo();
+        
+        nomeUser.setText(nomeUsuario);
         tipoUser.setText(tipoUsuario);
-        */
+        
 
-        if (tipoUsuario.equals("gerente")) { //habilita as ações de gerente e visões de tabela de gerente
+        if (userBO.getTipo().equals("gerente")) { //habilita as ações de gerente e visões de tabela de gerente
 
             //mudar a tabela para a das obras (será recebido um ResultSet)
 
-        } else if (tipoUsuario.equals("autor")) { //habilitar ações de autor e visões de tabela de autor
+        } else if (userBO.getTipo().equals("autor")) { //habilitar ações de autor e visões de tabela de autor
 
-            botaoRelatorio.visibleProperty().set(false);
+            botaoRelatorio.setVisible(false);
             fundoBotaoRelatorio.visibleProperty().set(false);
             txtRelatorio.visibleProperty().set(false);
 
@@ -119,7 +127,7 @@ public class TelaPrincipalController {
 
             //mudar a tabela para a das obras do próprio autor (será recebido um ResultSet)
 
-        } else if (tipoUsuario.equals("Avaliador")) { //habilitar ações de avaliador e visões de tabela de avaliador
+        } else if (userBO.getTipo().equals("Avaliador")) { //habilitar ações de avaliador e visões de tabela de avaliador
 
             botaoRelatorio.visibleProperty().set(false);
             fundoBotaoRelatorio.visibleProperty().set(false);

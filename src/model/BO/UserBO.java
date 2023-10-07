@@ -30,8 +30,7 @@ public class UserBO {
     }
 
     public String getTipo() {
-        return "Gerente"; // temporário, só pra não dar erro de "tipo não inicializado
-        //return this.tipo;
+        return this.tipo;
     }
 
     public void setNome(String nome) {

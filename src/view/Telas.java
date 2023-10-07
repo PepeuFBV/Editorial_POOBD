@@ -27,8 +27,6 @@ public class Telas {
     }
     
     public static void telaPrincipal(UserBO userBO) throws Exception {
-        TelaPrincipalController tela = new TelaPrincipalController(); //erro pode estar aqui, ao inicializar uma tela e depois dar load
-        tela.initialize(userBO);
         Parent root = FXMLLoader.load(Telas.class.getResource("/view/VE/tela-principal.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
