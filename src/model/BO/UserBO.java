@@ -2,18 +2,31 @@ package model.BO;
 
 public class UserBO {
 
+    private int id;
     private String tipo;
     private String nome;
     private String login;
     private String senha;
 
-    public UserBO(String nome, String login, String senha) {
+    public UserBO(int id, String nome, String login, String senha) {
+        setId(id);
         setNome(nome);
-        setLogin(login);
         setSenha(senha);
+        setLogin(login);
     }
 
-    public UserBO() { }
+    public UserBO() {
+    }
+    
+    public void setId(int id) {
+        if (id > 0) {
+            this.id = id;
+        }
+    }
+
+    public int getId() {
+        return this.id;
+    }
 
     public boolean login(String login, String senha) {//chama o dao e checa se é válido nas tabelas, se for válido, define o tipo e retorna true
         setLogin("admin");

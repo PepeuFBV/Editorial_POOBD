@@ -17,14 +17,7 @@
    <children>
       <TableView layoutX="38.0" layoutY="111.0" prefHeight="263.0" prefWidth="535.0" style="-fx-border-color: #01FFB3; -fx-border-radius: 10; -fx-border-width: 6; -fx-padding: 35 0 0 0;">
         <columns>
-          <TableColumn fx:id="id_obra" prefWidth="30.0" text="id" />
-          <TableColumn fx:id="titulo_obra" minWidth="50.0" prefWidth="70.0" text="/título" />
-            <TableColumn fx:id="genero_obra" prefWidth="75.0" text="/gênero" />
-            <TableColumn fx:id="ano_obra" prefWidth="50.0" text="/ano" />
-            <TableColumn fx:id="autor_obra" text="/autor" />
-            <TableColumn fx:id="avaliador_obra" prefWidth="85.0" text="/avaliador" />
-            <TableColumn fx:id="status_obra" prefWidth="75.0" text="/status" />
-            <TableColumn prefWidth="50.0" text="/opções" />
+          <TableColumn fx:id="idTabela" prefWidth="30.0" text="id" />
         </columns>
       </TableView>
       <ImageView fitHeight="400.0" fitWidth="600.0">

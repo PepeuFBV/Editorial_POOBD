@@ -27,7 +27,11 @@ public class Telas {
     }
     
     public static void telaPrincipal(UserBO userBO) throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("/view/VE/tela-principal.fxml"));
+        FXMLLoader loader = new FXMLLoader(Telas.class.getResource("/view/VE/tela-principal.fxml"));
+        Parent root = loader.load();
+        TelaPrincipalController controller = loader.getController();
+        controller.setUserBO(userBO);
+        controller.setApropriateScreen();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Tela Principal");
