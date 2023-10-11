@@ -13,5 +13,7 @@ public interface BaseDAO<E> {
     public ResultSet listar();
 
     public void excluir(E entity);
+    
+    public ResultSet buscarPorEmail(E entity);
 
 }

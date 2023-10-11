@@ -16,7 +16,6 @@ public class ObraVO {
     private AvaliadorVO avaliador;
     private String pdf_obra;
     private String pdf_avaliacao;
-
     
     public ObraVO(Long iDObra, String titulo, String genero, LocalDate ano, String status, LocalDate data_avaliacao, ArrayList<AutorVO> autores, ArrayList<AvaliadorVO> avaliadores, String pdf_obra, String pdf_avaliacao) {
         setIDObra(iDObra);

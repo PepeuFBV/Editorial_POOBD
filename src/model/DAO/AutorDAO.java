@@ -3,7 +3,6 @@ package model.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import model.VO.AutorVO;
 import model.VO.ObraVO;
@@ -151,7 +150,7 @@ public class AutorDAO extends UsersDAO<AutorVO> {
             rs = statement.executeQuery();
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             BaseDAOImpl.closeConnection();
         } 
         return rs;
@@ -172,7 +171,7 @@ public class AutorDAO extends UsersDAO<AutorVO> {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            closeResources(statement, con);
+        	BaseDAOImpl.closeConnection();
         }
     }
 }

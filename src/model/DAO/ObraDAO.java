@@ -7,10 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.VO.ObraVO;
+import util.LerPDF;
 
-public class ObraDAO implements BaseDAO<ObraVO> {
+public class ObraDAO {
     
-	@Override
 	public void inserir(ObraVO obra) {
 	    Connection con = null;
 	    PreparedStatement statement = null;
@@ -25,8 +25,12 @@ public class ObraDAO implements BaseDAO<ObraVO> {
 	        statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
 	        statement.setLong(6, obra.getAutor().getIDAutor());
 	        statement.setLong(7, obra.getAvaliador().getIDAvaliador());
-	        statement.setString(8, obra.getPdfObra());
-	        statement.setString(9, obra.getPdfAvaliacao());
+	        
+	        byte[] pdfObraBytes = LerPDF.lerArquivoPDF(obra.getPdfObra());
+	        statement.setBytes(8, pdfObraBytes);
+
+	        byte[] pdfAvaliacaoBytes = LerPDF.lerArquivoPDF(obra.getPdfAvaliacao());
+	        statement.setBytes(9, pdfAvaliacaoBytes);
 
 	        int affectedRows = statement.executeUpdate();
 	        if (affectedRows == 0) {
@@ -45,7 +49,6 @@ public class ObraDAO implements BaseDAO<ObraVO> {
 	    }
 	}
 
-	@Override
 	public void atualizar(ObraVO obra) {
 	    Connection con = null;
 	    PreparedStatement statement = null;
@@ -60,21 +63,29 @@ public class ObraDAO implements BaseDAO<ObraVO> {
 	        statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
 	        statement.setLong(6, obra.getAutor().getIDAutor());
 	        statement.setLong(7, obra.getAvaliador().getIDAvaliador());
-	        statement.setString(8, obra.getPdfObra());
-	        statement.setString(9, obra.getPdfAvaliacao());
+	        
+	        byte[] pdfObraBytes = LerPDF.lerArquivoPDF(obra.getPdfObra());
+	        statement.setBytes(8, pdfObraBytes);
+
+	        byte[] pdfAvaliacaoBytes = LerPDF.lerArquivoPDF(obra.getPdfAvaliacao());
+	        statement.setBytes(9, pdfAvaliacaoBytes);
+
 	        statement.setLong(10, obra.getIDObra());
 	        statement.executeUpdate();
-	        statement.close();
-	        BaseDAOImpl.closeConnection();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    } finally {
+	        if (statement != null) {
+	            try {
+	                statement.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
 	        BaseDAOImpl.closeConnection();
 	    }
 	}
 
-
-    @Override
     public ResultSet buscarPorId(ObraVO obra) {
         ResultSet rs = null;
         Connection con = null;
@@ -184,7 +195,6 @@ public class ObraDAO implements BaseDAO<ObraVO> {
         return rs;
     }
 
-    @Override
     public ResultSet listar() {
         ResultSet rs = null;
         Connection con = null;
@@ -203,7 +213,6 @@ public class ObraDAO implements BaseDAO<ObraVO> {
         
     }
 
-    @Override
     public void excluir(ObraVO obra) {
         Connection con = null;
         PreparedStatement statement = null;
