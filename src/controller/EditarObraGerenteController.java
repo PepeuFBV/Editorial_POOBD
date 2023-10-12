@@ -1,5 +1,11 @@
 package controller;
 
+import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,17 +14,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.DAO.AutorDAO;
+import model.DAO.AvaliadorDAO;
 
 public class EditarObraGerenteController {
 
-	ObservableList<String> obras = FXCollections.observableArrayList("As Crônicas de Nárnia", "O Senhor dos Anéis", "Harry Potter e a Pedra Filosofal");
-	ObservableList<String> autores = FXCollections.observableArrayList("C.S. Lewis", "J. R. R. Tolkien", "J. K. Rowling");
-	ObservableList<String> avaliadores = FXCollections.observableArrayList("Gabriel Gadelha", "Angélica Félix", "Dudu");
-	ObservableList<String> status = FXCollections.observableArrayList("Aceita", "Rejeitada", "Em avaliação", "Avaliador pendente");
-	
 	@FXML
-	private ChoiceBox<String> obra; //titulos
+	private TextField showFileger;
 	
 	@FXML
 	private ChoiceBox<String> autor;
@@ -44,12 +48,61 @@ public class EditarObraGerenteController {
 	@FXML
 	private Button btncancelar;
 	
+    private Map<String, Integer> autorParaIDMap = new HashMap<>();
+    private Map<String, Integer> avaliadorParaIDMap = new HashMap<>();
+	
+	@FXML
+	public void handleBtnOpenFile(ActionEvent event) {
+		final FileChooser fc = new FileChooser();
+		fc.setTitle("Seleção da Obra");
+		fc.setInitialDirectory(new File(System.getProperty("user.home")));
+		fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.*"));
+		File file = fc.showOpenDialog(null);
+		if (file != null) {
+			showFileger.appendText(file.getAbsolutePath() + "\n");
+		} else {
+			System.out.println("Você deve selecionar um arquivo");
+		}
+	}
+	
 	@FXML
 	private void initialize() {
-		obra.setItems(obras);
-		autor.setItems(autores);
-		avaliador.setItems(avaliadores);
-		stts.setItems(status);
+		
+		ObservableList<String> status = FXCollections.observableArrayList("Aceita", "Rejeitada", "Em avaliação", "Avaliador pendente");
+	    ObservableList<String> autores = FXCollections.observableArrayList();
+	    ObservableList<String> avaliadores = FXCollections.observableArrayList();
+
+	    try {
+	        AutorDAO autorDAO = new AutorDAO();
+	        ResultSet autoresDoDB = autorDAO.listar();
+
+	        while (autoresDoDB.next()) {
+	            String nomeAutor = autoresDoDB.getString("nome");
+	            int autorID = autoresDoDB.getInt("id_autor");
+	            autores.add(nomeAutor);
+	            autorParaIDMap.put(nomeAutor, autorID);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    try {
+	        AvaliadorDAO avaDAO = new AvaliadorDAO();
+	        ResultSet avaliadoresDoDB = avaDAO.listar();
+
+	        while (avaliadoresDoDB.next()) {
+	            String nomeAvaliador = avaliadoresDoDB.getString("nome");
+	            int avaliadorID = avaliadoresDoDB.getInt("id_avaliador");
+	            avaliadores.add(nomeAvaliador);
+	            avaliadorParaIDMap.put(nomeAvaliador, avaliadorID);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    autor.setItems(autores);
+	    avaliador.setItems(avaliadores);
+	    stts.setItems(status);
 	}
 
 	

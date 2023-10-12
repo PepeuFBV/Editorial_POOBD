@@ -71,6 +71,6 @@
       <TextField fx:id="enderecoField" layoutX="57.0" layoutY="267.0" prefHeight="25.0" prefWidth="256.0" />
       <TextField fx:id="senhaField" layoutX="57.0" layoutY="325.0" prefHeight="25.0" prefWidth="256.0" />
       <TextField fx:id="confirmaSenhaField" layoutX="57.0" layoutY="382.0" prefHeight="25.0" prefWidth="256.0" />
-      <Label fx:id="mensagemLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="492.0" prefHeight="17.0" prefWidth="267.0" text="Label" />
+      <Label fx:id="mensagemLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="492.0" prefHeight="17.0" prefWidth="267.0" text="Label" visible="false" />
    </children>
 </Pane>

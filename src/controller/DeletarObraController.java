@@ -1,12 +1,13 @@
 package controller;
 
 
-import view.Telas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.DAO.ObraDAO;
+import view.Telas;
 
 public class DeletarObraController {
 	
@@ -30,7 +31,8 @@ public class DeletarObraController {
 
     @FXML
     private void handleSimButtonAction(ActionEvent event) {
-    	//lógica para deletar obra
+    	ObraDAO obraDAO = new ObraDAO();
+    	obraDAO.excluir(obraVO);
     	System.out.println("Obra excluída com sucesso.");
     	label1.setVisible(false);
     	label2.setVisible(false);

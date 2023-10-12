@@ -1,11 +1,12 @@
 package controller;
 
-import view.Telas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.DAO.AutorDAO;
+import view.Telas;
 
 public class DeletarAutorController {
 	
@@ -29,6 +30,8 @@ public class DeletarAutorController {
 
     @FXML
     private void handleSimButtonAction(ActionEvent event) {
+    	AutorDAO autorDAO = new AutorDAO();
+    	autorDAO.excluir(autorVO);
     	System.out.println("Autor excluído com sucesso.");
     	label1.setVisible(false);
     	label2.setVisible(false);

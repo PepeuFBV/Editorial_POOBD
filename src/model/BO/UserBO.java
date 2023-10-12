@@ -2,7 +2,9 @@ package model.BO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import exceptions.ErroLoginException;
+import exceptions.InsertException;
 import model.DAO.AutorDAO;
 import model.DAO.AvaliadorDAO;
 import model.DAO.BaseDAO;
@@ -75,6 +77,19 @@ public class UserBO<VO extends UsuarioVO> {
 	    	e.printStackTrace();
 	    }
     	throw new ErroLoginException();
+	}
+	
+	public void cadastrar(UsuarioVO vo) throws InsertException{
+		try {
+			ResultSet rs = usuDAO.buscarPorEmail(vo);
+			if(rs.next()) {
+				throw new InsertException("O email que você inseriu já existe");
+			} else {
+				usuDAO.inserir(vo);
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 }

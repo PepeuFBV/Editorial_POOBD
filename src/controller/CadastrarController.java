@@ -1,12 +1,17 @@
 package controller;
 
-import view.Telas;
+import exceptions.InsertException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import model.BO.UserBO;
+import model.VO.AutorVO;
+import model.VO.AvaliadorVO;
+import model.VO.UsuarioVO;
+import view.Telas;
 
 public class CadastrarController {
 
@@ -66,9 +71,52 @@ public class CadastrarController {
             	mensagemLabel.setText("Você deve selecionar o tipo de usuário.");
             	mensagemLabel.setVisible(true);
             	return;
-            }
-        	System.out.println("Cadastro realizado com sucesso.");
-            //cadastrar usuário
+            	
+            } else {
+            	if(tipoUsuario.equals("Autor")) {
+            		UsuarioVO autorVO = new AutorVO();
+            		autorVO.setNome(username);
+            		autorVO.setEmail(email);
+            		autorVO.setCpf(cpf);
+            		autorVO.setEndereco(endereco);
+            		autorVO.setSenha(senha);
+            		autorVO.setTipo(tipoUsuario);
+                    try {
+                    	UserBO<AutorVO> userBO = new UserBO<AutorVO>();
+                        userBO.cadastrar(autorVO);
+                        try {
+							Telas.telaLogin();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+                    } catch (InsertException e) {
+                        mensagemLabel.setText("Erro ao cadastrar: " + e.getMessage());
+                        mensagemLabel.setVisible(true);                      
+                    }
+            		
+            	} else{
+            		UsuarioVO avaliadorVO = new AvaliadorVO();
+            		avaliadorVO.setNome(username);
+            		avaliadorVO.setEmail(email);
+            		avaliadorVO.setCpf(cpf);
+            		avaliadorVO.setEndereco(endereco);
+            		avaliadorVO.setSenha(senha);
+            		avaliadorVO.setTipo(tipoUsuario);
+                    try {
+                    	UserBO<AvaliadorVO> userBO = new UserBO<AvaliadorVO>();
+                        userBO.cadastrar(avaliadorVO);
+                        try {
+							Telas.telaLogin();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+                    } catch (InsertException e) {
+                        mensagemLabel.setText("Erro ao cadastrar: " + e.getMessage());
+                        mensagemLabel.setVisible(true);                      
+                    }
+            	}
+            } 
+            
         	try {
 				Telas.telaLogin();
 			} catch (Exception e) {

@@ -53,12 +53,8 @@
          </font>
       </Label>
       <ChoiceBox fx:id="stts" layoutX="175.0" layoutY="267.0" prefHeight="25.0" prefWidth="298.0" />
-      <Label layoutX="106.0" layoutY="305.0" text="Obra:">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="obra" layoutX="175.0" layoutY="303.0" prefHeight="25.0" prefWidth="298.0" />
       <Label fx:id="erroNovaObraGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="116.0" layoutY="343.0" prefHeight="17.0" prefWidth="359.0" text="Label" visible="false" />
+      <Button fx:id="buttonarquivoger" alignment="CENTER" layoutX="101.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleBtnOpenFile" prefHeight="17.0" prefWidth="99.0" text="Abrir arquivo" />
+      <TextField fx:id="showFileger" layoutX="200.0" layoutY="310.0" prefHeight="25.0" prefWidth="273.0" />
    </children>
 </Pane>

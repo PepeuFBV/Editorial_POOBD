@@ -33,11 +33,7 @@ public class AutorVO extends UsuarioVO {
     }
 
     public void setObras(ArrayList<ObraVO> obras) {
-        if (obras != null) {
-            this.obras = obras;
-        } else {
-            throw new IllegalArgumentException("A lista de obras não pode ser nula.");
-        }
+        this.obras = obras;
     }
 }
 

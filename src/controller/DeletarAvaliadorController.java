@@ -1,12 +1,13 @@
 package controller;
 
 
-import view.Telas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.DAO.AvaliadorDAO;
+import view.Telas;
 
 public class DeletarAvaliadorController {
 	
@@ -30,6 +31,8 @@ public class DeletarAvaliadorController {
 
     @FXML
     private void handleSimButtonAction(ActionEvent event) {
+    	AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+    	avaliadorDAO.excluir(avaliadorVO);
     	System.out.println("Avaliador excluído com sucesso.");
     	label1.setVisible(false);
     	label2.setVisible(false);
