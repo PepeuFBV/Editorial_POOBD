@@ -68,10 +68,9 @@ public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> implemen
         
         try {
             con = BaseDAOImpl.getConnection();
-            String sql = "SELECT * FROM users WHERE id_usuario = ? AND tipo = ?";
+            String sql = "SELECT * FROM users WHERE id_usuario = ?";
             statement = con.prepareStatement(sql);
             statement.setLong(1, user.getIDUsuario());
-            statement.setString(2, user.getTipo());
             rs = statement.executeQuery();
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,4 +144,5 @@ public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> implemen
             e.printStackTrace();
         } 
     }
+
 }

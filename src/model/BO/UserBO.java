@@ -23,60 +23,50 @@ public class UserBO<VO extends UsuarioVO> {
 	static private BaseDAO<AvaliadorVO> avaDAO = new AvaliadorDAO();
 	
 	public UsuarioVO autenticar(UsuarioVO vo) throws ErroLoginException {
-	    ResultSet usuRS = usuDAO.buscarPorEmail(vo); 
+	    ResultSet usuRS = usuDAO.buscarPorEmail(vo);
 	    try {
 	        if (usuRS.next()) {
 	            if (usuRS.getString("senha").equals(vo.getSenha())) {
-	                GerenteVO ger = new GerenteVO();
-	                ger.setIDUsuario(usuRS.getLong("id_usuario"));
-	                
-	                ResultSet gerRS = gerDAO.buscarPorId(ger);
-	                if (gerRS.next()) {
+	                String tipoUsuario = usuRS.getString("tipo");
+
+	                if ("Gerente".equals(tipoUsuario)) {
+	                    GerenteVO ger = new GerenteVO();
+	                    ger.setIDUsuario(usuRS.getLong("id_usuario"));
 	                    ger.setEmail(vo.getEmail());
 	                    ger.setCpf(usuRS.getString("cpf"));
 	                    ger.setNome(usuRS.getString("nome"));
 	                    ger.setEndereco(usuRS.getString("endereco"));
-	                    ger.setIDUsuario(usuRS.getLong("id_usuario"));
-	                    ger.setTipo(usuRS.getString("tipo"));
+	                    ger.setTipo(tipoUsuario); 
 	                    return ger;
-	                } else {
+	                } else if ("Autor".equals(tipoUsuario)) {
 	                    AutorVO aut = new AutorVO();
 	                    aut.setIDUsuario(usuRS.getLong("id_usuario"));
-	                    
-	                    ResultSet autRS = autDAO.buscarPorId(aut);
-	                    if (autRS.next()) {
-	                        aut.setEmail(vo.getEmail());
-	                        aut.setCpf(usuRS.getString("cpf"));
-	                        aut.setNome(usuRS.getString("nome"));
-	                        aut.setEndereco(usuRS.getString("endereco"));
-	                        aut.setIDUsuario(usuRS.getLong("id_usuario"));
-	                        aut.setTipo(usuRS.getString("tipo"));
-	                        return aut;
-	                    } else {
-	                        AvaliadorVO ava = new AvaliadorVO();
-	                        ava.setIDUsuario(usuRS.getLong("id_usuario"));
-	                        
-	                        ResultSet avaRS = avaDAO.buscarPorId(ava);
-	                        if (avaRS.next()) {
-	                            ava.setEmail(vo.getEmail());
-	                            ava.setCpf(usuRS.getString("cpf"));
-	                            ava.setNome(usuRS.getString("nome"));
-	                            ava.setEndereco(usuRS.getString("endereco"));
-	                            ava.setIDUsuario(usuRS.getLong("id_usuario"));
-	                            ava.setTipo(usuRS.getString("tipo"));
-	                            return ava;
-	                        }
-	        	            else throw new ErroLoginException();
-	                    }
+	                    aut.setEmail(vo.getEmail());
+	                    aut.setCpf(usuRS.getString("cpf"));
+	                    aut.setNome(usuRS.getString("nome"));
+	                    aut.setEndereco(usuRS.getString("endereco"));
+	                    aut.setTipo(tipoUsuario);
+	                    return aut;
+	                } else if ("Avaliador".equals(tipoUsuario)) {
+	                    AvaliadorVO ava = new AvaliadorVO();
+	                    ava.setIDUsuario(usuRS.getLong("id_usuario"));
+	                    ava.setEmail(vo.getEmail());
+	                    ava.setCpf(usuRS.getString("cpf"));
+	                    ava.setNome(usuRS.getString("nome"));
+	                    ava.setEndereco(usuRS.getString("endereco"));
+	                    ava.setTipo(tipoUsuario); 
+	                    return ava;
+	                } else {
+	                    throw new ErroLoginException();
 	                }
+	            } else {
+	                throw new ErroLoginException();
 	            }
-	            else throw new ErroLoginException();
-
 	        }
 	    } catch (SQLException e) {
-	    	e.printStackTrace();
+	        e.printStackTrace();
 	    }
-    	throw new ErroLoginException();
+	    throw new ErroLoginException();
 	}
 	
 	public void cadastrar(UsuarioVO vo) throws InsertException{
