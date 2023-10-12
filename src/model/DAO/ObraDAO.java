@@ -140,6 +140,26 @@ public class ObraDAO {
         }
         return rs;
     }
+    
+    public ResultSet buscarPorAno(int anoInicio, int anoFinal) {
+        ResultSet rs = null;
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+        	con = BaseDAOImpl.getConnection();
+            String sql = "SELECT * FROM obra WHERE ano BETWEEN ? AND ?";
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, anoInicio);
+            statement.setInt(2, anoFinal);
+            rs = statement.executeQuery();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        	BaseDAOImpl.closeConnection();
+        }
+        return rs;
+    }
+
 
     public ResultSet buscarPorStatus(ObraVO obra) {
         ResultSet rs = null;

@@ -1,26 +1,17 @@
 package controller;
 
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.DAO.ObraDAO;
-import model.DAO.UsersDAO;
-import model.VO.AutorVO;
-import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
-import model.VO.UsuarioVO;
 
 public class NovaObraAutorController {
 	
