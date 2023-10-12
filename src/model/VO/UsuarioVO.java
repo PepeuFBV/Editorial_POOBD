@@ -64,22 +64,30 @@ public class UsuarioVO {
     }
 
     public void setCpf(String cpf) {
-        if (cpf != null && !cpf.isEmpty()) {
-            this.cpf = cpf;
+        if (cpf != null) {
+            //remove todos os caracteres não numéricos da entrada do usuário.
+            String cpfNumerico = cpf.replaceAll("\\D", "");
+
+            if (cpfNumerico.length() == 11) {
+                this.cpf = cpfNumerico;
+            } else {
+                throw new IllegalArgumentException("CPF deve conter exatamente 11 dígitos numéricos.");
+            }
         } else {
-            throw new IllegalArgumentException("CPF não pode ser nulo ou vazio.");
+            throw new IllegalArgumentException("CPF não pode ser nulo.");
         }
     }
+
 
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
-        if (email != null && !email.isEmpty()) {
+        if (email != null && email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) { //simplificado
             this.email = email;
         } else {
-            throw new IllegalArgumentException("E-mail não pode ser nulo ou vazio.");
+            throw new IllegalArgumentException("E-mail não é válido.");
         }
     }
 
@@ -88,12 +96,16 @@ public class UsuarioVO {
     }
 
     public void setSenha(String senha) {
-        if (senha != null && !senha.isEmpty()) {
+        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$!%*?&])[A-Za-z\\d@#$!%*?&]{8,}$"; 
+        // deve possuir no mínimo: 1 letra maiuscula, 1 letra minuscula, 1 digito, 1 caractere especial e 8 dígitos
+        
+        if (senha != null && senha.matches(regex)) {
             this.senha = senha;
         } else {
-            throw new IllegalArgumentException("Senha não pode ser nula ou vazia.");
+            throw new IllegalArgumentException("Senha não atende aos critérios de segurança.");
         }
     }
+
 
     public String getTipo() {
         return tipo;
@@ -101,9 +113,16 @@ public class UsuarioVO {
 
     public void setTipo(String tipo) {
         if (tipo != null && !tipo.isEmpty()) {
-            this.tipo = tipo;
+            tipo = tipo.trim().toLowerCase(); 
+
+            if (tipo.equals("gerente") || tipo.equals("autor") || tipo.equals("avaliador")) {
+                this.tipo = tipo;
+            } else {
+                throw new IllegalArgumentException("Tipo deve ser 'Gerente', 'Autor' ou 'Avaliador'.");
+            }
         } else {
             throw new IllegalArgumentException("Tipo não pode ser nulo ou vazio.");
         }
     }
+
 }
