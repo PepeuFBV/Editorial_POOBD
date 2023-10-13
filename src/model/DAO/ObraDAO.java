@@ -9,80 +9,75 @@ import java.util.ArrayList;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
-import util.LerPDF;
 
 //TODO
 // parar a inserção de obras sem autor
 
 public class ObraDAO extends BaseDAOImpl<ObraVO> {
 
-    public void inserir(ObraVO obra) {
-        Connection con = null;
-        try {
-            con = BaseDAOImpl.getConnection();
-            PreparedStatement statement = null;
-            String sql = "INSERT INTO obra (titulo, genero, ano, status, data_avaliacao, id_autor, id_avaliador, pdf_obra, pdf_avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setString(1, obra.getTitulo());
-            statement.setString(2, obra.getGenero());
-            statement.setDate(3, Date.valueOf(obra.getAno()));
-            statement.setString(4, obra.getStatus());
-            statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
-            statement.setLong(6, obra.getAutor().getIDAutor());
-            statement.setLong(7, obra.getAvaliador().getIDAvaliador());
+	public void inserir(ObraVO obra) {
+	    Connection con = null;
+	    try {
+	        con = BaseDAOImpl.getConnection();
+	        PreparedStatement statement = null;
+	        String sql = "INSERT INTO obra (titulo, genero, ano, status, data_avaliacao, id_autor, id_avaliador, pdf_obra, pdf_avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	        statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+	        statement.setString(1, obra.getTitulo());
+	        statement.setString(2, obra.getGenero());
+	        statement.setDate(3, Date.valueOf(obra.getAno()));
+	        statement.setString(4, obra.getStatus());
+	        statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
+	        statement.setLong(6, obra.getAutor().getIDAutor());
+	        statement.setLong(7, obra.getAvaliador().getIDAvaliador());
 
-            byte[] pdfObraBytes = LerPDF.lerArquivoPDF(obra.getPdfObra());
-            statement.setBytes(8, pdfObraBytes);
+	        statement.setBytes(8, obra.getPdfObra());
+	        statement.setBytes(9, obra.getPdfAvaliacao());
 
-            byte[] pdfAvaliacaoBytes = LerPDF.lerArquivoPDF(obra.getPdfAvaliacao());
-            statement.setBytes(9, pdfAvaliacaoBytes);
+	        int affectedRows = statement.executeUpdate();
+	        if (affectedRows == 0) {
+	            throw new Exception("A inserção falhou. Nenhuma linha foi alterada.");
+	        }
+	        ResultSet generatedKeys = statement.getGeneratedKeys();
+	        if (generatedKeys.next()) {
+	            obra.setIDObra(generatedKeys.getLong(1));
+	        } else {
+	            throw new Exception("A inserção falhou. Nenhum id foi retornado.");
+	        }
+	        statement.close();
+	        BaseDAOImpl.closeConnection();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows == 0) {
-                throw new Exception("A inserção falhou. Nenhuma linha foi alterada.");
-            }
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                obra.setIDObra(generatedKeys.getLong(1));
-            } else {
-                throw new Exception("A inserção falhou. Nenhum id foi retornado.");
-            }
-            statement.close();
-            BaseDAOImpl.closeConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public void atualizar(ObraVO obra) {
+	    Connection con = null;
+	    try {
+	        con = BaseDAOImpl.getConnection();
+	        PreparedStatement statement = null;
+	        String sql = "UPDATE obra SET titulo = ?, genero = ?, ano = ?, status = ?, data_avaliacao = ?, id_autor = ?, id_avaliador = ?, pdf_obra = ?, pdf_avaliacao = ? WHERE id_obra = ?";
+	        statement = con.prepareStatement(sql);
+	        statement.setString(1, obra.getTitulo());
+	        statement.setString(2, obra.getGenero());
+	        statement.setDate(3, Date.valueOf(obra.getAno()));
+	        statement.setString(4, obra.getStatus());
+	        statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
+	        statement.setLong(6, obra.getAutor().getIDAutor());
+	        statement.setLong(7, obra.getAvaliador().getIDAvaliador());
 
-    public void atualizar(ObraVO obra) {
-        Connection con = null;
-        try {
-            con = BaseDAOImpl.getConnection();
-            PreparedStatement statement = null;
-            String sql = "UPDATE obra SET titulo = ?, genero = ?, ano = ?, status = ?, data_avaliacao = ?, id_autor = ?, id_avaliador = ?, pdf_obra = ?, pdf_avaliacao = ? WHERE id_obra = ?";
-            statement = con.prepareStatement(sql);
-            statement.setString(1, obra.getTitulo());
-            statement.setString(2, obra.getGenero());
-            statement.setDate(3, Date.valueOf(obra.getAno()));
-            statement.setString(4, obra.getStatus());
-            statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
-            statement.setLong(6, obra.getAutor().getIDAutor());
-            statement.setLong(7, obra.getAvaliador().getIDAvaliador());
+	        statement.setBytes(8, obra.getPdfObra());
+	        statement.setBytes(9, obra.getPdfAvaliacao());
 
-            byte[] pdfObraBytes = LerPDF.lerArquivoPDF(obra.getPdfObra());
-            statement.setBytes(8, pdfObraBytes);
+	        statement.setLong(10, obra.getIDObra());
+	        statement.executeUpdate();
 
-            byte[] pdfAvaliacaoBytes = LerPDF.lerArquivoPDF(obra.getPdfAvaliacao());
-            statement.setBytes(9, pdfAvaliacaoBytes);
-            statement.setLong(10, obra.getIDObra());
-            statement.executeUpdate();
+	        statement.close();
+	        BaseDAOImpl.closeConnection();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 
-            statement.close();
-            BaseDAOImpl.closeConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public ArrayList<ObraVO> buscarPorId(ObraVO obra) {
         Connection con = null;
@@ -295,10 +290,13 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 obraVO.setStatus(rs.getString("status"));
                 obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
 
-                AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
+                byte[] pdfAvaliacao = rs.getBytes("pdf_avaliacao");
+                obraVO.setPdfAvaliacao(pdfAvaliacao);
+
+                AutorVO autorVO = new AutorVO();
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO);
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
                     autorVO.setNome(autores.get(0).getNome());
@@ -307,16 +305,16 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     autorVO.setEmail(autores.get(0).getEmail());
                     autorVO.setSenha(autores.get(0).getSenha());
                     autorVO.setTipo(autores.get(0).getTipo());
-                    
+
                     obraVO.setAutor(autorVO);
                 } else {
                     obraVO.setAutor(null);
                 }
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
+                AvaliadorVO avaliadorVO = new AvaliadorVO();
                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
                 if (!avaliadores.isEmpty()) {
                     avaliadorVO.setNome(avaliadores.get(0).getNome());
                     avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
@@ -337,8 +335,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             e.printStackTrace();
         }
         return arrayDeObras;
-
     }
+
 
     public ArrayList<ObraVO> buscarPorStatus(ObraVO obra) throws SQLException {
         Connection con = null;

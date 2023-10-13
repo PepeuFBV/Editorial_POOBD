@@ -1,8 +1,9 @@
 package controller;
 
 import java.io.File;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,148 +19,140 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.DAO.AutorDAO;
 import model.DAO.AvaliadorDAO;
+import model.DAO.ObraDAO;
+import model.VO.AutorVO;
+import model.VO.AvaliadorVO;
 
 public class EditarObraGerenteController {
 
-	@FXML
-	private TextField showFileger;
-	
-	@FXML
-	private ChoiceBox<String> autor;
-	
-	@FXML
-	private ChoiceBox<String> avaliador;
-	
-	@FXML
-	private ChoiceBox<String> stts;
-	
-	@FXML
-	private TextField titulo;
-	
-	@FXML
-	private TextField genero;
-	
-	@FXML
-	private TextField ano;
-	
-	@FXML
-	private Label erroEditarObraGerente;
-	
-	@FXML
-	private Button btncancelar;
-	
-    private Map<String, Integer> autorParaIDMap = new HashMap<>();
-    private Map<String, Integer> avaliadorParaIDMap = new HashMap<>();
-	
-	@FXML
-	public void handleBtnOpenFile(ActionEvent event) {
-		final FileChooser fc = new FileChooser();
-		fc.setTitle("Seleção da Obra");
-		fc.setInitialDirectory(new File(System.getProperty("user.home")));
-		fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.*"));
-		File file = fc.showOpenDialog(null);
-		if (file != null) {
-			showFileger.appendText(file.getAbsolutePath() + "\n");
-		} else {
-			System.out.println("Você deve selecionar um arquivo");
-		}
-	}
-	
-	@FXML
-	private void initialize() {
-		
-		ObservableList<String> status = FXCollections.observableArrayList("Aceita", "Rejeitada", "Em avaliação", "Avaliador pendente");
-	    ObservableList<String> autores = FXCollections.observableArrayList();
-	    ObservableList<String> avaliadores = FXCollections.observableArrayList();
+    @FXML
+    private TextField showFileger;
 
-	    try {
-	        AutorDAO autorDAO = new AutorDAO();
-	        ResultSet autoresDoDB = autorDAO.listar();
+    @FXML
+    private ChoiceBox<String> autor;
 
-	        while (autoresDoDB.next()) {
-	            String nomeAutor = autoresDoDB.getString("nome");
-	            int autorID = autoresDoDB.getInt("id_autor");
-	            autores.add(nomeAutor);
-	            autorParaIDMap.put(nomeAutor, autorID);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+    @FXML
+    private ChoiceBox<String> avaliador;
 
-	    try {
-	        AvaliadorDAO avaDAO = new AvaliadorDAO();
-	        ResultSet avaliadoresDoDB = avaDAO.listar();
+    @FXML
+    private ChoiceBox<String> stts;
 
-	        while (avaliadoresDoDB.next()) {
-	            String nomeAvaliador = avaliadoresDoDB.getString("nome");
-	            int avaliadorID = avaliadoresDoDB.getInt("id_avaliador");
-	            avaliadores.add(nomeAvaliador);
-	            avaliadorParaIDMap.put(nomeAvaliador, avaliadorID);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+    @FXML
+    private TextField titulo;
 
-	    autor.setItems(autores);
-	    avaliador.setItems(avaliadores);
-	    stts.setItems(status);
-	}
+    @FXML
+    private TextField genero;
 
-	
-	public void concluir(ActionEvent event) {
-		
-        String selecao = (String) obra.getValue(); 
-        if (selecao != null) {
-            // editar obra 
+    @FXML
+    private TextField ano;
+
+    @FXML
+    private Label erroEditarObraGerente;
+
+    @FXML
+    private Button btncancelar;
+
+    private Map<String, Long> autorParaIDMap = new HashMap<>();
+    private Map<String, Long> avaliadorParaIDMap = new HashMap<>();
+
+    @FXML
+    public void handleBtnOpenFile(ActionEvent event) {
+        final FileChooser fc = new FileChooser();
+        fc.setTitle("Seleção da Obra");
+        fc.setInitialDirectory(new File(System.getProperty("user.home")));
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.*"));
+        File file = fc.showOpenDialog(null);
+        if (file != null) {
+            showFileger.appendText(file.getAbsolutePath() + "\n");
         } else {
-        	erroEditarObraGerente.setText("Você deve selecionar uma obra.");
-        	erroEditarObraGerente.setVisible(true);
-            return;
+            System.out.println("Você deve selecionar um arquivo");
         }
-        
+    }
+
+    @FXML
+    private void initialize() {
+
+        ObservableList<String> status = FXCollections.observableArrayList("Aceita", "Rejeitada", "Em avaliação", "Avaliador pendente");
+        ObservableList<String> autores = FXCollections.observableArrayList();
+        ObservableList<String> avaliadores = FXCollections.observableArrayList();
+
+        AutorDAO autorDAO = new AutorDAO();
+        try {
+            ArrayList<AutorVO> autoresDoDB = autorDAO.listar();
+            for (AutorVO autorVO : autoresDoDB) {
+                String nomeAutor = autorVO.getNome();
+                Long autorID = autorVO.getIDAutor();
+                autores.add(nomeAutor);
+                autorParaIDMap.put(nomeAutor, autorID);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+        try {
+            ArrayList<AvaliadorVO> avaliadoresDoDB = avaliadorDAO.listar();
+            for (AvaliadorVO avaliadorVO : avaliadoresDoDB) {
+                String nomeAvaliador = avaliadorVO.getNome();
+                Long avaliadorID = avaliadorVO.getIDAvaliador();
+                avaliadores.add(nomeAvaliador);
+                avaliadorParaIDMap.put(nomeAvaliador, avaliadorID);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        autor.setItems(autores);
+        avaliador.setItems(avaliadores);
+        stts.setItems(status);
+    }
+
+    public void concluir(ActionEvent event) {
+
         String tituloText = titulo.getText();
-	    String generoText = genero.getText();
-	    String anoText = ano.getText();
-	    if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty()) {
-	    	erroEditarObraGerente.setText("Por favor, preencha todos os campos.");
-	    	erroEditarObraGerente.setVisible(true);
-	    } else {
-	        selecao = (String) autor.getValue(); 
-	        if (selecao != null) {
-	            // editar autor 
-	        } else {
-	        	erroEditarObraGerente.setText("Você deve selecionar um autor.");
-	        	erroEditarObraGerente.setVisible(true);
-	            return;
-	        }
-	        
-	        selecao = (String) avaliador.getValue(); 
-	        if (selecao != null) {
-	            // editar avaliador 
-	        } else {
-	        	erroEditarObraGerente.setText("Você deve selecionar um avaliador.");
-	        	erroEditarObraGerente.setVisible(true);
-	            return;
-	        }
-	        
-	        selecao = (String) stts.getValue(); 
-	        if (selecao != null) {
-	            // editar status 
-	        } else {
-	        	erroEditarObraGerente.setText("Você deve selecionar um status.");
-	        	erroEditarObraGerente.setVisible(true);
-	            return;
-	        }
-	        System.out.println("Edição bem-sucedida.");
-	        erroEditarObraGerente.setText("Edição bem-sucedida.");
-	        erroEditarObraGerente.setVisible(true);
-	        btncancelar.setText("Fechar");
-	    }
-       
-	}
-	
-	public void cancelar(ActionEvent event) {
-		Stage stage = (Stage) erroEditarObraGerente.getScene().getWindow();
-	    stage.close();
-	}
+        String generoText = genero.getText();
+        String anoText = ano.getText();
+        String autorSelecionado = autor.getValue();
+        String avaliadorSelecionado = avaliador.getValue();
+        String statusSelecionado = stts.getValue();
+        String obraSelecionada = showFileger.getText();
+
+        if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty() || autorSelecionado == null || avaliadorSelecionado == null || statusSelecionado == null || obraSelecionada.isEmpty()) {
+            erroEditarObraGerente.setText("Por favor, preencha todos os campos.");
+            erroEditarObraGerente.setVisible(true);
+            return;
+        } else {
+        	
+            obra.setTitulo(tituloText);
+            obra.setGenero(generoText);
+            obra.setAno(LocalDate.parse(anoText));
+            obra.setStatus(statusSelecionado);
+
+            long idAutor = autorParaIDMap.get(autorSelecionado);
+            long idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
+            
+            AutorVO autorVO = new AutorVO();
+            autorVO.setIDAutor(idAutor);
+            obra.setAutor(autorVO);
+
+            AvaliadorVO avaliadorVO = new AvaliadorVO();
+            avaliadorVO.setIDAvaliador(idAvaliador);
+            obra.setAvaliador(avaliadorVO);
+
+            LocalDate dataAvaliacao = obra.getDataAvaliacao();
+            obra.setDataAvaliacao(dataAvaliacao);
+
+            obraDAO.atualizar(obra);
+
+            System.out.println("Obra atualizada com sucesso.");
+            erroEditarObraGerente.setText("Obra atualizada com sucesso.");
+            erroEditarObraGerente.setVisible(true);
+            btncancelar.setText("Fechar");
+        }
+    }
+
+    public void cancelar(ActionEvent event) {
+        Stage stage = (Stage) erroEditarObraGerente.getScene().getWindow();
+        stage.close();
+    }
 }

@@ -13,10 +13,10 @@ public class ObraVO {
     private LocalDate data_avaliacao;
     private AutorVO autor;
     private AvaliadorVO avaliador;
-    private String pdf_obra;
-    private String pdf_avaliacao;
+    private byte[] pdf_obra;
+    private byte[] pdf_avaliacao;
     
-    public ObraVO(Long iDObra, String titulo, String genero, LocalDate ano, String status, LocalDate data_avaliacao, AutorVO autor, AvaliadorVO avaliador, String pdf_obra, String pdf_avaliacao) {
+    public ObraVO(Long iDObra, String titulo, String genero, LocalDate ano, String status, LocalDate data_avaliacao, AutorVO autor, AvaliadorVO avaliador, byte[] pdf_obra, byte[] pdf_avaliacao) {
         setIDObra(iDObra);
         setTitulo(titulo);
         setGenero(genero);
@@ -135,20 +135,21 @@ public class ObraVO {
         }
     }
     
-    public String getPdfObra() {
+    public byte[] getPdfObra() {
         return pdf_obra;
     }
 
-    public void setPdfObra(String pdf_obra) {
+    public void setPdfObra(byte[] pdf_obra) {
         this.pdf_obra = pdf_obra;
     }
 
-    public String getPdfAvaliacao() {
+    public byte[] getPdfAvaliacao() {
         return pdf_avaliacao;
     }
 
-    public void setPdfAvaliacao(String pdf_avaliacao) {
+    public void setPdfAvaliacao(byte[] pdf_avaliacao) {
         this.pdf_avaliacao = pdf_avaliacao;
     }
+
     
 }

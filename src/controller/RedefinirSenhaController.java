@@ -1,7 +1,5 @@
 package controller;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -20,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.DAO.UsersDAO;
+import model.DAO.UsuarioDAO;
 import model.VO.UsuarioVO;
 
 public class RedefinirSenhaController {
@@ -52,13 +50,15 @@ public class RedefinirSenhaController {
 	    } else {
 	        UsuarioVO usuarioVO = new UsuarioVO();
 	        usuarioVO.setEmail(email);
-	        UsersDAO<UsuarioVO> userDAO = new UsersDAO<UsuarioVO>();
+	        UsuarioDAO userDAO = new UsuarioDAO();
 
 	        try {
-	            ResultSet rs = userDAO.buscarPorEmail(usuarioVO);
+	            ArrayList<UsuarioVO> users = userDAO.buscarPorEmail(usuarioVO);
 
-	            if (rs.next()) {
-	                String senha = rs.getString("senha");
+	            if (!users.isEmpty()) {
+	                UsuarioVO user = users.get(0); // pega o primeiro usuário da lista
+	                String senha = user.getSenha(); // pega a senha do primeiro usuário
+
 
 	                String host = "smtp.gmail.com";
 	                String username = "srpaulaoeditora@gmail.com";
@@ -85,21 +85,20 @@ public class RedefinirSenhaController {
 
 	                Transport.send(message);
 
-	                System.out.println("E-mail enviado com sucesso.");
+	    	        label1.setVisible(false);
+	    	        label2.setVisible(false);
+	    	        label3.setVisible(false);
+	    	        botao.setVisible(false);
+	    	        emailrecuperacao.setVisible(false);
+	    	        mensagemLabel.setText("E-mail enviado com sucesso.");
+	    	        mensagemLabel.setVisible(true);
+	    	        
 	            } else {
 	            	throw new NotFoundException();
 	            }
-	        } catch (MessagingException | SQLException | NotFoundException e) {
+	        } catch (MessagingException | NotFoundException e) {
 	            e.printStackTrace();
 	        }
-
-	        label1.setVisible(false);
-	        label2.setVisible(false);
-	        label3.setVisible(false);
-	        botao.setVisible(false);
-	        emailrecuperacao.setVisible(false);
-	        mensagemLabel.setText("E-mail enviado com sucesso.");
-	        mensagemLabel.setVisible(true);
 	    }
 	}
     
