@@ -27,11 +27,11 @@ import model.DAO.ObraDAO;
 import model.VO.ObraVO;
 import model.entities.Obra;
 import view.Telas;
+import model.VO.UsuarioVO;
 
 public class TelaPrincipalController {
 
-    private UserBO userBO;
-
+    private UsuarioVO usuarioVO;
     private String visaoAtual = "obras"; //variável para saber qual visão está sendo mostrada na tabela
 
     @FXML
@@ -79,25 +79,29 @@ public class TelaPrincipalController {
     @FXML
     private Text txtRelatorio;
 
-    public void setUserBO(UserBO userBO) {
-        this.userBO = userBO;
+    public void setUsuarioVO(UsuarioVO usuarioVO) {
+        if (usuarioVO == null) {
+            this.usuarioVO = usuarioVO;
+        }
     }
 
-    public UserBO getUserBO() {
-        return userBO;
+    public UsuarioVO getUsuarioVO() {
+        return usuarioVO;
     }
 
     public void setVisaoAtual(String visaoAtual) {
-        this.visaoAtual = visaoAtual;
+        if (visaoAtual != null) {
+            this.visaoAtual = visaoAtual;
+        }
     }
 
     public String getVisaoAtual() {
         return visaoAtual;
     }
 
-    @FXML
-    public void initialize() {
-
+    public TelaPrincipalController(UsuarioVO usuarioVO, String visaoAtual) {
+        setUsuarioVO(usuarioVO);
+        setVisaoAtual(visaoAtual);
     }
 
     @FXML
@@ -117,7 +121,7 @@ public class TelaPrincipalController {
 
             
             
-            //cria a tableView principal, e a estiliza
+            //cria a tableView principal e a estiliza
             TableView<ObraVO> mainTableView = new TableView<>();
             mainTableView.setLayoutX(38.0);
             mainTableView.setLayoutY(111.0);
@@ -134,6 +138,7 @@ public class TelaPrincipalController {
                 Long id = (obra.getIDObra());
                 obrasNaTabela.add(id);
             }
+
             
             TableColumn<ObraVO, String> tituloColumn = new TableColumn<>("Título");
             tituloColumn.setPrefWidth(96.79998779296875);
@@ -144,6 +149,7 @@ public class TelaPrincipalController {
                 titulosNaTabela.add(titulo);
             }
 
+
             TableColumn<ObraVO, String> generoColumn = new TableColumn<>("Gênero");
             generoColumn.setPrefWidth(72.0);
             generoColumn.setEditable(false);
@@ -152,6 +158,7 @@ public class TelaPrincipalController {
                 String genero = (obra.getGenero());
                 generosNaTabela.add(genero);
             }
+
 
             TableColumn<ObraVO, LocalDate> anoColumn = new TableColumn<>("Ano");
             anoColumn.setPrefWidth(34.4000244140625);

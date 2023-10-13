@@ -13,11 +13,11 @@ public class UsuarioVO {
     public UsuarioVO(Long iDUsuario, String nome, String endereco, String cpf, String email, String senha, String tipo) {
         setIDUsuario(iDUsuario);
         setNome(nome);
+        setTipo(tipo);
         setEndereco(endereco);
         setCpf(cpf);
         setEmail(email);
         setSenha(senha);
-        setTipo(tipo);
     }
     
     public UsuarioVO() {

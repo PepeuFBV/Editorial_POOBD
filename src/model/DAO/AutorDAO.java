@@ -1,16 +1,14 @@
 package model.DAO;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import model.VO.AutorVO;
 import model.VO.ObraVO;
-import model.entities.Autor;
 
-public class AutorDAO extends UsersDAO<AutorVO> {
+public class AutorDAO extends BaseDAOImpl<AutorVO> {
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
     
     @Override
     public void inserir(AutorVO autor) {
@@ -18,7 +16,6 @@ public class AutorDAO extends UsersDAO<AutorVO> {
         PreparedStatement statement = null;
 
         try {
-            super.inserir(autor);
             con = BaseDAOImpl.getConnection();
             String sql = "INSERT INTO autor (nome, email, senha, cpf, id_usuario) VALUES (?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -37,9 +34,10 @@ public class AutorDAO extends UsersDAO<AutorVO> {
             } else {
                 throw new Exception("A inserção falhou. Nenhum id foi retornado.");
             }
-
+            
             statement.close();
             BaseDAOImpl.closeConnection();
+            usuarioDAO.inserir(autor);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,7 +49,6 @@ public class AutorDAO extends UsersDAO<AutorVO> {
         PreparedStatement statement = null;
 
         try {
-            super.atualizar(autor);
             con = BaseDAOImpl.getConnection();
             String sql = "UPDATE autor SET nome = ?, email = ?, senha = ?, cpf = ? WHERE id_autor = ?";
             statement = con.prepareStatement(sql);
@@ -61,15 +58,15 @@ public class AutorDAO extends UsersDAO<AutorVO> {
             statement.setString(4, autor.getCpf());
             statement.setLong(5, autor.getIDAutor());
             statement.executeUpdate();
-
+            
             statement.close();
         	BaseDAOImpl.closeConnection();
+            usuarioDAO.atualizar(autor);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Override
     public ArrayList<AutorVO> buscarPorId(AutorVO autor) {
         Connection con = null;
         ArrayList<AutorVO> autores = new ArrayList<AutorVO>();
@@ -99,7 +96,7 @@ public class AutorDAO extends UsersDAO<AutorVO> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return rs;
+        return autores;
     }
 
     public ArrayList<AutorVO> buscarPorEmail(AutorVO autor) {
@@ -236,16 +233,16 @@ public class AutorDAO extends UsersDAO<AutorVO> {
         Connection con = null;
         
         try {
-            super.excluir(autor);
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             String sql = "DELETE FROM autor WHERE id_autor = ?";
             statement = con.prepareStatement(sql);
             statement.setLong(1, autor.getIDAutor());
             statement.executeUpdate();
-
+            
             statement.close();
         	BaseDAOImpl.closeConnection();
+            usuarioDAO.excluir(autor);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
 
-public class AvaliadorDAO extends UsersDAO<AvaliadorVO> {
-    
+public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+
     @Override
     public void inserir(AvaliadorVO avaliador) {
         Connection con = null;
         
         try {
-            super.inserir(avaliador);
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             String sql = "INSERT INTO avaliador (nome, email, senha, cpf, id_usuario) VALUES (?, ?, ?, ?, ?)";
@@ -38,6 +38,7 @@ public class AvaliadorDAO extends UsersDAO<AvaliadorVO> {
 
             statement.close();
             BaseDAOImpl.closeConnection();
+            usuarioDAO.inserir(avaliador);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,7 +49,6 @@ public class AvaliadorDAO extends UsersDAO<AvaliadorVO> {
         Connection con = null;
         
         try {
-            super.atualizar(avaliador);
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             String sql = "UPDATE avaliador SET nome = ?, email = ?, senha = ?, cpf = ? WHERE id_avaliador = ?";
@@ -59,15 +59,15 @@ public class AvaliadorDAO extends UsersDAO<AvaliadorVO> {
             statement.setString(4, avaliador.getCpf());
             statement.setLong(5, avaliador.getIDAvaliador());
             statement.executeUpdate();
-
+            
             statement.close();
         	BaseDAOImpl.closeConnection();
+            usuarioDAO.atualizar(avaliador);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Override
     public ArrayList<AvaliadorVO> buscarPorId(AvaliadorVO avaliador) {
         Connection con = null;
         ArrayList<AvaliadorVO> avaliadores = new ArrayList<AvaliadorVO>();
@@ -231,16 +231,16 @@ public class AvaliadorDAO extends UsersDAO<AvaliadorVO> {
         Connection con = null;
         
         try {
-            super.excluir(avaliador);
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             String sql = "DELETE FROM avaliador WHERE id_avaliador = ?";
             statement = con.prepareStatement(sql);
             statement.setLong(1, avaliador.getIDAvaliador());
             statement.executeUpdate();
-
+            
             statement.close();
             BaseDAOImpl.closeConnection();
+            usuarioDAO.excluir(avaliador);
         } catch (Exception e) {
             e.printStackTrace();
         }

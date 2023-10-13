@@ -7,4 +7,8 @@ public class ErroLoginException extends Exception {
     public ErroLoginException() {
         super("Login inválido.");
     }
+
+    public ErroLoginException(String string) {
+        super(string);
+    }
 }

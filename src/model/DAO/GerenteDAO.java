@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.VO.GerenteVO;
 
-public class GerenteDAO extends UsersDAO<GerenteVO> {
-    
+public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+
 	@Override
-    public void inserir(GerenteVO gerente) {
+    public void inserir(GerenteVO gerenteVO) {
 		Connection con = null;
         
         try {
@@ -17,29 +18,32 @@ public class GerenteDAO extends UsersDAO<GerenteVO> {
             PreparedStatement statement = null;
             String sql = "INSERT INTO gerentes (nome, email, senha) VALUES (?, ?, ?)";
             statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setString(1, gerente.getNome());
-            statement.setString(2, gerente.getEmail());
-            statement.setString(3, gerente.getSenha());
+            statement.setString(1, gerenteVO.getNome());
+            statement.setString(2, gerenteVO.getEmail());
+            statement.setString(3, gerenteVO.getSenha());
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 throw new Exception("A inserção falhou. Nenhuma linha foi alterada.");
             }
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                gerente.setIDGerente(generatedKeys.getLong(1));
+                gerenteVO.setIDGerente(generatedKeys.getLong(1));
             } else {
                 throw new Exception("A inserção falhou. Nenhum id foi retornado.");
             }
 
             statement.close();
             BaseDAOImpl.closeConnection();
+
+            
+            usuarioDAO.inserir(gerenteVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
 	}
     
     @Override
-    public void atualizar(GerenteVO gerente) {
+    public void atualizar(GerenteVO gerenteVO) {
         Connection con = null;
         
         try {
@@ -47,20 +51,20 @@ public class GerenteDAO extends UsersDAO<GerenteVO> {
             PreparedStatement statement = null;
             String sql = "UPDATE gerentes SET nome = ?, email = ?, senha = ? WHERE id_gerente = ?";
             statement = con.prepareStatement(sql);
-            statement.setString(1, gerente.getNome());
-            statement.setString(2, gerente.getEmail());
-            statement.setString(3, gerente.getSenha());
-            statement.setLong(4, gerente.getIDGerente());
+            statement.setString(1, gerenteVO.getNome());
+            statement.setString(2, gerenteVO.getEmail());
+            statement.setString(3, gerenteVO.getSenha());
+            statement.setLong(4, gerenteVO.getIDGerente());
             statement.executeUpdate();
 
             statement.close();
             BaseDAOImpl.closeConnection();
+            usuarioDAO.atualizar(gerenteVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Override
     public ArrayList<GerenteVO> buscarPorId(GerenteVO gerente) {
         Connection con = null;
         ArrayList<GerenteVO> gerentes = new ArrayList<GerenteVO>();
@@ -120,20 +124,20 @@ public class GerenteDAO extends UsersDAO<GerenteVO> {
     }
 
     @Override
-    public void excluir(GerenteVO gerente) {
+    public void excluir(GerenteVO gerenteVO) {
         Connection con = null;
         
         try {
-            super.excluir(gerente);
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             String sql = "DELETE FROM gerentes WHERE id_gerente = ?";
             statement = con.prepareStatement(sql);
-            statement.setLong(1, gerente.getIDGerente());
+            statement.setLong(1, gerenteVO.getIDGerente());
             statement.executeUpdate();
 
             statement.close();
             BaseDAOImpl.closeConnection();
+            usuarioDAO.excluir(gerenteVO);
         } catch (Exception e) {
             e.printStackTrace();
         }

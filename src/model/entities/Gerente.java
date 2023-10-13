@@ -1,9 +1,9 @@
 package model.entities;
 
-public class Gerente extends User {
+public class Gerente extends Usuario {
 
-    public Gerente(String nome, String login, String senha) {
-        super(nome, login, senha);
+    public Gerente(String nome, String email, String senha) {
+        super(nome, email, senha);
     }
 
     public Gerente() {

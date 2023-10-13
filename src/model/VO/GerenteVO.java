@@ -1,6 +1,6 @@
 package model.VO;
 
-public class GerenteVO extends UsuarioVO{
+public class GerenteVO extends UsuarioVO {
 
     private Long IDGerente;
 

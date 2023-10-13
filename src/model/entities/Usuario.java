@@ -1,25 +1,25 @@
 package model.entities;
 
-public abstract class User {
+public abstract class Usuario {
 
-    private int id;
+    private Long id;
     private String nome;
-    private String login;
+    private String email;
     private String senha;
 
-    public User(String nome, String login, String senha) {
+    public Usuario(String nome, String email, String senha) {
         setNome(nome);
-        setLogin(login);
+        setEmail(email);
         setSenha(senha);
     }
 
-    public User() { }
+    public Usuario() { }
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         if (id > 0) {
             this.id = id;
         }
@@ -35,13 +35,13 @@ public abstract class User {
         }
     }
 
-    public String getLogin() {
-        return this.login;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setLogin(String login) {
-        if (login != null && !login.isEmpty()) {
-            this.login = login;
+    public void setEmail(String email) {
+        if (email != null && !email.isEmpty()) {
+            this.email = email;
         }
     }
 

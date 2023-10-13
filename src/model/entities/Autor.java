@@ -3,14 +3,14 @@ package model.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Autor extends User {
+public class Autor extends Usuario {
 
     private String endereco;
     private String cpf;
     private List<Obra> obras = new ArrayList<>();
 
-    public Autor(String nome, String login, String senha, String endereco, String cpf) {
-        super(nome, login, senha);
+    public Autor(String nome, String email, String senha, String endereco, String cpf) {
+        super(nome, email, senha);
         setEndereco(endereco);
         setCpf(cpf);
     }

@@ -11,7 +11,10 @@ import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
 import util.LerPDF;
 
-public class ObraDAO {
+//TODO
+// parar a inserção de obras sem autor
+
+public class ObraDAO extends BaseDAOImpl<ObraVO> {
 
     public void inserir(ObraVO obra) {
         Connection con = null;
@@ -104,31 +107,32 @@ public class ObraDAO {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ResultSet autorRS = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
-                if (autorRS.next()) {
-                    autorVO.setNome(autorRS.getString("nome"));
-                    autorVO.setEndereco(autorRS.getString("endereco"));
-                    autorVO.setCpf(autorRS.getString("cpf"));
-                    autorVO.setEmail(autorRS.getString("email"));
-                    autorVO.setSenha(autorRS.getString("senha"));
-                    autorVO.setTipo(autorRS.getString("tipo"));
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO, esse array só terá um valor
+                if (!autores.isEmpty()) {
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+                    autorVO.setTipo(autores.get(0).getTipo());
+
                     obraVO.setAutor(autorVO);
-                } else {
-                    obraVO.setAutor(null);
+                } else { //exception 
+                    throw new Exception("Autor não encontrado");
                 }
 
                 AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ResultSet avaliadorRS = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar
-                                                                               // no avaliadorVO
-                if (avaliadorRS.next()) {
-                    avaliadorVO.setNome(avaliadorRS.getString("nome"));
-                    avaliadorVO.setEndereco(avaliadorRS.getString("endereco"));
-                    avaliadorVO.setCpf(avaliadorRS.getString("cpf"));
-                    avaliadorVO.setEmail(avaliadorRS.getString("email"));
-                    avaliadorVO.setSenha(avaliadorRS.getString("senha"));
-                    avaliadorVO.setTipo(avaliadorRS.getString("tipo"));
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                if (!avaliadores.isEmpty()) {
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+                    autorVO.setTipo(autores.get(0).getTipo());
+
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
                     obraVO.setAvaliador(null);
@@ -166,14 +170,15 @@ public class ObraDAO {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ResultSet autorRS = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
-                if (autorRS.next()) {
-                    autorVO.setNome(autorRS.getString("nome"));
-                    autorVO.setEndereco(autorRS.getString("endereco"));
-                    autorVO.setCpf(autorRS.getString("cpf"));
-                    autorVO.setEmail(autorRS.getString("email"));
-                    autorVO.setSenha(autorRS.getString("senha"));
-                    autorVO.setTipo(autorRS.getString("tipo"));
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                if (!autores.isEmpty()) {
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+                    autorVO.setTipo(autores.get(0).getTipo());
+
                     obraVO.setAutor(autorVO);
                 } else {
                     obraVO.setAutor(null);
@@ -182,15 +187,15 @@ public class ObraDAO {
                 AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ResultSet avaliadorRS = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar
-                                                                               // no avaliadorVO
-                if (avaliadorRS.next()) {
-                    avaliadorVO.setNome(avaliadorRS.getString("nome"));
-                    avaliadorVO.setEndereco(avaliadorRS.getString("endereco"));
-                    avaliadorVO.setCpf(avaliadorRS.getString("cpf"));
-                    avaliadorVO.setEmail(avaliadorRS.getString("email"));
-                    avaliadorVO.setSenha(avaliadorRS.getString("senha"));
-                    avaliadorVO.setTipo(avaliadorRS.getString("tipo"));
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setNome(avaliadores.get(0).getNome());
+                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
+
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
                     obraVO.setAvaliador(null);
@@ -228,14 +233,16 @@ public class ObraDAO {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ResultSet autorRS = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
-                if (autorRS.next()) {
-                    autorVO.setNome(autorRS.getString("nome"));
-                    autorVO.setEndereco(autorRS.getString("endereco"));
-                    autorVO.setCpf(autorRS.getString("cpf"));
-                    autorVO.setEmail(autorRS.getString("email"));
-                    autorVO.setSenha(autorRS.getString("senha"));
-                    autorVO.setTipo(autorRS.getString("tipo"));
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                if (!autores.isEmpty()) {
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+                    autorVO.setTipo(autores.get(0).getTipo());
+
                     obraVO.setAutor(autorVO);
                 } else {
                     obraVO.setAutor(null);
@@ -244,15 +251,15 @@ public class ObraDAO {
                 AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ResultSet avaliadorRS = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar
-                                                                               // no avaliadorVO
-                if (avaliadorRS.next()) {
-                    avaliadorVO.setNome(avaliadorRS.getString("nome"));
-                    avaliadorVO.setEndereco(avaliadorRS.getString("endereco"));
-                    avaliadorVO.setCpf(avaliadorRS.getString("cpf"));
-                    avaliadorVO.setEmail(avaliadorRS.getString("email"));
-                    avaliadorVO.setSenha(avaliadorRS.getString("senha"));
-                    avaliadorVO.setTipo(avaliadorRS.getString("tipo"));
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                if (!avaliadores.isEmpty()) {
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+                    autorVO.setTipo(autores.get(0).getTipo());
+
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
                     obraVO.setAvaliador(null);
@@ -291,14 +298,16 @@ public class ObraDAO {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ResultSet autorRS = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
-                if (autorRS.next()) {
-                    autorVO.setNome(autorRS.getString("nome"));
-                    autorVO.setEndereco(autorRS.getString("endereco"));
-                    autorVO.setCpf(autorRS.getString("cpf"));
-                    autorVO.setEmail(autorRS.getString("email"));
-                    autorVO.setSenha(autorRS.getString("senha"));
-                    autorVO.setTipo(autorRS.getString("tipo"));
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                if (!autores.isEmpty()) {
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+                    autorVO.setTipo(autores.get(0).getTipo());
+                    
                     obraVO.setAutor(autorVO);
                 } else {
                     obraVO.setAutor(null);
@@ -307,15 +316,15 @@ public class ObraDAO {
                 AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ResultSet avaliadorRS = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar
-                                                                               // no avaliadorVO
-                if (avaliadorRS.next()) {
-                    avaliadorVO.setNome(avaliadorRS.getString("nome"));
-                    avaliadorVO.setEndereco(avaliadorRS.getString("endereco"));
-                    avaliadorVO.setCpf(avaliadorRS.getString("cpf"));
-                    avaliadorVO.setEmail(avaliadorRS.getString("email"));
-                    avaliadorVO.setSenha(avaliadorRS.getString("senha"));
-                    avaliadorVO.setTipo(avaliadorRS.getString("tipo"));
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setNome(avaliadores.get(0).getNome());
+                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
+
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
                     obraVO.setAvaliador(null);
@@ -354,14 +363,16 @@ public class ObraDAO {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ResultSet autorRS = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
-                if (autorRS.next()) {
-                    autorVO.setNome(autorRS.getString("nome"));
-                    autorVO.setEndereco(autorRS.getString("endereco"));
-                    autorVO.setCpf(autorRS.getString("cpf"));
-                    autorVO.setEmail(autorRS.getString("email"));
-                    autorVO.setSenha(autorRS.getString("senha"));
-                    autorVO.setTipo(autorRS.getString("tipo"));
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                if (!autores.isEmpty()) { 
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+                    autorVO.setTipo(autores.get(0).getTipo());
+
                     obraVO.setAutor(autorVO);
                 } else {
                     obraVO.setAutor(null);
@@ -370,15 +381,15 @@ public class ObraDAO {
                 AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ResultSet avaliadorRS = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar
-                                                                               // no avaliadorVO
-                if (avaliadorRS.next()) {
-                    avaliadorVO.setNome(avaliadorRS.getString("nome"));
-                    avaliadorVO.setEndereco(avaliadorRS.getString("endereco"));
-                    avaliadorVO.setCpf(avaliadorRS.getString("cpf"));
-                    avaliadorVO.setEmail(avaliadorRS.getString("email"));
-                    avaliadorVO.setSenha(avaliadorRS.getString("senha"));
-                    avaliadorVO.setTipo(avaliadorRS.getString("tipo"));
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setNome(avaliadores.get(0).getNome());
+                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
+
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
                     obraVO.setAvaliador(null);
@@ -416,14 +427,16 @@ public class ObraDAO {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ResultSet autorRS = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
-                if (autorRS.next()) {
-                    autorVO.setNome(autorRS.getString("nome"));
-                    autorVO.setEndereco(autorRS.getString("endereco"));
-                    autorVO.setCpf(autorRS.getString("cpf"));
-                    autorVO.setEmail(autorRS.getString("email"));
-                    autorVO.setSenha(autorRS.getString("senha"));
-                    autorVO.setTipo(autorRS.getString("tipo"));
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                if (!autores.isEmpty()) {
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+                    autorVO.setTipo(autores.get(0).getTipo());
+
                     obraVO.setAutor(autorVO);
                 } else {
                     obraVO.setAutor(null);
@@ -432,15 +445,15 @@ public class ObraDAO {
                 AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ResultSet avaliadorRS = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar
-                                                                               // no avaliadorVO
-                if (avaliadorRS.next()) {
-                    avaliadorVO.setNome(avaliadorRS.getString("nome"));
-                    avaliadorVO.setEndereco(avaliadorRS.getString("endereco"));
-                    avaliadorVO.setCpf(avaliadorRS.getString("cpf"));
-                    avaliadorVO.setEmail(avaliadorRS.getString("email"));
-                    avaliadorVO.setSenha(avaliadorRS.getString("senha"));
-                    avaliadorVO.setTipo(avaliadorRS.getString("tipo"));
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setNome(avaliadores.get(0).getNome());
+                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
+
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
                     obraVO.setAvaliador(null);
@@ -478,14 +491,16 @@ public class ObraDAO {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ResultSet autorRS = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
-                if (autorRS.next()) {
-                    autorVO.setNome(autorRS.getString("nome"));
-                    autorVO.setEndereco(autorRS.getString("endereco"));
-                    autorVO.setCpf(autorRS.getString("cpf"));
-                    autorVO.setEmail(autorRS.getString("email"));
-                    autorVO.setSenha(autorRS.getString("senha"));
-                    autorVO.setTipo(autorRS.getString("tipo"));
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                if (!autores.isEmpty()) {
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+                    autorVO.setTipo(autores.get(0).getTipo());
+
                     obraVO.setAutor(autorVO);
                 } else {
                     obraVO.setAutor(null);
@@ -494,15 +509,15 @@ public class ObraDAO {
                 AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ResultSet avaliadorRS = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar
-                                                                               // no avaliadorVO
-                if (avaliadorRS.next()) {
-                    avaliadorVO.setNome(avaliadorRS.getString("nome"));
-                    avaliadorVO.setEndereco(avaliadorRS.getString("endereco"));
-                    avaliadorVO.setCpf(avaliadorRS.getString("cpf"));
-                    avaliadorVO.setEmail(avaliadorRS.getString("email"));
-                    avaliadorVO.setSenha(avaliadorRS.getString("senha"));
-                    avaliadorVO.setTipo(avaliadorRS.getString("tipo"));
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setNome(avaliadores.get(0).getNome());
+                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
+
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
                     obraVO.setAvaliador(null);
@@ -517,7 +532,7 @@ public class ObraDAO {
         return arrayDeObras;
     }
 
-    public ArrayList<ObraVO> listar() throws SQLException {
+    public ArrayList<ObraVO> listar() {
         Connection con = null;
         ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
         try {
@@ -539,14 +554,16 @@ public class ObraDAO {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ResultSet autorRS = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
-                if (autorRS.next()) {
-                    autorVO.setNome(autorRS.getString("nome"));
-                    autorVO.setEndereco(autorRS.getString("endereco"));
-                    autorVO.setCpf(autorRS.getString("cpf"));
-                    autorVO.setEmail(autorRS.getString("email"));
-                    autorVO.setSenha(autorRS.getString("senha"));
-                    autorVO.setTipo(autorRS.getString("tipo"));
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                if (!autores.isEmpty()) {
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+                    autorVO.setTipo(autores.get(0).getTipo());
+
                     obraVO.setAutor(autorVO);
                 } else {
                     obraVO.setAutor(null);
@@ -555,15 +572,15 @@ public class ObraDAO {
                 AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ResultSet avaliadorRS = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar
-                                                                               // no avaliadorVO
-                if (avaliadorRS.next()) {
-                    avaliadorVO.setNome(avaliadorRS.getString("nome"));
-                    avaliadorVO.setEndereco(avaliadorRS.getString("endereco"));
-                    avaliadorVO.setCpf(avaliadorRS.getString("cpf"));
-                    avaliadorVO.setEmail(avaliadorRS.getString("email"));
-                    avaliadorVO.setSenha(avaliadorRS.getString("senha"));
-                    avaliadorVO.setTipo(avaliadorRS.getString("tipo"));
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setNome(avaliadores.get(0).getNome());
+                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
+
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
                     obraVO.setAvaliador(null);

@@ -5,6 +5,6 @@ import model.VO.UsuarioVO;
 
 public interface UsuarioInterBO<VO extends UsuarioVO> {
 
-	public UsuarioVO autenticar (VO vo) throws ErroLoginException;
+    public UsuarioVO autenticar(VO vo) throws ErroLoginException;
 	
 }

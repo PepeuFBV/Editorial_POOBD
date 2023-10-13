@@ -1,14 +1,12 @@
 package model.DAO;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import model.VO.UsuarioVO;
 
-public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> {
+public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
     
 	@Override
     public void inserir(UsuarioVO user) {
@@ -68,8 +66,7 @@ public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> {
         }
     }
 
-	@Override
-    public ArrayList<UsuarioVO> buscarPorId(UsuarioVO user) { //TODO por que não aceita UserVO?
+    public ArrayList<UsuarioVO> buscarPorId(UsuarioVO usuarioVO) { //pegar o tipo de users
         Connection con = null;
         ArrayList<UsuarioVO> users = new ArrayList<UsuarioVO>();
         try {
@@ -78,7 +75,7 @@ public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> {
             ResultSet rs = null;
             String sql = "SELECT * FROM users WHERE id_usuario = ?";
             statement = con.prepareStatement(sql);
-            statement.setLong(1, user.getIDUsuario()); //o uso do método de UserVO não é permitido?
+            statement.setLong(1, usuarioVO.getIDUsuario()); //o uso do método de UserVO não é permitido?
             rs = statement.executeQuery();
             while (rs.next()) {
                 UsuarioVO userVO = new UsuarioVO(); //usado para salvar a cada linha do ResultSet
@@ -101,7 +98,7 @@ public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> {
         return users;
     }
 
-    public ArrayList<UsuarioVO> buscarPorNome(UsuarioVO user) throws SQLException {
+    public ArrayList<UsuarioVO> buscarPorNome(UsuarioVO user) {
         Connection con = null;
         ArrayList<UsuarioVO> users = new ArrayList<UsuarioVO>();
         try {
