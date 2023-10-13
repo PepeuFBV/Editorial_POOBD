@@ -1,6 +1,10 @@
 package model.DAO;
 
-import java.sql.ResultSet;
+import java.util.ArrayList;
+
+//TODO
+//Checar a existencia do dado antes de inserir na tabela
+//Fazer a adição na tabela Users antes da tabela correspondente
 
 public interface BaseDAO<E> {
 
@@ -8,12 +12,12 @@ public interface BaseDAO<E> {
     
     public void atualizar(E entity);
 
-    public ResultSet buscarPorId(E entity);
+    public ArrayList<E> buscarPorId(E entity);
 
-    public ResultSet listar();
+    public ArrayList<E> listar();
 
     public void excluir(E entity);
     
-    public ResultSet buscarPorEmail(E entity);
+    public ArrayList<E> buscarPorEmail(E entity);
 
 }

@@ -1,16 +1,30 @@
 package controller;
 
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javafx.beans.property.ReadOnlyLongWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import model.BO.AutorBO;
 import model.BO.UserBO;
+import model.DAO.ObraDAO;
+import model.VO.ObraVO;
 import model.entities.Obra;
 import view.Telas;
 
@@ -43,9 +57,6 @@ public class TelaPrincipalController {
 
     @FXML
     private ImageView fundoBotaoRelatorio;
-
-    @FXML
-    private TableColumn<?, Integer> idTabela; //como faz isso?
 
     @FXML
     private Label nomeUser;
@@ -101,7 +112,92 @@ public class TelaPrincipalController {
 
         if (userBO.getTipo().equals("gerente")) { //habilita as ações de gerente e visões de tabela de gerente
 
-            //mudar a tabela para a das obras (será recebido um ResultSet)
+            ObraDAO obrasDAO = new ObraDAO();
+            ArrayList<ObraVO> obras = obrasDAO.listar();
+
+            
+            
+            //cria a tableView principal, e a estiliza
+            TableView<ObraVO> mainTableView = new TableView<>();
+            mainTableView.setLayoutX(38.0);
+            mainTableView.setLayoutY(111.0);
+            mainTableView.setPrefHeight(263.0);
+            mainTableView.setPrefWidth(535.0);
+            mainTableView.setStyle("-fx-border-color: #01FFB3; -fx-border-radius: 10; -fx-border-width: 6; -fx-padding: 35 0 0 0;");
+
+            //cria as colunas da tabela
+            TableColumn<ObraVO, Long> idColumn = new TableColumn<>("ID");
+            idColumn.setPrefWidth(28.7999267578125);
+            idColumn.setEditable(false);
+            ObservableList<Long> obrasNaTabela = FXCollections.observableArrayList();
+            for (ObraVO obra : obras) {
+                Long id = (obra.getIDObra());
+                obrasNaTabela.add(id);
+            }
+            
+            TableColumn<ObraVO, String> tituloColumn = new TableColumn<>("Título");
+            tituloColumn.setPrefWidth(96.79998779296875);
+            tituloColumn.setEditable(false);
+            ObservableList<String> titulosNaTabela = FXCollections.observableArrayList();
+            for (ObraVO obra : obras) {
+                String titulo = (obra.getTitulo());
+                titulosNaTabela.add(titulo);
+            }
+
+            TableColumn<ObraVO, String> generoColumn = new TableColumn<>("Gênero");
+            generoColumn.setPrefWidth(72.0);
+            generoColumn.setEditable(false);
+            ObservableList<String> generosNaTabela = FXCollections.observableArrayList();
+            for (ObraVO obra : obras) {
+                String genero = (obra.getGenero());
+                generosNaTabela.add(genero);
+            }
+
+            TableColumn<ObraVO, LocalDate> anoColumn = new TableColumn<>("Ano");
+            anoColumn.setPrefWidth(34.4000244140625);
+            anoColumn.setEditable(false);
+            ObservableList<LocalDate> anosNaTabela = FXCollections.observableArrayList();
+            for (ObraVO obra : obras) {
+                LocalDate ano = (obra.getAno());
+                anosNaTabela.add(ano);
+            }
+
+            TableColumn<ObraVO, String> statusColumn = new TableColumn<>("Status");
+            statusColumn.setPrefWidth(84.79998779296875);
+            statusColumn.setEditable(false);
+            ObservableList<String> statusNaTabela = FXCollections.observableArrayList();
+            for (ObraVO obra : obras) {
+                String status = (obra.getStatus());
+                statusNaTabela.add(status);
+            }
+
+            TableColumn<ObraVO, String> autorColumn = new TableColumn<>("Autor");
+            autorColumn.setPrefWidth(87.20001220703125);
+            autorColumn.setEditable(false);
+            ObservableList<String> autoresNaTabela = FXCollections.observableArrayList();
+            for (ObraVO obra : obras) {
+                String autor = (obra.getAutor().getNome());
+                autoresNaTabela.add(autor);
+            }
+
+            TableColumn<ObraVO, String> avaliadorColumn = new TableColumn<>("Avaliador");
+            avaliadorColumn.setPrefWidth(67.20001220703125);
+            avaliadorColumn.setEditable(false);
+            ObservableList<String> avaliadoresNaTabela = FXCollections.observableArrayList();
+            for (ObraVO obra : obras) {
+                String avaliador = (obra.getAvaliador().getNome());
+                avaliadoresNaTabela.add(avaliador);
+            }
+
+            //fazer os botões de opções
+            TableColumn<ObraVO, String> opcoesColumn = new TableColumn<>("Opções");
+            opcoesColumn.setPrefWidth(54.39996337890625);
+            opcoesColumn.setEditable(false);
+
+            //adiciona todas as colunas a tabela
+            List<TableColumn<ObraVO, ?>> columns = new ArrayList<>();
+            columns.addAll(Arrays.asList(idColumn, tituloColumn, generoColumn, anoColumn, statusColumn, autorColumn, avaliadorColumn, opcoesColumn));
+            mainTableView.getColumns().addAll(columns);
 
         } else if (userBO.getTipo().equals("autor")) { //habilitar ações de autor e visões de tabela de autor
 

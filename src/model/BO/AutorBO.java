@@ -30,7 +30,7 @@ public class AutorBO {
     }
 
     public void setId(int id) {
-        if (id != null && id > 0) {
+        if (id > 0) {
             this.id = id;
         }
     }

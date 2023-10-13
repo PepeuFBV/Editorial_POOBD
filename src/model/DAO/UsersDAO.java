@@ -1,20 +1,22 @@
 package model.DAO;
 
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.sql.SQLException;
+import java.util.ArrayList;
 import model.VO.UsuarioVO;
 
-public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> implements BaseDAO<User> {
+public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> {
     
 	@Override
     public void inserir(UsuarioVO user) {
         Connection con = null;
-        PreparedStatement statement = null;
         
         try {
             con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
             String sql = "INSERT INTO users (tipo, nome, endereco, cpf, email, senha) VALUES (?, ?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getTipo());
@@ -33,6 +35,9 @@ public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> implemen
             } else {
                 throw new Exception("A inserção falhou. Nenhum id foi retornado.");
             }
+
+            statement.close();
+            BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,10 +46,10 @@ public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> implemen
 	@Override
     public void atualizar(UsuarioVO user) {
         Connection con = null;
-        PreparedStatement statement = null;
         
         try {
             con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
             String sql = "UPDATE users SET nome = ?, endereco = ?, cpf = ?, email = ?, senha = ?, tipo = ? WHERE id_usuario = ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, user.getNome());
@@ -55,91 +60,157 @@ public class UsersDAO<User extends UsuarioVO> extends BaseDAOImpl<User> implemen
             statement.setString(6, user.getTipo());
             statement.setLong(7, user.getIDUsuario());
             statement.executeUpdate();
+
+            statement.close();
+            BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 	@Override
-    public ResultSet buscarPorId(UsuarioVO user) {
+    public ArrayList<UsuarioVO> buscarPorId(UsuarioVO user) { //TODO por que não aceita UserVO?
         Connection con = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        
+        ArrayList<UsuarioVO> users = new ArrayList<UsuarioVO>();
         try {
             con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
             String sql = "SELECT * FROM users WHERE id_usuario = ?";
             statement = con.prepareStatement(sql);
-            statement.setLong(1, user.getIDUsuario());
+            statement.setLong(1, user.getIDUsuario()); //o uso do método de UserVO não é permitido?
             rs = statement.executeQuery();
+            while (rs.next()) {
+                UsuarioVO userVO = new UsuarioVO(); //usado para salvar a cada linha do ResultSet
+                userVO.setIDUsuario(rs.getLong("id_usuario"));
+                userVO.setTipo(rs.getString("tipo"));
+                userVO.setNome(rs.getString("nome"));
+                userVO.setEndereco(rs.getString("endereco"));
+                userVO.setCpf(rs.getString("cpf"));
+                userVO.setEmail(rs.getString("email"));
+                userVO.setSenha(rs.getString("senha"));
+
+                users.add(userVO);
+            }
+
+            statement.close();
+            BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
-        } 
-        return rs;
+        }
+        return users;
     }
 
-    public ResultSet buscarPorNome(UsuarioVO user) {
+    public ArrayList<UsuarioVO> buscarPorNome(UsuarioVO user) throws SQLException {
         Connection con = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        
+        ArrayList<UsuarioVO> users = new ArrayList<UsuarioVO>();
         try {
             con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
             String sql = "SELECT * FROM users WHERE nome = ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, user.getNome());
             rs = statement.executeQuery();
+            while (rs.next()) {
+                UsuarioVO userVO = new UsuarioVO(); //usado para salvar a cada linha do ResultSet
+                userVO.setIDUsuario(rs.getLong("id_usuario"));
+                userVO.setTipo(rs.getString("tipo"));
+                userVO.setNome(rs.getString("nome"));
+                userVO.setEndereco(rs.getString("endereco"));
+                userVO.setCpf(rs.getString("cpf"));
+                userVO.setEmail(rs.getString("email"));
+                userVO.setSenha(rs.getString("senha"));
+
+                users.add(userVO);
+            }
+
+            statement.close();
+            BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
-        } 
-        return rs;
+        }
+        return users;
     }
 
-    public ResultSet buscarPorEmail(UsuarioVO user) {
+    public ArrayList<UsuarioVO> buscarPorEmail(UsuarioVO user) {
         Connection con = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        
+        ArrayList<UsuarioVO> users = new ArrayList<UsuarioVO>();
         try {
             con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
             String sql = "SELECT * FROM users WHERE email = ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, user.getEmail());
             rs = statement.executeQuery();
+            while (rs.next()) {
+                UsuarioVO userVO = new UsuarioVO(); //usado para salvar a cada linha do ResultSet
+                userVO.setIDUsuario(rs.getLong("id_usuario"));
+                userVO.setTipo(rs.getString("tipo"));
+                userVO.setNome(rs.getString("nome"));
+                userVO.setEndereco(rs.getString("endereco"));
+                userVO.setCpf(rs.getString("cpf"));
+                userVO.setEmail(rs.getString("email"));
+                userVO.setSenha(rs.getString("senha"));
+
+                users.add(userVO);
+            }
+
+            statement.close();
+            BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
-        } 
-        return rs;
+        }
+        return users;
     }
 
 	@Override
-    public ResultSet listar() {
+    public ArrayList<UsuarioVO> listar() {
         Connection con = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        
+        ArrayList<UsuarioVO> users = new ArrayList<UsuarioVO>();
         try {
             con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
             String sql = "SELECT * FROM users";
             statement = con.prepareStatement(sql);
             rs = statement.executeQuery();
+            while (rs.next()) {
+                UsuarioVO userVO = new UsuarioVO(); //usado para salvar a cada linha do ResultSet
+                userVO.setIDUsuario(rs.getLong("id_usuario"));
+                userVO.setTipo(rs.getString("tipo"));
+                userVO.setNome(rs.getString("nome"));
+                userVO.setEndereco(rs.getString("endereco"));
+                userVO.setCpf(rs.getString("cpf"));
+                userVO.setEmail(rs.getString("email"));
+                userVO.setSenha(rs.getString("senha"));
+
+                users.add(userVO);
+            }
+
+            statement.close();
+            BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
-        } 
-        return rs;
+        }
+        return users;
     }
 
 	@Override
     public void excluir(UsuarioVO user) {
         Connection con = null;
-        PreparedStatement statement = null;
         
         try {
             con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
             String sql = "DELETE FROM users WHERE id_usuario = ?";
             statement = con.prepareStatement(sql);
             statement.setLong(1, user.getIDUsuario());
             statement.executeUpdate();
+
+            statement.close();
+            BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
         } 

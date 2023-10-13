@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class Obra {
 
-	private int id;
+	private Long id;
 	private String titulo;
 	private String genero;
 	private LocalDate ano;
@@ -25,11 +25,11 @@ public class Obra {
     
     public Obra() { }
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         if (id > 0) {
             this.id = id;
         }
