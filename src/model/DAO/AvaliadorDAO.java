@@ -13,7 +13,7 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
     @Override
     public void inserir(AvaliadorVO avaliador) {
         Connection con = null;
-        
+        usuarioDAO.inserir(avaliador);
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
@@ -38,7 +38,6 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
 
             statement.close();
             BaseDAOImpl.closeConnection();
-            usuarioDAO.inserir(avaliador);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,6 +46,7 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
     @Override
     public void atualizar(AvaliadorVO avaliador) {
         Connection con = null;
+        usuarioDAO.atualizar(avaliador);
         
         try {
             con = BaseDAOImpl.getConnection();
@@ -62,7 +62,6 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
             
             statement.close();
         	BaseDAOImpl.closeConnection();
-            usuarioDAO.atualizar(avaliador);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -217,7 +216,6 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
 
                 avaliadores.add(avaliador);
             }
-
             statement.close();
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
@@ -229,6 +227,7 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
     @Override
     public void excluir(AvaliadorVO avaliador) {
         Connection con = null;
+        usuarioDAO.excluir(avaliador);
         
         try {
             con = BaseDAOImpl.getConnection();
@@ -240,7 +239,6 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
             
             statement.close();
             BaseDAOImpl.closeConnection();
-            usuarioDAO.excluir(avaliador);
         } catch (Exception e) {
             e.printStackTrace();
         }
