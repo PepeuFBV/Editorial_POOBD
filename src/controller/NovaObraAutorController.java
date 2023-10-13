@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,9 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.DAO.ObraDAO;
-import model.VO.ObraVO;
-import util.LerPDF;
+import model.BO.AutorBO;
 
 public class NovaObraAutorController {
 	
@@ -55,24 +52,9 @@ public class NovaObraAutorController {
 	    String generoText = genero.getText();
 	    String anoText = ano.getText();
 
-	    if (obraSelecionada.isEmpty() || tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty()) {
-	        erroNovaObraAutor.setText("Por favor, preencha todos os campos.");
-	        erroNovaObraAutor.setVisible(true);
-	        return;
-	    }
-
 	    try {
-	        byte[] pdfObraBytes = LerPDF.lerConteudoPDF(obraSelecionada);
-
-	        ObraVO novaObra = new ObraVO();
-	        novaObra.setTitulo(tituloText);
-	        novaObra.setGenero(generoText);
-	        LocalDate anoLocalDate = LocalDate.parse(anoText);
-	        novaObra.setAno(anoLocalDate);
-	        novaObra.setPdfObra(pdfObraBytes);
-
-	        ObraDAO obraDAO = new ObraDAO();
-	        obraDAO.inserir(novaObra);
+	        AutorBO autorBO = new AutorBO();
+	        autorBO.adicionarObra(obraSelecionada, tituloText, generoText, anoText);
 
 	        System.out.println("Obra adicionada com sucesso.");
 	        erroNovaObraAutor.setText("Obra adicionada com sucesso.");
@@ -81,6 +63,9 @@ public class NovaObraAutorController {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	        erroNovaObraAutor.setText("Erro ao ler o arquivo PDF.");
+	        erroNovaObraAutor.setVisible(true);
+	    } catch (IllegalArgumentException e) {
+	        erroNovaObraAutor.setText(e.getMessage());
 	        erroNovaObraAutor.setVisible(true);
 	    }
 	}

@@ -1,72 +1,33 @@
 package model.BO;
 
-import java.util.List;
-import model.entities.Obra;
+import java.io.IOException;
+import java.time.LocalDate;
+
+import model.DAO.ObraDAO;
+import model.VO.ObraVO;
+import util.LerPDF;
 
 public class AutorBO {
 
-    private int id;
-    private String nome;
-    private String login;
-    private String senha;
-    private List<Obra> obras;
-
-    public AutorBO(int id, String nome, String login, String senha) {
-        setId(id);
-        setNome(nome);
-        setSenha(senha);
-        setLogin(login);
-    }
-
-    public AutorBO() {
-    }
-
-    public void setObras(List<Obra> obras) {
-        this.obras = obras;
-    }
-
-    public List<Obra> getObras() {
-        return this.obras;
-    }
-
-    public void setId(int id) {
-        if (id > 0) {
-            this.id = id;
+    public void adicionarObra(String obraSelecionada, String titulo, String genero, String ano) throws IOException {
+        if (obraSelecionada.isEmpty() || titulo.isEmpty() || genero.isEmpty() || ano.isEmpty()) {
+            throw new IllegalArgumentException("Por favor, preencha todos os campos.");
         }
-    }
 
-    public int getId() {
-        return this.id;
-    }
+        byte[] pdfObraBytes = LerPDF.lerConteudoPDF(obraSelecionada);
 
-    public void setNome(String nome) {
-        if (nome != null && !nome.isEmpty()) {
-            this.nome = nome;
+        if (pdfObraBytes == null) {
+            throw new IOException("Erro ao ler o arquivo PDF.");
         }
-    }
 
-    public String getNome() {
-        return this.nome;
-    }
+        ObraVO novaObra = new ObraVO();
+        novaObra.setTitulo(titulo);
+        novaObra.setGenero(genero);
+        LocalDate anoLocalDate = LocalDate.parse(ano);
+        novaObra.setAno(anoLocalDate);
+        novaObra.setPdfObra(pdfObraBytes);
 
-    public void setLogin(String login) {
-        if (login != null && !login.isEmpty()) {
-            this.login = login;
-        }
+        ObraDAO obraDAO = new ObraDAO();
+        obraDAO.inserir(novaObra);
     }
-
-    public String getLogin() {
-        return this.login;
-    }
-
-    public void setSenha(String senha) {
-        if (senha != null && !senha.isEmpty()) {
-            this.senha = senha;
-        }
-    }
-
-    public String getSenha() {
-        return this.senha;
-    }
-
 }
