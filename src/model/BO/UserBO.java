@@ -1,13 +1,11 @@
 package model.BO;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import exceptions.DeletionException;
 import exceptions.ErroLoginException;
 import exceptions.InsertException;
 import model.DAO.AutorDAO;
 import model.DAO.AvaliadorDAO;
-import model.DAO.BaseDAO;
 import model.DAO.GerenteDAO;
 import model.DAO.UsuarioDAO;
 import model.VO.AutorVO;

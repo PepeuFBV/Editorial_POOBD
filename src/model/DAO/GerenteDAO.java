@@ -12,6 +12,7 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
 	@Override
     public void inserir(GerenteVO gerenteVO) {
 		Connection con = null;
+        usuarioDAO.inserir(gerenteVO);
         
         try {
             con = BaseDAOImpl.getConnection();
@@ -34,9 +35,6 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
 
             statement.close();
             BaseDAOImpl.closeConnection();
-
-            
-            usuarioDAO.inserir(gerenteVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,6 +43,7 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
     @Override
     public void atualizar(GerenteVO gerenteVO) {
         Connection con = null;
+        usuarioDAO.atualizar(gerenteVO);
         
         try {
             con = BaseDAOImpl.getConnection();
@@ -59,7 +58,6 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
 
             statement.close();
             BaseDAOImpl.closeConnection();
-            usuarioDAO.atualizar(gerenteVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,7 +124,8 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
     @Override
     public void excluir(GerenteVO gerenteVO) {
         Connection con = null;
-        
+        usuarioDAO.excluir(gerenteVO);
+
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
@@ -137,11 +136,9 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
 
             statement.close();
             BaseDAOImpl.closeConnection();
-            usuarioDAO.excluir(gerenteVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     
 }

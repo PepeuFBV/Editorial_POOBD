@@ -13,10 +13,11 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
     @Override
     public void inserir(AutorVO autor) {
         Connection con = null;
-        PreparedStatement statement = null;
-
+        usuarioDAO.inserir(autor);
+        
         try {
             con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
             String sql = "INSERT INTO autor (nome, email, senha, cpf, id_usuario) VALUES (?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, autor.getNome());
@@ -37,7 +38,6 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
             
             statement.close();
             BaseDAOImpl.closeConnection();
-            usuarioDAO.inserir(autor);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,10 +46,11 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
     @Override
     public void atualizar(AutorVO autor) {
         Connection con = null;
-        PreparedStatement statement = null;
-
+        usuarioDAO.atualizar(autor);
+        
         try {
             con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
             String sql = "UPDATE autor SET nome = ?, email = ?, senha = ?, cpf = ? WHERE id_autor = ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, autor.getNome());
@@ -61,7 +62,6 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
             
             statement.close();
         	BaseDAOImpl.closeConnection();
-            usuarioDAO.atualizar(autor);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -231,6 +231,7 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
     @Override
     public void excluir(AutorVO autor) {
         Connection con = null;
+        usuarioDAO.excluir(autor);
         
         try {
             con = BaseDAOImpl.getConnection();
@@ -242,7 +243,6 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
             
             statement.close();
         	BaseDAOImpl.closeConnection();
-            usuarioDAO.excluir(autor);
         } catch (Exception e) {
             e.printStackTrace();
         }
