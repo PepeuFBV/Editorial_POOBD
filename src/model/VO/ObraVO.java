@@ -37,14 +37,6 @@ public class ObraVO {
         setAutor(autor);
         setPdfObra(pdf_obra);
     }
-    
-    public ObraVO(String titulo, String genero, LocalDate ano, AutorVO autor) {
-        setTitulo(titulo);
-        setGenero(genero);
-        setAno(ano);
-        setAutor(autor);
-        setStatus("Em espera");
-    }
 
     public ObraVO() {
     }
