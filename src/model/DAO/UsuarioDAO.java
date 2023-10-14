@@ -15,7 +15,7 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
-            String sql = "INSERT INTO users (tipo, nome, endereco, cpf, email, senha) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO usuarios (tipo, nome, endereco, cpf, email, senha) VALUES (?, ?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getTipo());
             statement.setString(2, user.getNome());
@@ -48,13 +48,13 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
-            String sql = "UPDATE users SET nome = ?, endereco = ?, cpf = ?, email = ?, senha = ?, tipo = ? WHERE id_usuario = ?";
+            String sql = "UPDATE usuarios SET nome = ?, email = ?, senha= ?, cpf = ?, endereco = ?, tipo = ? WHERE id_usuario = ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, user.getNome());
-            statement.setString(2, user.getEndereco());
-            statement.setString(3, user.getCpf());
-            statement.setString(4, user.getEmail());
-            statement.setString(5, user.getSenha());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getSenha());
+            statement.setString(4, user.getCpf());
+            statement.setString(5, user.getEndereco());
             statement.setString(6, user.getTipo());
             statement.setLong(7, user.getIDUsuario());
             statement.executeUpdate();
@@ -66,14 +66,14 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
         }
     }
 
-    public ArrayList<UsuarioVO> buscarPorId(UsuarioVO usuarioVO) { //pegar o tipo de users
+    public ArrayList<UsuarioVO> buscarPorId(UsuarioVO usuarioVO) { //pegar o tipo de usuario
         Connection con = null;
-        ArrayList<UsuarioVO> users = new ArrayList<UsuarioVO>();
+        ArrayList<UsuarioVO> usuarios = new ArrayList<UsuarioVO>();
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM users WHERE id_usuario = ?";
+            String sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
             statement = con.prepareStatement(sql);
             statement.setLong(1, usuarioVO.getIDUsuario()); //o uso do método de UserVO não é permitido?
             rs = statement.executeQuery();
@@ -87,7 +87,7 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
                 userVO.setEmail(rs.getString("email"));
                 userVO.setSenha(rs.getString("senha"));
 
-                users.add(userVO);
+                usuarios.add(userVO);
             }
 
             statement.close();
@@ -95,17 +95,17 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return users;
+        return usuarios;
     }
 
     public ArrayList<UsuarioVO> buscarPorNome(UsuarioVO user) {
         Connection con = null;
-        ArrayList<UsuarioVO> users = new ArrayList<UsuarioVO>();
+        ArrayList<UsuarioVO> usuarios = new ArrayList<UsuarioVO>();
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM users WHERE nome = ?";
+            String sql = "SELECT * FROM usuarios WHERE nome = ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, user.getNome());
             rs = statement.executeQuery();
@@ -119,7 +119,7 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
                 userVO.setEmail(rs.getString("email"));
                 userVO.setSenha(rs.getString("senha"));
 
-                users.add(userVO);
+                usuarios.add(userVO);
             }
 
             statement.close();
@@ -127,19 +127,19 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return users;
+        return usuarios;
     }
 
-    public ArrayList<UsuarioVO> buscarPorEmail(UsuarioVO user) {
+    public ArrayList<UsuarioVO> buscarPorEmail(UsuarioVO usuarioVO) {
         Connection con = null;
-        ArrayList<UsuarioVO> users = new ArrayList<UsuarioVO>();
+        ArrayList<UsuarioVO> usuarios = new ArrayList<UsuarioVO>();
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM users WHERE email = ?";
+            String sql = "SELECT * FROM usuarios WHERE email = ?";
             statement = con.prepareStatement(sql);
-            statement.setString(1, user.getEmail());
+            statement.setString(1, usuarioVO.getEmail());
             rs = statement.executeQuery();
             while (rs.next()) {
                 UsuarioVO userVO = new UsuarioVO(); //usado para salvar a cada linha do ResultSet
@@ -151,7 +151,7 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
                 userVO.setEmail(rs.getString("email"));
                 userVO.setSenha(rs.getString("senha"));
 
-                users.add(userVO);
+                usuarios.add(userVO);
             }
 
             statement.close();
@@ -159,18 +159,18 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return users;
+        return usuarios;
     }
 
 	@Override
     public ArrayList<UsuarioVO> listar() {
         Connection con = null;
-        ArrayList<UsuarioVO> users = new ArrayList<UsuarioVO>();
+        ArrayList<UsuarioVO> usuarios = new ArrayList<UsuarioVO>();
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM users";
+            String sql = "SELECT * FROM usuarios";
             statement = con.prepareStatement(sql);
             rs = statement.executeQuery();
             while (rs.next()) {
@@ -183,7 +183,7 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
                 userVO.setEmail(rs.getString("email"));
                 userVO.setSenha(rs.getString("senha"));
 
-                users.add(userVO);
+                usuarios.add(userVO);
             }
 
             statement.close();
@@ -191,7 +191,7 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return users;
+        return usuarios;
     }
 
 	@Override
@@ -201,7 +201,7 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
-            String sql = "DELETE FROM users WHERE id_usuario = ?";
+            String sql = "DELETE FROM usuarios WHERE id_usuario = ?";
             statement = con.prepareStatement(sql);
             statement.setLong(1, user.getIDUsuario());
             statement.executeUpdate();

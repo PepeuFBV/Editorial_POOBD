@@ -2,7 +2,7 @@ package model.VO;
 
 import java.util.ArrayList;
 
-public class AvaliadorVO extends UsuarioVO{
+public class AvaliadorVO extends UsuarioVO {
 
     private Long IDAvaliador;
     private ArrayList<ObraVO> obras;

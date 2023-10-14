@@ -10,7 +10,8 @@ public class UsuarioVO {
     private String senha;
     private String tipo;
 
-    public UsuarioVO(Long iDUsuario, String nome, String endereco, String cpf, String email, String senha, String tipo) {
+    public UsuarioVO(Long iDUsuario, String nome, String endereco, String cpf, String email, String senha,
+            String tipo) {
         setIDUsuario(iDUsuario);
         setNome(nome);
         setTipo(tipo);
@@ -18,6 +19,15 @@ public class UsuarioVO {
         setCpf(cpf);
         setEmail(email);
         setSenha(senha);
+    }
+    
+    public UsuarioVO(String nome, String endereco, String cpf, String email, String senha, String tipo) {
+        setNome(nome);
+        setEndereco(endereco);
+        setCpf(cpf);
+        setEmail(email);
+        setSenha(senha);
+        setTipo(tipo);
     }
     
     public UsuarioVO() {
@@ -113,15 +123,15 @@ public class UsuarioVO {
 
     public void setTipo(String tipo) {
         if (tipo != null && !tipo.isEmpty()) {
-            tipo = tipo.trim().toLowerCase(); 
+            //tipo = tipo.trim().toLowerCase(); //TODO apagar
 
-            if (tipo.equals("gerente") || tipo.equals("autor") || tipo.equals("avaliador")) {
+            if (tipo.equals("Gerente") || tipo.equals("Autor") || tipo.equals("Avaliador")) {
                 this.tipo = tipo;
             } else {
-                throw new IllegalArgumentException("Tipo deve ser 'Gerente', 'Autor' ou 'Avaliador'.");
+                throw new IllegalArgumentException("Tipo deve ser 'Gerente', 'Autor' ou 'Avaliador'");
             }
         } else {
-            throw new IllegalArgumentException("Tipo não pode ser nulo ou vazio.");
+            throw new IllegalArgumentException("Tipo não pode ser nulo ou vazio");
         }
     }
 

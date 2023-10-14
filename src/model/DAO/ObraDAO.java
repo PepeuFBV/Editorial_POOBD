@@ -16,26 +16,21 @@ import util.LerPDF;
 
 public class ObraDAO extends BaseDAOImpl<ObraVO> {
 
-    public void inserir(ObraVO obra) {
+    public void inserir(ObraVO obra) { //apenas para a primeira inserção
         Connection con = null;
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
-            String sql = "INSERT INTO obra (titulo, genero, ano, status, data_avaliacao, id_autor, id_avaliador, pdf_obra, pdf_avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO obras (titulo, genero, ano, status, id_autor, pdf_obra) VALUES (?, ?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, obra.getTitulo());
             statement.setString(2, obra.getGenero());
             statement.setDate(3, Date.valueOf(obra.getAno()));
             statement.setString(4, obra.getStatus());
-            statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
-            statement.setLong(6, obra.getAutor().getIDAutor());
-            statement.setLong(7, obra.getAvaliador().getIDAvaliador());
+            statement.setLong(5, obra.getAutor().getIDAutor());
 
             byte[] pdfObraBytes = LerPDF.lerArquivoPDF(obra.getPdfObra());
-            statement.setBytes(8, pdfObraBytes);
-
-            byte[] pdfAvaliacaoBytes = LerPDF.lerArquivoPDF(obra.getPdfAvaliacao());
-            statement.setBytes(9, pdfAvaliacaoBytes);
+            statement.setBytes(6, pdfObraBytes);
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -59,7 +54,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
-            String sql = "UPDATE obra SET titulo = ?, genero = ?, ano = ?, status = ?, data_avaliacao = ?, id_autor = ?, id_avaliador = ?, pdf_obra = ?, pdf_avaliacao = ? WHERE id_obra = ?";
+            String sql = "UPDATE obras SET titulo = ?, genero = ?, ano = ?, status = ?, data_avaliacao = ?, id_autor = ?, id_avaliador = ?, pdf_obra = ?, pdf_avaliacao = ? WHERE id_obra = ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, obra.getTitulo());
             statement.setString(2, obra.getGenero());
@@ -91,7 +86,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM obra WHERE id_obra = ?";
+            String sql = "SELECT * FROM obras WHERE id_obra = ?";
             statement = con.prepareStatement(sql);
             statement.setLong(1, obra.getIDObra());
             rs = statement.executeQuery();
@@ -154,7 +149,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM obra WHERE titulo LIKE ?";
+            String sql = "SELECT * FROM obras WHERE titulo LIKE ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, "%" + obra.getTitulo() + "%");
             rs = statement.executeQuery();
@@ -217,7 +212,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM obra WHERE ano = ?";
+            String sql = "SELECT * FROM obras WHERE ano = ?";
             statement = con.prepareStatement(sql);
             statement.setDate(1, Date.valueOf(obra.getAno()));
             rs = statement.executeQuery();
@@ -281,7 +276,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM obra WHERE ano BETWEEN ? AND ?";
+            String sql = "SELECT * FROM obras WHERE ano BETWEEN ? AND ?";
             statement = con.prepareStatement(sql);
             statement.setInt(1, anoInicio);
             statement.setInt(2, anoFinal);
@@ -347,7 +342,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM obra WHERE status LIKE ?";
+            String sql = "SELECT * FROM obras WHERE status LIKE ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, "%" + obra.getStatus() + "%");
             rs = statement.executeQuery();
@@ -411,7 +406,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM obra WHERE data_avaliacao = ?";
+            String sql = "SELECT * FROM obras WHERE data_avaliacao = ?";
             statement = con.prepareStatement(sql);
             statement.setDate(1, Date.valueOf(obra.getDataAvaliacao()));
             rs = statement.executeQuery();
@@ -475,7 +470,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM obra WHERE id_autor = ?";
+            String sql = "SELECT * FROM obras WHERE id_autor = ?";
             statement = con.prepareStatement(sql);
             statement.setLong(1, obra.getAutor().getIDAutor());
             rs = statement.executeQuery();
@@ -539,7 +534,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM obra";
+            String sql = "SELECT * FROM obras";
             statement = con.prepareStatement(sql);
             rs = statement.executeQuery();
             while (rs.next()) {
@@ -600,7 +595,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         PreparedStatement statement = null;
         try {
             con = BaseDAOImpl.getConnection();
-            String sql = "DELETE FROM obra WHERE id_obra = ?";
+            String sql = "DELETE FROM obras WHERE id_obra = ?";
             statement = con.prepareStatement(sql);
             statement.setLong(1, obra.getIDObra());
             statement.executeUpdate();

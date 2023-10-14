@@ -5,23 +5,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.VO.GerenteVO;
+import model.VO.UsuarioVO;
 
 public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
 	@Override
     public void inserir(GerenteVO gerenteVO) {
-		Connection con = null;
         usuarioDAO.inserir(gerenteVO);
+		Connection con = null;
         
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
-            String sql = "INSERT INTO gerentes (nome, email, senha) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO gerentes (nome, cpf, email, senha) VALUES (?, ?, ?, ?)";
             statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, gerenteVO.getNome());
-            statement.setString(2, gerenteVO.getEmail());
-            statement.setString(3, gerenteVO.getSenha());
+            statement.setString(2, gerenteVO.getCpf());
+            statement.setString(3, gerenteVO.getEmail());
+            statement.setString(4, gerenteVO.getSenha());
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 throw new Exception("A inserção falhou. Nenhuma linha foi alterada.");
@@ -35,6 +37,13 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
 
             statement.close();
             BaseDAOImpl.closeConnection();
+
+            //para adicionar o ID_Usuario na tabela de gerentes
+            ArrayList<UsuarioVO> gerente = usuarioDAO.buscarPorEmail(gerenteVO);
+            gerenteVO.setIDUsuario(gerente.get(0).getIDUsuario());
+
+            GerenteDAO gerenteDAO = new GerenteDAO();
+            gerenteDAO.atualizar(gerenteVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,12 +57,13 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
-            String sql = "UPDATE gerentes SET nome = ?, email = ?, senha = ? WHERE id_gerente = ?";
+            String sql = "UPDATE gerentes SET nome = ?, email = ?, senha = ?, id_usuario = ? WHERE id_gerente = ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, gerenteVO.getNome());
             statement.setString(2, gerenteVO.getEmail());
             statement.setString(3, gerenteVO.getSenha());
-            statement.setLong(4, gerenteVO.getIDGerente());
+            statement.setLong(4, gerenteVO.getIDUsuario());
+            statement.setLong(5, gerenteVO.getIDGerente());
             statement.executeUpdate();
 
             statement.close();
@@ -109,6 +119,7 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
                 gerenteVO.setNome(rs.getString("nome"));
                 gerenteVO.setEmail(rs.getString("email"));
                 gerenteVO.setSenha(rs.getString("senha"));
+                gerenteVO.setTipo("Gerente");
 
                 gerentes.add(gerenteVO);
             }

@@ -16,7 +16,8 @@ public class ObraVO {
     private String pdf_obra;
     private String pdf_avaliacao;
     
-    public ObraVO(Long iDObra, String titulo, String genero, LocalDate ano, String status, LocalDate data_avaliacao, AutorVO autor, AvaliadorVO avaliador, String pdf_obra, String pdf_avaliacao) {
+    public ObraVO(Long iDObra, String titulo, String genero, LocalDate ano, String status, LocalDate data_avaliacao,
+            AutorVO autor, AvaliadorVO avaliador, String pdf_obra, String pdf_avaliacao) {
         setIDObra(iDObra);
         setTitulo(titulo);
         setGenero(genero);
@@ -29,7 +30,13 @@ public class ObraVO {
         setPdfAvaliacao(pdf_avaliacao);
     }
     
-    public ObraVO() {
+    public ObraVO(String titulo, String genero, LocalDate ano, AutorVO autor, String pdf_obra) { //adição de obra pela primeira vez
+        setTitulo(titulo);
+        setGenero(genero);
+        setAno(ano);
+        setStatus("Em espera");
+        setAutor(autor);
+        setPdfObra(pdf_obra);
     }
     
     public Long getIDObra() {
@@ -74,14 +81,7 @@ public class ObraVO {
 
     public void setAno(LocalDate ano) {
         if (ano != null) {
-            int year = Year.now().getValue();
-            int anoDaObra = ano.getYear();
-
-            if (anoDaObra >= year) {
-                this.ano = ano;
-            } else {
-                throw new IllegalArgumentException("Ano da obra não pode ser um ano passado.");
-            }
+            this.ano = ano;
         } else {
             throw new IllegalArgumentException("Ano da obra não pode ser nulo.");
         }
@@ -123,7 +123,7 @@ public class ObraVO {
         }
     }
 
-    public AvaliadorVO getAvaliador() {
+    public UsuarioVO getAvaliador() {
         return avaliador;
     }
 

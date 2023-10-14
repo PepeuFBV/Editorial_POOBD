@@ -8,7 +8,7 @@ public class ObraBO {
 
 	static private ObraDAO obraDAO = new ObraDAO();
 
-    public void adicionar(ObraVO obraVO) {
+    public void cadastrar(ObraVO obraVO) {
         obraDAO.inserir(obraVO);
     }
 
