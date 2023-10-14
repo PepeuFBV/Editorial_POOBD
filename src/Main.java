@@ -7,14 +7,16 @@ import javafx.stage.Stage;
 import model.BO.ObraBO;
 import model.BO.UsuarioBO;
 import model.DAO.AutorDAO;
+import model.DAO.ObraDAO;
 import model.VO.AutorVO;
 import model.VO.ObraVO;
 import model.VO.UsuarioVO;
+import util.LerPDF;
 
 public class Main extends Application {
     public static void main(String[] args) {
         System.out.println("Hello World");
-
+        
         launch();
 
     }
@@ -60,7 +62,7 @@ public class Main extends Application {
         AutorDAO autorDAO = new AutorDAO();
         ArrayList<AutorVO> autores = autorDAO.listar();
         AutorVO autor = new AutorVO();
-        for (AutorVO autorVO : autores) { //haverá só 1
+        for (AutorVO autorVO : autores) { \\\\haverá só 1
             autor = autorVO;
         }
         

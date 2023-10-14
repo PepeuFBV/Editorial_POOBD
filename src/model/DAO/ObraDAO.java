@@ -386,8 +386,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 }
 
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO();
                 try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO();
                     avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                     AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
                     ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
@@ -468,23 +468,28 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     obraVO.setAutor(null);
                 }
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
-                avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
-                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
-                if (!avaliadores.isEmpty()) {
-                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
-                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
-                    avaliadorVO.setTipo("Avaliador");
-                    avaliadorVO.setNome(avaliadores.get(0).getNome());
-                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
-                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
-                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
-                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+               try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO();
+                    avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
+                    if (!avaliadores.isEmpty()) {
+                        avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                        avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                        avaliadorVO.setTipo("Avaliador");
+                        avaliadorVO.setNome(avaliadores.get(0).getNome());
+                        avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                        avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                        avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                        avaliadorVO.setSenha(avaliadores.get(0).getSenha());
 
-                    obraVO.setAvaliador(avaliadorVO);
-                } else {
-                    obraVO.setAvaliador(null);
+                        obraVO.setAvaliador(avaliadorVO);
+                    }
+                    else {
+                        throw new Exception("Avaliador não encontrado");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Não tem avaliador!");
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -545,23 +550,28 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     obraVO.setAutor(null);
                 }
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
-                avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
-                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
-                if (!avaliadores.isEmpty()) {
-                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
-                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
-                    avaliadorVO.setTipo("Avaliador");
-                    avaliadorVO.setNome(avaliadores.get(0).getNome());
-                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
-                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
-                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
-                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO();
+                    avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
+                    if (!avaliadores.isEmpty()) {
+                        avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                        avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                        avaliadorVO.setTipo("Avaliador");
+                        avaliadorVO.setNome(avaliadores.get(0).getNome());
+                        avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                        avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                        avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                        avaliadorVO.setSenha(avaliadores.get(0).getSenha());
 
-                    obraVO.setAvaliador(avaliadorVO);
-                } else {
-                    obraVO.setAvaliador(null);
+                        obraVO.setAvaliador(avaliadorVO);
+                    }
+                    else {
+                        throw new Exception("Avaliador não encontrado");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Não tem avaliador!");
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -622,23 +632,28 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     obraVO.setAutor(null);
                 }
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
-                avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
-                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
-                if (!avaliadores.isEmpty()) {
-                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
-                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
-                    avaliadorVO.setTipo("Avaliador");
-                    avaliadorVO.setNome(avaliadores.get(0).getNome());
-                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
-                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
-                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
-                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO();
+                    avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
+                    if (!avaliadores.isEmpty()) {
+                        avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                        avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                        avaliadorVO.setTipo("Avaliador");
+                        avaliadorVO.setNome(avaliadores.get(0).getNome());
+                        avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                        avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                        avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                        avaliadorVO.setSenha(avaliadores.get(0).getSenha());
 
-                    obraVO.setAvaliador(avaliadorVO);
-                } else {
-                    obraVO.setAvaliador(null);
+                        obraVO.setAvaliador(avaliadorVO);
+                    }
+                    else {
+                        throw new Exception("Avaliador não encontrado");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Não tem avaliador!");
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -699,23 +714,28 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     obraVO.setAutor(null);
                 }
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
-                avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
-                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
-                if (!avaliadores.isEmpty()) {
-                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
-                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
-                    avaliadorVO.setTipo("Avaliador");
-                    avaliadorVO.setNome(avaliadores.get(0).getNome());
-                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
-                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
-                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
-                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO();
+                    avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
+                    if (!avaliadores.isEmpty()) {
+                        avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                        avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                        avaliadorVO.setTipo("Avaliador");
+                        avaliadorVO.setNome(avaliadores.get(0).getNome());
+                        avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                        avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                        avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                        avaliadorVO.setSenha(avaliadores.get(0).getSenha());
 
-                    obraVO.setAvaliador(avaliadorVO);
-                } else {
-                    obraVO.setAvaliador(null);
+                        obraVO.setAvaliador(avaliadorVO);
+                    }
+                    else {
+                        throw new Exception("Avaliador não encontrado");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Não tem avaliador!");
                 }
                 arrayDeObras.add(obraVO);
             }
