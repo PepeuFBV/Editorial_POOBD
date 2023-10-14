@@ -6,12 +6,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -45,7 +47,7 @@ public class NovaObraGerenteController {
     private TextField genero;
 
     @FXML
-    private TextField ano;
+    private DatePicker ano;
 
     @FXML
     private Label erroNovaObraGerente;
@@ -118,17 +120,21 @@ public class NovaObraGerenteController {
     public void adicionar(ActionEvent event) {
         String tituloText = titulo.getText();
         String generoText = genero.getText();
-        String anoText = ano.getText();
+        LocalDate anoText = ano.getValue();
         String autorSelecionado = autor.getValue();
         String avaliadorSelecionado = avaliador.getValue();
         String statusSelecionado = stts.getValue();
         String obraSelecionada = showFileger.getText();
 
-        if (obraSelecionada.isEmpty() || tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty() || autorSelecionado == null || avaliadorSelecionado == null || statusSelecionado == null) {
+        if (obraSelecionada.isEmpty() || tituloText.isEmpty() || generoText.isEmpty() || autorSelecionado == null || avaliadorSelecionado == null || statusSelecionado == null) {
             erroNovaObraGerente.setText("Por favor, preencha todos os campos.");
             erroNovaObraGerente.setVisible(true);
-            return;
+            throw new IllegalArgumentException("Por favor, preencha todos os campos.");
         }
+        
+	    if (ano == null) {
+	        throw new IllegalArgumentException("O campo de data não pode estar vazio.");
+	    }
 
         byte[] pdfObraBytes = null;
 
@@ -144,8 +150,7 @@ public class NovaObraGerenteController {
             ObraVO novaObra = new ObraVO();
             novaObra.setTitulo(tituloText);
             novaObra.setGenero(generoText);
-            LocalDate anoLocalDate = LocalDate.parse(anoText);
-            novaObra.setAno(anoLocalDate);
+            novaObra.setAno(anoText);
 
             int idAutor = autorParaIDMap.get(autorSelecionado);
             AutorVO autorVO = new AutorVO();

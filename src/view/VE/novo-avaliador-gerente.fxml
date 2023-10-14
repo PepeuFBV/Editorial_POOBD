@@ -13,9 +13,7 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <Button layoutX="305.0" layoutY="303.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="25.0" prefWidth="99.0" text="Adicionar" textFill="#008009" />
-      <Button fx:id="btncancelar" layoutX="169.0" layoutY="303.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
-      <Label fx:id="erroNovoAvaliadorGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="125.0" layoutY="271.0" prefHeight="17.0" prefWidth="347.0" text="Label" visible="false" />
+      <Label fx:id="erroNovoAvaliadorGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="273.0" prefHeight="17.0" prefWidth="436.0" text="Label" visible="false" />
       <TextField fx:id="nome" layoutX="164.0" layoutY="98.0" prefHeight="25.0" prefWidth="298.0" />
       <TextField fx:id="endereco" layoutX="164.0" layoutY="135.0" prefHeight="25.0" prefWidth="298.0" />
       <TextField fx:id="cpf" layoutX="164.0" layoutY="171.0" prefHeight="25.0" prefWidth="298.0" />
@@ -47,5 +45,7 @@
             <Font size="15.0" />
          </font>
       </Label>
+      <Button fx:id="btncancelar" layoutX="169.0" layoutY="303.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
+      <Button layoutX="305.0" layoutY="303.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="25.0" prefWidth="99.0" text="Adicionar" textFill="#008009" />
    </children>
 </Pane>

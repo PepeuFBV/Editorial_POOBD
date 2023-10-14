@@ -25,7 +25,7 @@ public class Main extends Application {
         Telas.telaLogin();
     }
     
-    public static void testeAdicionarUsuario() {
+    /*public static void testeAdicionarUsuario() {
         //é só mudar o tipo para testar
         UsuarioVO usuarioVO = new UsuarioVO("Jorge", "Rua Manoel Jorge", "12345678910", "jorge.local@gmail.com",
                 "Ajf2#dsafd", "Avaliador");
@@ -35,7 +35,7 @@ public class Main extends Application {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
+    }*/
     
     /*public static void testeAdicionarObra() {
         ObraVO obraVO = new ObraVO("Joãozinho na terra dos sonhos", "Aventura", LocalDate.of(2000, 1, 1), autor);

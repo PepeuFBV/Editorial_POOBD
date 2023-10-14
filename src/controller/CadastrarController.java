@@ -4,6 +4,7 @@ import exceptions.InsertException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -28,10 +29,10 @@ public class CadastrarController {
     private TextField enderecoField;
 
     @FXML
-    private TextField senhaField;
+    private PasswordField senhaField;
 
     @FXML
-    private TextField confirmaSenhaField;
+    private PasswordField confirmaSenhaField;
 
     @FXML
     private RadioButton autorRadioButton;
@@ -82,7 +83,7 @@ public class CadastrarController {
             		autorVO.setSenha(senha);
             		autorVO.setTipo(tipoUsuario);
                     try {
-                    	UserBO<AutorVO> userBO = new UserBO<AutorVO>();
+                    	UsuarioBO<AutorVO> userBO = new UsuarioBO<AutorVO>();
                         userBO.cadastrar(autorVO);
                         try {
 							Telas.telaLogin();
@@ -90,7 +91,7 @@ public class CadastrarController {
 							e.printStackTrace();
 						}
                     } catch (InsertException e) {
-                        mensagemLabel.setText("Erro ao cadastrar: " + e.getMessage());
+                        mensagemLabel.setText("Erro ao cadastrar");
                         mensagemLabel.setVisible(true);                      
                     }
             		
@@ -103,7 +104,7 @@ public class CadastrarController {
             		avaliadorVO.setSenha(senha);
             		avaliadorVO.setTipo(tipoUsuario);
                     try {
-                    	UserBO<AvaliadorVO> userBO = new UserBO<AvaliadorVO>();
+                    	UsuarioBO<AvaliadorVO> userBO = new UsuarioBO<AvaliadorVO>();
                         userBO.cadastrar(avaliadorVO);
                         try {
 							Telas.telaLogin();
@@ -111,7 +112,7 @@ public class CadastrarController {
 							e.printStackTrace();
 						}
                     } catch (InsertException e) {
-                        mensagemLabel.setText("Erro ao cadastrar: " + e.getMessage());
+                        mensagemLabel.setText("Erro ao cadastrar");
                         mensagemLabel.setVisible(true);                      
                     }
             	}

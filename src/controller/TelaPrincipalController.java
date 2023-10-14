@@ -310,7 +310,7 @@ public class TelaPrincipalController {
             }
         } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
             try {
-                Telas.telaNovaObraAutor();
+                Telas.telaNovaObraAutor(Telas.getUsuarioVOAtual());
             } catch (Exception e) {
                 e.printStackTrace();
             }

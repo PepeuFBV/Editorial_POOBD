@@ -45,7 +45,7 @@ public class AvaliarObraController {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf"));
         File file = fc.showOpenDialog(null);
         if (file != null) {
-            showFile.setText(file.getAbsolutePath()); // Use setText em vez de appendText
+            showFile.setText(file.getAbsolutePath()); 
         } else {
             System.out.println("Você deve selecionar um arquivo");
         }

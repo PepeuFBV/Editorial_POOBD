@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public abstract class BaseDAOImpl<E> implements BaseDAO<E> {
 
-    final static String URL = "jdbc:postgresql://localhost:1812/Editorial"; //alterar database e port
-    final static String USER = "pedro"; //alterar usuario
-    final static String PASSWORD = "password"; //alterar senha
+    final static String URL = "jdbc:postgresql://localhost:5432/Editorial"; //alterar database e port
+    final static String USER = "postgres"; //alterar usuario
+    final static String PASSWORD = "root123"; //alterar senha
 	static Connection con = null;
 
 	public static Connection getConnection() {

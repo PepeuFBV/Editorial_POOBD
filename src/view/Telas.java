@@ -1,11 +1,14 @@
 package view;
 
 import java.io.IOException;
+
 import controller.LoginPageController;
+import controller.NovaObraAutorController;
 import controller.TelaPrincipalController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.VO.UsuarioVO;
 
@@ -187,17 +190,22 @@ public class Telas {
 		}
     }
 
-    public static void telaNovaObraAutor() throws Exception {
+    public static void telaNovaObraAutor(UsuarioVO usuarioVO) throws Exception {
         FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/nova-obra-autor.fxml"));
-        try {
-            Scene scene = new Scene(fx.load());
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Tela Nova Obra Autor");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Parent root = fx.load();
+        NovaObraAutorController controller = fx.getController();
+        controller.setUsuarioVO(usuarioVO);
+
+        Stage popupStage = new Stage();
+        Scene scene = new Scene(root);
+        popupStage.setScene(scene);
+
+        popupStage.setTitle("Tela Nova Obra Autor");
+
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.initOwner(primaryStage); 
+
+        popupStage.show();
     }
 
     public static void telaNovaObraGerente() throws Exception {

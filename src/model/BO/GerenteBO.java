@@ -72,19 +72,6 @@ public class GerenteBO {
             }
 
             for (ObraVO obra : obras) {
-                if (obra.getPdfObra() != null) {
-                    byte[] pdfObraBytes = obra.getPdfObra();
-                    String nomeArquivoObra = "obra_" + obra.getIDObra() + ".pdf";
-                    String caminhoArquivoObra = diretorioSalvar + nomeArquivoObra;
-
-                    try (FileOutputStream outputStream = new FileOutputStream(caminhoArquivoObra)) {
-                        outputStream.write(pdfObraBytes);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        throw e;
-                    }
-                }
-
                 if (obra.getPdfAvaliacao() != null) {
                     byte[] pdfAvaliacaoBytes = obra.getPdfAvaliacao();
                     String nomeArquivoAvaliacao = "avaliacao_" + obra.getIDObra() + ".pdf";
@@ -100,6 +87,7 @@ public class GerenteBO {
             }
         }
     }
+
     
 }
 
