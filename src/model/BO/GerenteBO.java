@@ -3,8 +3,11 @@ package model.BO;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+
 import exceptions.InsertException;
 import model.DAO.ObraDAO;
 import model.VO.AutorVO;
@@ -55,8 +58,10 @@ public class GerenteBO {
         }
     }
     
-    public void baixarRelatorios(int anoInicio, int anoFinal) throws IOException, SQLException {
-        if (anoInicio > anoFinal) {
+    public void baixarRelatorios(Date anoInicio, Date anoFinal) throws IOException, SQLException {
+        LocalDate dataInicio = anoInicio.toLocalDate();
+        LocalDate dataFinal = anoFinal.toLocalDate();
+        if (dataInicio.isAfter(dataFinal)) {
             throw new IllegalArgumentException("O ano inicial não pode ser maior que o ano final.");
         }
 
@@ -79,6 +84,7 @@ public class GerenteBO {
 
                     try (FileOutputStream outputStream = new FileOutputStream(caminhoArquivoAvaliacao)) {
                         outputStream.write(pdfAvaliacaoBytes);
+                        System.out.println("Relatório(s) baixado(s) com sucesso.");
                     } catch (IOException e) {
                         e.printStackTrace();
                         throw e;
