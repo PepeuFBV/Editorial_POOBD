@@ -22,7 +22,7 @@ public class AvaliadorVO extends UsuarioVO {
 
     public void setIDAvaliador(Long iDAvaliador) {
         if (iDAvaliador > 0) {
-            IDAvaliador = iDAvaliador;
+            this.IDAvaliador = iDAvaliador;
         } else {
             throw new IllegalArgumentException("ID do Avaliador deve ser maior que zero.");
         }
