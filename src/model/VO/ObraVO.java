@@ -131,11 +131,7 @@ public class ObraVO {
     }
 
     public void setAvaliador(AvaliadorVO avaliador) {
-        if (avaliador != null) {
-            this.avaliador = avaliador;
-        } else {
-            throw new IllegalArgumentException("Avaliador da obra não pode ser nulo.");
-        }
+        this.avaliador = avaliador;
     }
     
     public byte[] getPdfObra() {

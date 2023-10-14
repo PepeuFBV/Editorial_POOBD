@@ -2,7 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -391,7 +391,7 @@ public class TelaPrincipalController {
             if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
                 Telas.telaEditarObraGerente();
             } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
-                Telas.telaEditarObraAutor();
+                Telas.telaEditarObraAutor(Telas.getUsuarioVOAtual());
             }
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
@@ -429,6 +429,15 @@ public class TelaPrincipalController {
     public void gerarRelatorio(ActionEvent event) { //botão só está disponível para gerente
     	try {
 			Telas.telaGerarRelatorio();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    @FXML
+    public void avaliarObra(ActionEvent event) { 
+    	try {
+			Telas.telaAvaliarObra(Telas.getUsuarioVOAtual());;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

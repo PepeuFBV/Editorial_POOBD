@@ -185,9 +185,9 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM obras WHERE titulo LIKE ?";
+            String sql = "SELECT * FROM obras WHERE titulo = ?";
             statement = con.prepareStatement(sql);
-            statement.setString(1, "%" + obra.getTitulo() + "%");
+            statement.setString(1, obra.getTitulo());
             rs = statement.executeQuery();
             while (rs.next()) {
                 ObraVO obraVO = new ObraVO();
@@ -573,7 +573,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         return arrayDeObras;
     }
 
-    public ArrayList<ObraVO> buscarPorAutor(ObraVO obra) throws SQLException {
+    public ArrayList<ObraVO> buscarPorAutor(AutorVO autor) throws SQLException {
         Connection con = null;
         ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
         try {
@@ -582,7 +582,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             ResultSet rs = null;
             String sql = "SELECT * FROM obras WHERE id_autor = ?";
             statement = con.prepareStatement(sql);
-            statement.setLong(1, obra.getAutor().getIDAutor());
+            statement.setLong(1, autor.getIDAutor());
             rs = statement.executeQuery();
             while (rs.next()) {
                 ObraVO obraVO = new ObraVO();
@@ -649,6 +649,84 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         }
         return arrayDeObras;
     }
+    
+    public ArrayList<ObraVO> buscarPorAvaliador(AvaliadorVO avaliador) throws SQLException {
+        Connection con = null;
+        ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
+        try {
+            con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM obras WHERE id_avaliador = ?";
+            statement = con.prepareStatement(sql);
+            statement.setLong(1, avaliador.getIDAvaliador());
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                ObraVO obraVO = new ObraVO();
+                obraVO.setIDObra(rs.getLong("id_obra"));
+                obraVO.setTitulo(rs.getString("titulo"));
+                obraVO.setGenero(rs.getString("genero"));
+                obraVO.setAno(rs.getDate("ano").toLocalDate());
+                obraVO.setStatus(rs.getString("status"));
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                }
+                if (rs.getBytes("pdf_obra") != null) {
+                    obraVO.setPdfObra(rs.getBytes("pdf_obra"));
+                } else {
+                    obraVO.setPdfObra(null); //para chamar exception
+                }
+                if (rs.getBytes("pdf_avaliacao") != null) {
+                    obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
+                }
+
+                AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
+                autorVO.setIDAutor(rs.getLong("id_autor"));
+                AutorDAO autorDAO = new AutorDAO();
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                if (!autores.isEmpty()) {
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+
+                    obraVO.setAutor(autorVO);
+                } else {
+                    obraVO.setAutor(null);
+                }
+
+                AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
+                avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                    avaliadorVO.setTipo("Avaliador");
+                    avaliadorVO.setNome(avaliadores.get(0).getNome());
+                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+
+                    obraVO.setAvaliador(avaliadorVO);
+                } else {
+                    obraVO.setAvaliador(null);
+                }
+                arrayDeObras.add(obraVO);
+            }
+            BaseDAOImpl.closeConnection();
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arrayDeObras;
+    }
+
 
     public ArrayList<ObraVO> listar() {
         Connection con = null;

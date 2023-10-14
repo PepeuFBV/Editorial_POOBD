@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 
+import controller.EditarObraAutorController;
 import controller.LoginPageController;
 import controller.NovaObraAutorController;
 import controller.TelaPrincipalController;
@@ -57,18 +58,22 @@ public class Telas {
         primaryStage.show();
     }
 
-    public static void telaAvaliarObra() throws Exception { //mudar a classe
+    public static void telaAvaliarObra(UsuarioVO usuarioVO) throws Exception { //mudar a classe
     	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/avaliar-obra.fxml"));
-    	try {
-			Scene scene = new Scene(fx.load());
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			stage.setTitle("Tela Avaliar Obra");
-			stage.show();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        Parent root = fx.load();
+        EditarObraAutorController controller = fx.getController();
+        controller.setUsuarioVO(usuarioVO);
+
+        Stage popupStage = new Stage();
+        Scene scene = new Scene(root);
+        popupStage.setScene(scene);
+
+        popupStage.setTitle("Tela Avaliar Obra");
+
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.initOwner(primaryStage); 
+
+        popupStage.show();
     }
     
     public static void telaCadastrar() throws Exception {
@@ -169,18 +174,22 @@ public class Telas {
         }
     }
 
-    public static void telaEditarObraAutor() throws Exception {
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/editar-obra-autor.fxml"));
-    	try {
-			Scene scene = new Scene(fx.load());
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			stage.setTitle("Tela Editar Obra Autor");
-			stage.show();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    public static void telaEditarObraAutor(UsuarioVO usuarioVO) throws Exception {
+        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/editar-obra-autor.fxml"));
+        Parent root = fx.load();
+        EditarObraAutorController controller = fx.getController();
+        controller.setUsuarioVO(usuarioVO);
+
+        Stage popupStage = new Stage();
+        Scene scene = new Scene(root);
+        popupStage.setScene(scene);
+
+        popupStage.setTitle("Tela Editar Obra Autor");
+
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.initOwner(primaryStage); 
+
+        popupStage.show();
     }
 
     public static void telaGerarRelatorio() throws Exception {

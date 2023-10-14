@@ -7,54 +7,59 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditarObraGerenteController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="446.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditarObraGerenteController">
    <children>
-      <TextField fx:id="titulo" layoutX="173.0" layoutY="70.0" prefHeight="25.0" prefWidth="298.0" />
-      <Label layoutX="238.0" layoutY="17.0" prefHeight="17.0" prefWidth="113.0" text="Editar Obra">
+      <TextField fx:id="titulo" layoutX="173.0" layoutY="114.0" prefHeight="25.0" prefWidth="298.0" />
+      <Label layoutX="243.0" layoutY="27.0" prefHeight="17.0" prefWidth="113.0" text="Editar Obra">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="genero" layoutX="173.0" layoutY="111.0" prefHeight="25.0" prefWidth="298.0" />
-      <TextField fx:id="ano" layoutX="173.0" layoutY="152.0" prefHeight="25.0" prefWidth="298.0" />
-      <Label />
-      <Label layoutX="104.0" layoutY="70.0" prefHeight="25.0" prefWidth="45.0" text="Título:">
+      <TextField fx:id="genero" layoutX="173.0" layoutY="155.0" prefHeight="25.0" prefWidth="298.0" />
+      <TextField fx:id="ano" layoutX="173.0" layoutY="196.0" prefHeight="25.0" prefWidth="298.0" />
+      <Label layoutX="68.0" layoutY="114.0" prefHeight="25.0" prefWidth="81.0" text="Novo título:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="104.0" layoutY="113.0" prefHeight="21.0" prefWidth="58.0" text="Gênero:">
+      <Label layoutX="68.0" layoutY="157.0" prefHeight="21.0" prefWidth="99.0" text="Novo gênero:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="104.0" layoutY="154.0" prefHeight="21.0" prefWidth="36.0" text="Ano:">
+      <Label layoutX="68.0" layoutY="198.0" prefHeight="21.0" prefWidth="75.0" text="Novo ano:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="302.0" layoutY="351.0" mnemonicParsing="false" onAction="#concluir" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
-      <Button fx:id="btncancelar" layoutX="189.0" layoutY="351.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
-      <Label layoutX="105.0" layoutY="191.0" text="Definir Autor:">
+      <Button layoutX="314.0" layoutY="395.0" mnemonicParsing="false" onAction="#concluir" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
+      <Button fx:id="btncancelar" layoutX="189.0" layoutY="395.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
+      <Label layoutX="105.0" layoutY="235.0" text="Definir Autor:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="autor" layoutX="199.0" layoutY="189.0" prefHeight="25.0" prefWidth="273.0" />
-      <Label layoutX="105.0" layoutY="227.0" text="Definir Avaliador:">
+      <ChoiceBox fx:id="autor" layoutX="199.0" layoutY="233.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="105.0" layoutY="271.0" text="Definir Avaliador:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="avaliador" layoutX="222.0" layoutY="225.0" prefHeight="25.0" prefWidth="249.0" />
-      <Label layoutX="104.0" layoutY="263.0" text="Status:">
+      <ChoiceBox fx:id="avaliador" layoutX="222.0" layoutY="269.0" prefHeight="25.0" prefWidth="249.0" />
+      <Label layoutX="104.0" layoutY="307.0" text="Status:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="stts" layoutX="173.0" layoutY="261.0" prefHeight="25.0" prefWidth="298.0" />
-      <Label fx:id="erroEditarObraGerente" layoutX="286.0" layoutY="335.0" text="Label" visible="false" />
-      <Button fx:id="buttonarquivoger" alignment="CENTER" layoutX="100.0" layoutY="298.0" mnemonicParsing="false" onAction="#handleBtnOpenFile" prefHeight="17.0" prefWidth="99.0" text="Abrir arquivo" />
-      <TextField fx:id="showFileger" layoutX="199.0" layoutY="298.0" prefHeight="25.0" prefWidth="273.0" />
+      <ChoiceBox fx:id="stts" layoutX="173.0" layoutY="305.0" prefHeight="25.0" prefWidth="298.0" />
+      <Label fx:id="erroEditarObraGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="378.0" prefHeight="17.0" prefWidth="498.0" text="Label" visible="false" />
+      <Button fx:id="buttonarquivoger" alignment="CENTER" layoutX="100.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleBtnOpenFile" prefHeight="17.0" prefWidth="99.0" text="Abrir arquivo" />
+      <TextField fx:id="showFileger" layoutX="199.0" layoutY="342.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="68.0" layoutY="77.0" prefHeight="25.0" prefWidth="45.0" text="Obra:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="obras" layoutX="173.0" layoutY="77.0" prefHeight="25.0" prefWidth="298.0" />
    </children>
 </Pane>

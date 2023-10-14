@@ -22,11 +22,15 @@ import model.DAO.AvaliadorDAO;
 import model.DAO.ObraDAO;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
+import model.VO.ObraVO;
 
 public class EditarObraGerenteController {
 
     @FXML
     private TextField showFileger;
+    
+    @FXML
+    private ChoiceBox<String> obras;
 
     @FXML
     private ChoiceBox<String> autor;
@@ -75,6 +79,20 @@ public class EditarObraGerenteController {
         ObservableList<String> status = FXCollections.observableArrayList("Aceita", "Rejeitada", "Em avaliação", "Avaliador pendente");
         ObservableList<String> autores = FXCollections.observableArrayList();
         ObservableList<String> avaliadores = FXCollections.observableArrayList();
+        ObservableList<String> obrasList = FXCollections.observableArrayList();
+        
+        ObraDAO obraDAO = new ObraDAO();
+        try {
+            ArrayList<ObraVO> obrasDoDB = obraDAO.listar(); 
+            for (ObraVO obraVO : obrasDoDB) {
+                String tituloObra = obraVO.getTitulo();
+                obrasList.add(tituloObra);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        obras.setItems(obrasList);
 
         AutorDAO autorDAO = new AutorDAO();
         try {
@@ -108,47 +126,72 @@ public class EditarObraGerenteController {
     }
 
     public void concluir(ActionEvent event) {
+        String tituloSelecionado = obras.getValue();
 
-        String tituloText = titulo.getText();
-        String generoText = genero.getText();
-        String anoText = ano.getText();
-        String autorSelecionado = autor.getValue();
-        String avaliadorSelecionado = avaliador.getValue();
-        String statusSelecionado = stts.getValue();
-        String obraSelecionada = showFileger.getText();
-
-        if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty() || autorSelecionado == null || avaliadorSelecionado == null || statusSelecionado == null || obraSelecionada.isEmpty()) {
-            erroEditarObraGerente.setText("Por favor, preencha todos os campos.");
+        if (tituloSelecionado == null || tituloSelecionado.isEmpty()) {
+            erroEditarObraGerente.setText("Por favor, selecione uma obra para editar.");
             erroEditarObraGerente.setVisible(true);
             return;
-        } else {
-        	
-            obra.setTitulo(tituloText);
-            obra.setGenero(generoText);
-            obra.setAno(LocalDate.parse(anoText));
-            obra.setStatus(statusSelecionado);
+        }
+
+        ObraDAO obraDAO = new ObraDAO();
+        ObraVO obraEncontrada = buscarObraPorTitulo(tituloSelecionado);
+
+        if (obraEncontrada != null) {
+            String tituloText = titulo.getText();
+            String generoText = genero.getText();
+            String anoText = ano.getText();
+            String autorSelecionado = autor.getValue();
+            String avaliadorSelecionado = avaliador.getValue();
+            String statusSelecionado = stts.getValue();
+            String obraSelecionada = showFileger.getText();
+
+            if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty() || autorSelecionado == null || avaliadorSelecionado == null || statusSelecionado == null || obraSelecionada.isEmpty()) {
+                erroEditarObraGerente.setText("Por favor, preencha todos os campos.");
+                erroEditarObraGerente.setVisible(true);
+                return;
+            }
+
+            obraEncontrada.setTitulo(tituloText);
+            obraEncontrada.setGenero(generoText);
+            obraEncontrada.setAno(LocalDate.parse(anoText));
+            obraEncontrada.setStatus(statusSelecionado);
 
             long idAutor = autorParaIDMap.get(autorSelecionado);
             long idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
-            
+
             AutorVO autorVO = new AutorVO();
-            autorVO.setIDAutor(idAutor);
-            obra.setAutor(autorVO);
+            autorVO.setIDAutor(idAutor); //tem que pegar todos os atributos de autor ou só preciso passar ele com id??
+            obraEncontrada.setAutor(autorVO);
 
             AvaliadorVO avaliadorVO = new AvaliadorVO();
             avaliadorVO.setIDAvaliador(idAvaliador);
-            obra.setAvaliador(avaliadorVO);
+            obraEncontrada.setAvaliador(avaliadorVO);
 
-            LocalDate dataAvaliacao = obra.getDataAvaliacao();
-            obra.setDataAvaliacao(dataAvaliacao);
-
-            obraDAO.atualizar(obra);
+            obraDAO.atualizar(obraEncontrada);
 
             System.out.println("Obra atualizada com sucesso.");
             erroEditarObraGerente.setText("Obra atualizada com sucesso.");
             erroEditarObraGerente.setVisible(true);
             btncancelar.setText("Fechar");
         }
+    }
+
+    private ObraVO buscarObraPorTitulo(String titulo) {
+        ObraVO obra = new ObraVO();
+        ObraDAO obraDAO = new ObraDAO();
+        obra.setTitulo(titulo);
+
+        try {
+
+            ArrayList<ObraVO> obrasEncontradas = obraDAO.buscarPorTitulo(obra);
+            if (!obrasEncontradas.isEmpty()) {
+                return obrasEncontradas.get(0);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void cancelar(ActionEvent event) {
