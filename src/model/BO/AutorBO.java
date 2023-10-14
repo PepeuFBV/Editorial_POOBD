@@ -30,7 +30,8 @@ public class AutorBO {
 	    novaObra.setGenero(genero);
 	    novaObra.setAno(ano);
 	    novaObra.setPdfObra(pdfObraBytes);
-	    novaObra.setAutor(autorVO); 
+        novaObra.setAutor(autorVO);
+        novaObra.setStatus("Em espera");
 
 	    ObraDAO obraDAO = new ObraDAO();
 	    obraDAO.inserir(novaObra);

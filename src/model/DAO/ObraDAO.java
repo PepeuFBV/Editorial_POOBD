@@ -542,7 +542,18 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 obraVO.setGenero(rs.getString("genero"));
                 obraVO.setAno(rs.getDate("ano").toLocalDate());
                 obraVO.setStatus(rs.getString("status"));
-                obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                }
+                if (rs.getBytes("pdf_obra") != null) {
+                    obraVO.setPdfObra(rs.getBytes("pdf_obra"));
+                } else {
+                    obraVO.setPdfObra(null); //para chamar exception
+                }
+                if (rs.getBytes("pdf_avaliacao") != null) {
+                    obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
+                }
+
 
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
