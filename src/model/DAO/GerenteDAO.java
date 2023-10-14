@@ -18,12 +18,13 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
-            String sql = "INSERT INTO gerentes (nome, cpf, email, senha) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO gerentes (nome, email, senha, id_usuario) VALUES (?, ?, ?, ?)";
             statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, gerenteVO.getNome());
-            statement.setString(2, gerenteVO.getCpf());
-            statement.setString(3, gerenteVO.getEmail());
-            statement.setString(4, gerenteVO.getSenha());
+            statement.setString(2, gerenteVO.getEmail());
+            statement.setString(3, gerenteVO.getSenha());
+            statement.setLong(4, gerenteVO.getIDUsuario());
+
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 throw new Exception("A inserção falhou. Nenhuma linha foi alterada.");
@@ -87,6 +88,8 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
             while (rs.next()) {
                 GerenteVO gerenteVO = new GerenteVO(); //usado para salvar a cada linha do ResultSet
                 gerenteVO.setIDGerente(rs.getLong("id_gerente"));
+                gerenteVO.setIDUsuario(rs.getLong("id_usuario"));
+                gerenteVO.setTipo("Gerente");
                 gerenteVO.setNome(rs.getString("nome"));
                 gerenteVO.setEmail(rs.getString("email"));
                 gerenteVO.setSenha(rs.getString("senha"));
@@ -116,10 +119,11 @@ public class GerenteDAO extends BaseDAOImpl<GerenteVO> {
             while (rs.next()) {
                 GerenteVO gerenteVO = new GerenteVO(); //usado para salvar a cada linha do ResultSet
                 gerenteVO.setIDGerente(rs.getLong("id_gerente"));
+                gerenteVO.setIDUsuario(rs.getLong("id_usuario"));
+                gerenteVO.setTipo("Gerente");
                 gerenteVO.setNome(rs.getString("nome"));
                 gerenteVO.setEmail(rs.getString("email"));
                 gerenteVO.setSenha(rs.getString("senha"));
-                gerenteVO.setTipo("Gerente");
 
                 gerentes.add(gerenteVO);
             }

@@ -1,21 +1,38 @@
 package view;
 
 import java.io.IOException;
-
 import controller.LoginPageController;
 import controller.TelaPrincipalController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.BO.UserBO;
+import model.VO.UsuarioVO;
 
 public class Telas {
     
+    private static UsuarioVO usuarioVOAtual;
     private static Stage primaryStage;
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     public static void setPrimaryStage(Stage primaryStage) {
         Telas.primaryStage = primaryStage;
+    }
+
+    public static UsuarioVO getUsuarioVOAtual() {
+        return usuarioVOAtual;
+    }
+
+    public static void setUsuarioVOAtual(UsuarioVO usuarioVOAtual) {
+        if (usuarioVOAtual != null) {
+            Telas.usuarioVOAtual = usuarioVOAtual;
+        } else {
+            throw new NullPointerException("O usuário não pode ser nulo");
+        }
+
     }
 
     public static void telaLogin() throws Exception {
@@ -26,11 +43,10 @@ public class Telas {
         primaryStage.show();
     }
     
-    public static void telaPrincipal(UserBO userBO) throws Exception {
+    public static void telaPrincipal(UsuarioVO usuarioVO) throws Exception { //recebe um UsuarioVO para definir como será a tela principal
         FXMLLoader loader = new FXMLLoader(Telas.class.getResource("/view/VE/tela-principal.fxml"));
         Parent root = loader.load();
         TelaPrincipalController controller = loader.getController();
-        controller.setUserBO(userBO);
         controller.setApropriateScreen();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

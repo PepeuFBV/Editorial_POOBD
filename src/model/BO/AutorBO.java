@@ -30,4 +30,5 @@ public class AutorBO {
         ObraDAO obraDAO = new ObraDAO();
         obraDAO.inserir(novaObra);
     }
+    
 }

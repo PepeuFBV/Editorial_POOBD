@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import exceptions.InsertException;
 import model.DAO.ObraDAO;
 import model.VO.AutorVO;
@@ -14,7 +13,7 @@ import model.VO.UsuarioVO;
 
 
 public class GerenteBO {
-	
+
     public void adicionarAvaliador(String cpf, String nome, String endereco, String senha, String email) throws InsertException {
         if (cpf.isEmpty() || senha.isEmpty() || email.isEmpty() || nome.isEmpty() || endereco.isEmpty()) {
             throw new InsertException("Por favor, preencha todos os campos.");
@@ -27,9 +26,9 @@ public class GerenteBO {
         autorVO.setSenha(senha);
         autorVO.setTipo("Avaliador");
 
-        UserBO<AutorVO> userBO = new UserBO<AutorVO>();
+        UsuarioBO<AutorVO> usuarioBO = new UsuarioBO<AutorVO>();
         try {
-            userBO.cadastrar(autorVO);
+            usuarioBO.cadastrar(autorVO);
         } catch (InsertException e) {
             throw e;
         }
@@ -48,7 +47,7 @@ public class GerenteBO {
         autorVO.setSenha(senha);
         autorVO.setTipo("Autor");
 
-        UserBO<AutorVO> userBO = new UserBO<AutorVO>();
+        UsuarioBO<AutorVO> userBO = new UsuarioBO<AutorVO>();
         try {
             userBO.cadastrar(autorVO);
         } catch (InsertException e) {
@@ -69,7 +68,7 @@ public class GerenteBO {
             String diretorioSalvar = "C:\\Avaliações";
             File diretorio = new File(diretorioSalvar);
             if (!diretorio.exists()) {
-                diretorio.mkdirs(); 
+                diretorio.mkdirs();
             }
 
             for (ObraVO obra : obras) {
@@ -101,5 +100,6 @@ public class GerenteBO {
             }
         }
     }
+    
 }
 

@@ -16,13 +16,32 @@ import java.util.ArrayList;
 
 public class UsuarioBO<VO extends UsuarioVO> {
 
+    private boolean autenticado = false;
+    private String tipo;
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
 	
+    public boolean isAutenticado() {
+        return autenticado;
+    }
+
+    public String getTipo() {
+        if (autenticado) {
+            return tipo;
+        } else {
+            return null;
+        }
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public UsuarioVO autenticar(UsuarioVO usuarioVO) throws ErroLoginException { //retorna um objeto do tipo UsuarioVO (GerenteVO, AutorVO ou AvaliadorVO)
         ArrayList<UsuarioVO> usuario = usuarioDAO.buscarPorEmail(usuarioVO); //deve haver apenas 1 usuário no ArrayList
         if (usuario.isEmpty()) {
             throw new ErroLoginException("Usuário não encontrado");
         } else {
+            autenticado = true;
             for (UsuarioVO user : usuario) { //vai rodar apenas 1 vez
                 if (user.getSenha().equals(usuarioVO.getSenha())) {
                     if (user.getTipo().equals("Gerente")) {
@@ -32,6 +51,7 @@ public class UsuarioBO<VO extends UsuarioVO> {
                         gerenteVO.setEmail(user.getEmail());
                         gerenteVO.setSenha(user.getSenha());
                         gerenteVO.setTipo(user.getTipo());
+                        setTipo(user.getTipo());
                         return gerenteVO;
                     } else if (user.getTipo().equals("Autor")) { //na criação do autor o mesmo não tem nenhuma obra associada
                         AutorVO autorVO = new AutorVO();
@@ -42,6 +62,7 @@ public class UsuarioBO<VO extends UsuarioVO> {
                         autorVO.setCpf(user.getCpf());
                         autorVO.setEndereco(user.getEndereco());
                         autorVO.setTipo(user.getTipo());
+                        setTipo(user.getTipo());
                         return autorVO;
                     } else if (user.getTipo().equals("Avaliador")) {
                         AvaliadorVO avaliadorVO = new AvaliadorVO();
@@ -52,6 +73,7 @@ public class UsuarioBO<VO extends UsuarioVO> {
                         avaliadorVO.setCpf(user.getCpf());
                         avaliadorVO.setEndereco(user.getEndereco());
                         avaliadorVO.setTipo(user.getTipo());
+                        setTipo(user.getTipo());
                         return avaliadorVO;
                     }
                 } else {

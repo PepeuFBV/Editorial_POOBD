@@ -1,7 +1,6 @@
 package model.VO;
 
 import java.time.LocalDate;
-import java.time.Year;
 
 public class ObraVO {
     
@@ -17,7 +16,7 @@ public class ObraVO {
     private byte[] pdf_avaliacao;
     
     public ObraVO(Long iDObra, String titulo, String genero, LocalDate ano, String status, LocalDate data_avaliacao,
-            AutorVO autor, AvaliadorVO avaliador, String pdf_obra, String pdf_avaliacao) {
+            AutorVO autor, AvaliadorVO avaliador, byte[] pdf_obra, byte[] pdf_avaliacao) {
         setIDObra(iDObra);
         setTitulo(titulo);
         setGenero(genero);
@@ -30,7 +29,7 @@ public class ObraVO {
         setPdfAvaliacao(pdf_avaliacao);
     }
     
-    public ObraVO(String titulo, String genero, LocalDate ano, AutorVO autor, String pdf_obra) { //adição de obra pela primeira vez
+    public ObraVO(String titulo, String genero, LocalDate ano, AutorVO autor, byte[] pdf_obra) { //adição de obra pela primeira vez
         setTitulo(titulo);
         setGenero(genero);
         setAno(ano);
@@ -39,6 +38,18 @@ public class ObraVO {
         setPdfObra(pdf_obra);
     }
     
+    public ObraVO(String titulo, String genero, LocalDate ano, AutorVO autor) {
+        setTitulo(titulo);
+        setGenero(genero);
+        setAno(ano);
+        setAutor(autor);
+        setStatus("Em espera");
+    }
+
+    public ObraVO() {
+    }
+    
+
     public Long getIDObra() {
         return IDObra;
     }
@@ -123,7 +134,7 @@ public class ObraVO {
         }
     }
 
-    public UsuarioVO getAvaliador() {
+    public AvaliadorVO getAvaliador() {
         return avaliador;
     }
 
@@ -151,5 +162,4 @@ public class ObraVO {
         this.pdf_avaliacao = pdf_avaliacao;
     }
 
-    
 }

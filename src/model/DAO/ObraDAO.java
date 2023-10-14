@@ -11,7 +11,7 @@ import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
 
 //TODO
-// parar a inserção de obras sem autor
+//parar a inserção de obras sem autor
 
 public class ObraDAO extends BaseDAOImpl<ObraVO> {
 
@@ -27,9 +27,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             statement.setDate(3, Date.valueOf(obra.getAno()));
             statement.setString(4, obra.getStatus());
             statement.setLong(5, obra.getAutor().getIDAutor());
-
-	        statement.setBytes(8, obra.getPdfObra());
-	        statement.setBytes(9, obra.getPdfAvaliacao());
+	        statement.setBytes(6, obra.getPdfObra());
 
 	        int affectedRows = statement.executeUpdate();
 	        if (affectedRows == 0) {
@@ -62,7 +60,6 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
             statement.setLong(6, obra.getAutor().getIDAutor());
             statement.setLong(7, obra.getAvaliador().getIDAvaliador());
-
 	        statement.setBytes(8, obra.getPdfObra());
 	        statement.setBytes(9, obra.getPdfAvaliacao());
 

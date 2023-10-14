@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import model.BO.UserBO;
+import model.BO.UsuarioBO;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
 import model.VO.UsuarioVO;

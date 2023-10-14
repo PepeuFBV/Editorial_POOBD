@@ -92,7 +92,8 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
             rs = statement.executeQuery();
             while (rs.next()) {
                 avaliador.setIDUsuario(rs.getLong("id_usuario"));
-                avaliador.setTipo(rs.getString("tipo"));
+                avaliador.setIDAvaliador(rs.getLong("id_avaliador"));
+                avaliador.setTipo("Avaliador");
                 avaliador.setNome(rs.getString("nome"));
                 avaliador.setEndereco(rs.getString("endereco"));
                 avaliador.setCpf(rs.getString("cpf"));
@@ -101,7 +102,6 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
 
                 avaliadores.add(avaliador);
             }
-
             statement.close();
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
@@ -121,9 +121,10 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
             statement = con.prepareStatement(sql);
             statement.setString(1, avaliador.getEmail());
             rs = statement.executeQuery();
-            while (rs.next()) {
+            while (rs.next()) { //deve retornar só 1
                 avaliador.setIDUsuario(rs.getLong("id_usuario"));
-                avaliador.setTipo(rs.getString("tipo"));
+                avaliador.setIDAvaliador(rs.getLong("id_avaliador"));
+                avaliador.setTipo("Avaliador");
                 avaliador.setNome(rs.getString("nome"));
                 avaliador.setEndereco(rs.getString("endereco"));
                 avaliador.setCpf(rs.getString("cpf"));
@@ -132,7 +133,6 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
 
                 avaliadores.add(avaliador);
             }
-
             statement.close();
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
@@ -155,14 +155,14 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
             rs = statement.executeQuery();
             while (rs.next()) {
                 avaliador.setIDUsuario(rs.getLong("id_usuario"));
-                avaliador.setTipo(rs.getString("tipo"));
+                avaliador.setIDAvaliador(rs.getLong("id_avaliador"));
+                avaliador.setTipo("Avaliador");
                 avaliador.setNome(rs.getString("nome"));
                 avaliador.setEndereco(rs.getString("endereco"));
                 avaliador.setCpf(rs.getString("cpf"));
                 avaliador.setEmail(rs.getString("email"));
                 avaliador.setSenha(rs.getString("senha"));
             }
-
             statement.close();
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
@@ -186,7 +186,7 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
                 AvaliadorVO avaliador = new AvaliadorVO(); //usado para salvar a cada linha do ResultSet
                 avaliador.setIDAvaliador(rs.getLong("id_avaliador"));
                 avaliador.setIDUsuario(rs.getLong("id_usuario"));
-                avaliador.setTipo(rs.getString("tipo"));
+                avaliador.setTipo("Avaliador");
                 avaliador.setNome(rs.getString("nome"));
                 avaliador.setEndereco(rs.getString("endereco"));
                 avaliador.setCpf(rs.getString("cpf"));
@@ -195,7 +195,6 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
 
                 avaliadores.add(avaliador);
             }
-
             statement.close();
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
@@ -240,7 +239,7 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
     public void excluir(AvaliadorVO avaliador) {
         Connection con = null;
         usuarioDAO.excluir(avaliador);
-        
+
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
@@ -248,11 +247,12 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
             statement = con.prepareStatement(sql);
             statement.setLong(1, avaliador.getIDAvaliador());
             statement.executeUpdate();
-            
+
             statement.close();
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
 }

@@ -1,15 +1,9 @@
 package controller;
 
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javafx.beans.property.ReadOnlyLongWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,18 +15,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import model.BO.AutorBO;
-import model.BO.UserBO;
 import model.DAO.ObraDAO;
 import model.VO.ObraVO;
-import model.entities.Obra;
 import view.Telas;
-import model.VO.UsuarioVO;
 
 public class TelaPrincipalController {
 
-    private UsuarioVO usuarioVO;
-    private String visaoAtual = "obras"; //variável para saber qual visão está sendo mostrada na tabela
+    private static String visaoAtual = "obras"; //variável para saber qual visão está sendo mostrada na tabela
+    private static String tipoUsuarioAtual; //variável para saber qual tipo de usuário está logado
 
     @FXML
     private Button botaoAdicionar;
@@ -79,47 +69,43 @@ public class TelaPrincipalController {
     @FXML
     private Text txtRelatorio;
 
-    public void setUsuarioVO(UsuarioVO usuarioVO) {
-        if (usuarioVO == null) {
-            this.usuarioVO = usuarioVO;
-        }
-    }
-
-    public UsuarioVO getUsuarioVO() {
-        return usuarioVO;
-    }
-
-    public void setVisaoAtual(String visaoAtual) {
+    public static void setVisaoAtual(String visaoAtual) {
         if (visaoAtual != null) {
-            this.visaoAtual = visaoAtual;
+            TelaPrincipalController.visaoAtual = visaoAtual;
         }
     }
 
-    public String getVisaoAtual() {
+    public static String getVisaoAtual() {
         return visaoAtual;
     }
 
-    public TelaPrincipalController(UsuarioVO usuarioVO, String visaoAtual) {
-        setUsuarioVO(usuarioVO);
-        setVisaoAtual(visaoAtual);
+    public static String getTipoUsuario() {
+        return TelaPrincipalController.tipoUsuarioAtual;
+    }
+
+    public static void setTipoUsuario(String tipoUsuario) {
+        if (TelaPrincipalController.tipoUsuarioAtual != null) {
+            TelaPrincipalController.tipoUsuarioAtual = Telas.getUsuarioVOAtual().getTipo();
+        } else {
+            throw new NullPointerException("O tipo de usuário não pode ser nulo na tela principal");
+        }
     }
 
     @FXML
     public void setApropriateScreen() {
         
-        String nomeUsuario = userBO.getNome();
-        String tipoUsuario = userBO.getTipo();
-        
+        String nomeUsuario = Telas.getUsuarioVOAtual().getNome();
+        tipoUsuarioAtual = Telas.getUsuarioVOAtual().getTipo();
+
         nomeUser.setText(nomeUsuario);
-        tipoUser.setText(tipoUsuario);
+        tipoUser.setText(TelaPrincipalController.tipoUsuarioAtual);
         
 
-        if (userBO.getTipo().equals("gerente")) { //habilita as ações de gerente e visões de tabela de gerente
+        if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) { //habilita as ações de gerente e visões de tabela de gerente
 
             ObraDAO obrasDAO = new ObraDAO();
             ArrayList<ObraVO> obras = obrasDAO.listar();
 
-            
             
             //cria a tableView principal e a estiliza
             TableView<ObraVO> mainTableView = new TableView<>();
@@ -206,7 +192,7 @@ public class TelaPrincipalController {
             columns.addAll(Arrays.asList(idColumn, tituloColumn, generoColumn, anoColumn, statusColumn, autorColumn, avaliadorColumn, opcoesColumn));
             mainTableView.getColumns().addAll(columns);
 
-        } else if (userBO.getTipo().equals("autor")) { //habilitar ações de autor e visões de tabela de autor
+        } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) { //habilitar ações de autor e visões de tabela de autor
 
             botaoRelatorio.setVisible(false);
             fundoBotaoRelatorio.visibleProperty().set(false);
@@ -220,24 +206,8 @@ public class TelaPrincipalController {
             fundoBotaoAutores.visibleProperty().set(false);
             txtAutores.visibleProperty().set(false);
 
-            //lembrar de no botão adicionar obra checar o tipo de user para mostrar a tela correta
 
-            AutorBO autorBO = new AutorBO(userBO.getId(), userBO.getNome(), userBO.getLogin(), userBO.getSenha());
-            List<Obra> obras = autorBO.getObras(); //mudar para o método que retorna as obras do autor
-             //define o título da coluna da tabela
-            for (Obra obra : obras) {
-                //adiciona as obras na tabela, fazer isso para cada obra
-                obra.getId();
-                obra.getTitulo();
-                obra.getGenero();
-                obra.getAno();
-                obra.getStatus();
-                obra.getAutor();
-                obra.getAvaliador();
-
-            }
-
-        } else if (userBO.getTipo().equals("Avaliador")) { //habilitar ações de avaliador e visões de tabela de avaliador
+        } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Avaliador")) { //habilitar ações de avaliador e visões de tabela de avaliador
 
             botaoRelatorio.visibleProperty().set(false);
             fundoBotaoRelatorio.visibleProperty().set(false);
@@ -268,7 +238,7 @@ public class TelaPrincipalController {
             //pop-up de campo vázio
         } else {
         //mudar a tabela para a das obras/autores/avaliadores que contém a string de busca (será recebido um ResultSet)
-            if (userBO.getTipo().equals("Gerente")) {
+            if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
                     if (visaoAtual.equals("obras")) {
                         //mostrar todas as obras
                     } else if (visaoAtual.equals("autores")) {
@@ -277,12 +247,12 @@ public class TelaPrincipalController {
                         //mostrar todos os avaliadores
                     }
 
-            } else if (userBO.getTipo().equals("autor")) {
+            } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
                     if (visaoAtual.equals("obras")) {
                         //mostrar obras do próprio autor 
                     }
 
-            } else if (userBO.getTipo().equals("avaliador")) {
+            } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Avaliador")) {
                     if (visaoAtual.equals("obras")) {
                         //mostrar obras que o avaliador deve avaliar
                     }
@@ -296,12 +266,14 @@ public class TelaPrincipalController {
     @FXML
     public void paraAvaliadores(ActionEvent event) throws Exception { //botão de avaliador é apertado por gerentes
         //muda o conteúdo das tabelas e subir o botão de avaliadores
+
         visaoAtual = "avaliadores";
     }
 
     @FXML
     public void paraAutores(ActionEvent event) throws Exception { //botão de autor é apertado por gerentes
         //muda o conteúdo das tabelas e subir o botão de autores
+
         visaoAtual = "autores";
     }
 
@@ -316,7 +288,7 @@ public class TelaPrincipalController {
 
     @FXML
     public void adicionarNovo(ActionEvent event) {
-        if (userBO.getTipo().equals("gerente")) {
+        if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
             if (visaoAtual.equals("obras")) {
                 try {
                     Telas.telaNovaObraGerente();
@@ -336,7 +308,7 @@ public class TelaPrincipalController {
                     e.printStackTrace();
                 }
             }
-        } else if (userBO.getTipo().equals("autor")) {
+        } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
             try {
                 Telas.telaNovaObraAutor();
             } catch (Exception e) {
@@ -348,7 +320,7 @@ public class TelaPrincipalController {
     @FXML
     public void deletar(ActionEvent event) {
         try {
-            if (userBO.getTipo().equals("gerente")) {
+            if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
                 if (visaoAtual.equals("obras")) {
                 	Telas.telaDeletarObra();
                 } else if (visaoAtual.equals("autores")) {
@@ -356,9 +328,9 @@ public class TelaPrincipalController {
                 } else if (visaoAtual.equals("avaliadores")) {
                 	Telas.telaDeletarAvaliador();
                 }
-            } else if (userBO.getTipo().equals("autor")) {
+            } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
                 Telas.telaDeletarObra();
-            } else if (userBO.getTipo().equals("avaliador")) {
+            } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Avaliador")) {
                 Telas.telaDeletarAvaliacao(); //fazer telaDeletarAvaliacao
             }
         } catch (Exception e) {
@@ -369,9 +341,9 @@ public class TelaPrincipalController {
     @FXML
     public void editarObra(ActionEvent event) {
         try {
-            if (userBO.getTipo().equals("gerente")) {
+            if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
                 Telas.telaEditarObraGerente();
-            } else if (userBO.getTipo().equals("autor")) {
+            } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
                 Telas.telaEditarObraAutor();
             }
         } catch (Exception e) {
