@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 
+import controller.DeletarObraAutorController;
 import controller.EditarObraAutorController;
 import controller.LoginPageController;
 import controller.NovaObraAutorController;
@@ -112,18 +113,36 @@ public class Telas {
 		}
     }
 
-    public static void telaDeletarObra() throws Exception {
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/deletar-obra.fxml"));
+    public static void telaDeletarObraGerente() throws Exception {
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/deletar-obra-gerente.fxml"));
     	try {
 			Scene scene = new Scene(fx.load());
 			Stage stage = new Stage();
 			stage.setScene(scene);
-			stage.setTitle("Tela Deletar Obra");
+			stage.setTitle("Tela Deletar Obra Gerente");
 			stage.show();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    }
+    
+    public static void telaDeletarObraAutor(UsuarioVO usuarioVO) throws Exception { //mudar a classe
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/deletar-obra-autor.fxml"));
+        Parent root = fx.load();
+        DeletarObraAutorController controller = fx.getController();
+        controller.setUsuarioVO(usuarioVO);
+
+        Stage popupStage = new Stage();
+        Scene scene = new Scene(root);
+        popupStage.setScene(scene);
+
+        popupStage.setTitle("Tela Deletar Obra Autor");
+
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.initOwner(primaryStage); 
+
+        popupStage.show();
     }
     
     public static void telaDownload() throws Exception {

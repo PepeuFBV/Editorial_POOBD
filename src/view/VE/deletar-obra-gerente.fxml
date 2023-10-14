@@ -6,22 +6,22 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="249.0" prefWidth="318.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeletarAvaliadorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="249.0" prefWidth="318.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeletarObraGerenteController">
    <children>
-      <Label layoutX="90.0" layoutY="35.0" prefHeight="32.0" prefWidth="141.0" text="Deletar Avaliador">
+      <Label layoutX="96.0" layoutY="28.0" prefHeight="32.0" prefWidth="126.0" text="Deletar Obra">
          <font>
-            <Font size="18.0" />
+            <Font size="22.0" />
          </font>
       </Label>
       <Button layoutX="173.0" layoutY="196.0" mnemonicParsing="false" onAction="#deletar" prefHeight="25.0" prefWidth="99.0" text="Excluir" textFill="#ff1a00" />
       <Button fx:id="btncancelar" layoutX="47.0" layoutY="196.0" mnemonicParsing="false" onAction="#voltar" prefHeight="21.0" prefWidth="99.0" text="Voltar" />
       <Label fx:id="erroEditarObraGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="173.0" prefHeight="17.0" prefWidth="308.0" text="Label" visible="false" />
-      <Label layoutX="39.0" layoutY="88.0" prefHeight="25.0" prefWidth="43.0" text="Email:">
+      <Label layoutX="39.0" layoutY="88.0" prefHeight="25.0" prefWidth="43.0" text="Obra:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="email" layoutX="82.0" layoutY="88.0" prefHeight="25.0" prefWidth="182.0" />
+      <ChoiceBox fx:id="obra" layoutX="82.0" layoutY="88.0" prefHeight="25.0" prefWidth="182.0" />
       <Label layoutX="74.0" layoutY="143.0" text="Essa ação não pode ser desfeita." textAlignment="CENTER" />
    </children>
 </Pane>

@@ -368,14 +368,14 @@ public class TelaPrincipalController {
         try {
             if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
                 if (visaoAtual.equals("obras")) {
-                	Telas.telaDeletarObra();
+                	Telas.telaDeletarObraGerente();
                 } else if (visaoAtual.equals("autores")) {
                 	Telas.telaDeletarAutor();
                 } else if (visaoAtual.equals("avaliadores")) {
                 	Telas.telaDeletarAvaliador();
                 }
             } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
-                Telas.telaDeletarObra();
+                Telas.telaDeletarObraAutor(Telas.getUsuarioVOAtual());
             } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Avaliador")) {
                 Telas.telaDeletarAvaliacao(); //fazer telaDeletarAvaliacao
             }
