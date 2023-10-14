@@ -1,42 +1,105 @@
 package model.BO;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import exceptions.InsertException;
+import model.DAO.ObraDAO;
+import model.VO.AutorVO;
+import model.VO.ObraVO;
+import model.VO.UsuarioVO;
+
+
 public class GerenteBO {
+	
+    public void adicionarAvaliador(String cpf, String nome, String endereco, String senha, String email) throws InsertException {
+        if (cpf.isEmpty() || senha.isEmpty() || email.isEmpty() || nome.isEmpty() || endereco.isEmpty()) {
+            throw new InsertException("Por favor, preencha todos os campos.");
+        }
+        UsuarioVO autorVO = new AutorVO();
+        autorVO.setCpf(cpf);
+        autorVO.setNome(nome);
+        autorVO.setEndereco(endereco);
+        autorVO.setEmail(email);
+        autorVO.setSenha(senha);
+        autorVO.setTipo("Avaliador");
 
-    private String nome;
-    private String login;
-    private String senha;
-
-    public GerenteBO() {
-    }
-
-    public void setNome(String nome) {
-        if (nome != null && !nome.isEmpty()) {
-            this.nome = nome;
+        UserBO<AutorVO> userBO = new UserBO<AutorVO>();
+        try {
+            userBO.cadastrar(autorVO);
+        } catch (InsertException e) {
+            throw e;
         }
     }
+    
+    public void adicionarAutor(String cpf, String nome, String endereco, String senha, String email) throws InsertException {
+        if (cpf.isEmpty() || senha.isEmpty() || email.isEmpty() || nome.isEmpty() || endereco.isEmpty()) {
+            throw new InsertException("Por favor, preencha todos os campos.");
+        }
 
-    public String getNome() {
-        return this.nome;
-    }
+        UsuarioVO autorVO = new AutorVO();
+        autorVO.setCpf(cpf);
+        autorVO.setNome(nome);
+        autorVO.setEndereco(endereco);
+        autorVO.setEmail(email);
+        autorVO.setSenha(senha);
+        autorVO.setTipo("Autor");
 
-    public void setLogin(String login) {
-        if (login != null && !login.isEmpty()) {
-            this.login = login;
+        UserBO<AutorVO> userBO = new UserBO<AutorVO>();
+        try {
+            userBO.cadastrar(autorVO);
+        } catch (InsertException e) {
+            throw e;
         }
     }
+    
+    public void baixarRelatorios(int anoInicio, int anoFinal) throws IOException, SQLException {
+        if (anoInicio > anoFinal) {
+            throw new IllegalArgumentException("O ano inicial não pode ser maior que o ano final.");
+        }
 
-    public String getLogin() {
-        return this.login;
-    }
+        ArrayList<ObraVO> obras = new ArrayList<>();
+        ObraDAO obraDAO = new ObraDAO();
+        obras = obraDAO.buscarPorAno(anoInicio, anoFinal);
 
-    public void setSenha(String senha) {
-        if (senha != null && !senha.isEmpty()) {
-            this.senha = senha;
+        if (!obras.isEmpty()) {
+            String diretorioSalvar = "C:\\Avaliações";
+            File diretorio = new File(diretorioSalvar);
+            if (!diretorio.exists()) {
+                diretorio.mkdirs(); 
+            }
+
+            for (ObraVO obra : obras) {
+                if (obra.getPdfObra() != null) {
+                    byte[] pdfObraBytes = obra.getPdfObra();
+                    String nomeArquivoObra = "obra_" + obra.getIDObra() + ".pdf";
+                    String caminhoArquivoObra = diretorioSalvar + nomeArquivoObra;
+
+                    try (FileOutputStream outputStream = new FileOutputStream(caminhoArquivoObra)) {
+                        outputStream.write(pdfObraBytes);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        throw e;
+                    }
+                }
+
+                if (obra.getPdfAvaliacao() != null) {
+                    byte[] pdfAvaliacaoBytes = obra.getPdfAvaliacao();
+                    String nomeArquivoAvaliacao = "avaliacao_" + obra.getIDObra() + ".pdf";
+                    String caminhoArquivoAvaliacao = diretorioSalvar + nomeArquivoAvaliacao;
+
+                    try (FileOutputStream outputStream = new FileOutputStream(caminhoArquivoAvaliacao)) {
+                        outputStream.write(pdfAvaliacaoBytes);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        throw e;
+                    }
+                }
+            }
         }
     }
-
-    public String getSenha() {
-        return this.senha;
-    }
-
 }
+

@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.File;
-import java.time.LocalDate;
+import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,8 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.DAO.ObraDAO;
-import model.VO.ObraVO;
+import model.BO.AutorBO;
 
 public class NovaObraAutorController {
 	
@@ -48,33 +47,29 @@ public class NovaObraAutorController {
 	}
 	
 	public void adicionar(ActionEvent event) {
-		
-		String obraSelecionada = showFileautor.getText();    
+	    String obraSelecionada = showFileautor.getText();
 	    String tituloText = titulo.getText();
 	    String generoText = genero.getText();
 	    String anoText = ano.getText();
-	    
-	    if (obraSelecionada.isEmpty() ||tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty()) {
-	    	erroNovaObraAutor.setText("Por favor, preencha todos os campos.");
-	    	erroNovaObraAutor.setVisible(true);
-	        return;
-	        
-	    } else {
-		    ObraVO novaObra = new ObraVO();
-		    novaObra.setTitulo(tituloText);
-		    novaObra.setGenero(generoText);
-		    LocalDate anoLocalDate = LocalDate.parse(anoText);
-		    novaObra.setAno(anoLocalDate);
-		    novaObra.setPdfObra(obraSelecionada);
 
-		    ObraDAO obraDAO = new ObraDAO();
-		    obraDAO.inserir(novaObra);
+	    try {
+	        AutorBO autorBO = new AutorBO();
+	        autorBO.adicionarObra(obraSelecionada, tituloText, generoText, anoText);
+
 	        System.out.println("Obra adicionada com sucesso.");
 	        erroNovaObraAutor.setText("Obra adicionada com sucesso.");
 	        erroNovaObraAutor.setVisible(true);
 	        btncancelar.setText("Fechar");
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        erroNovaObraAutor.setText("Erro ao ler o arquivo PDF.");
+	        erroNovaObraAutor.setVisible(true);
+	    } catch (IllegalArgumentException e) {
+	        erroNovaObraAutor.setText(e.getMessage());
+	        erroNovaObraAutor.setVisible(true);
 	    }
 	}
+
 	
 	public void cancelar(ActionEvent event) {
 		Stage stage = (Stage) erroNovaObraAutor.getScene().getWindow();
