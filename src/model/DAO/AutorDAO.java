@@ -93,6 +93,7 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
             while (rs.next()) {
                 AutorVO autorVO = new AutorVO(); //usado para salvar a cada linha do ResultSet
                 autorVO.setIDUsuario(rs.getLong("id_usuario"));
+                autorVO.setIDAutor(rs.getLong("id_autor"));
                 autorVO.setTipo("Autor");
                 autorVO.setNome(rs.getString("nome"));
                 autorVO.setEndereco(rs.getString("endereco"));

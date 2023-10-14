@@ -20,14 +20,30 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
-            String sql = "INSERT INTO obras (titulo, genero, ano, status, id_autor, pdf_obra) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO obras (titulo, genero, ano, status, id_autor, pdf_obra, data_avaliacao, id_avaliador, pdf_avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, obra.getTitulo());
             statement.setString(2, obra.getGenero());
             statement.setDate(3, Date.valueOf(obra.getAno()));
             statement.setString(4, obra.getStatus());
             statement.setLong(5, obra.getAutor().getIDAutor());
-	        statement.setBytes(6, obra.getPdfObra());
+            statement.setBytes(6, obra.getPdfObra());
+            if (obra.getDataAvaliacao() == null) {
+                statement.setDate(7, null);
+            } else {
+                statement.setDate(7, Date.valueOf(obra.getDataAvaliacao()));
+            }
+            if (obra.getAvaliador() == null) {
+                statement.setLong(8, 0);
+            } else {
+                statement.setLong(8, obra.getAvaliador().getIDAvaliador());
+            }
+            if (obra.getPdfAvaliacao() == null) {
+                statement.setBytes(9, null);
+            } else {
+                statement.setBytes(9, obra.getPdfAvaliacao());
+            }
+            
 
 	        int affectedRows = statement.executeUpdate();
 	        if (affectedRows == 0) {
@@ -57,12 +73,23 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             statement.setString(2, obra.getGenero());
             statement.setDate(3, Date.valueOf(obra.getAno()));
             statement.setString(4, obra.getStatus());
-            statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
+            if (obra.getDataAvaliacao() == null) {
+                statement.setDate(5, null);
+            } else { //se a data de avaliação não for nula (se a obra foi avaliada)
+                statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
+            }
             statement.setLong(6, obra.getAutor().getIDAutor());
-            statement.setLong(7, obra.getAvaliador().getIDAvaliador());
-	        statement.setBytes(8, obra.getPdfObra());
-	        statement.setBytes(9, obra.getPdfAvaliacao());
-
+            if (obra.getAvaliador() == null) {
+                statement.setLong(7, 0);
+            } else {
+                statement.setLong(7, obra.getAvaliador().getIDAvaliador());
+            }
+            statement.setBytes(8, obra.getPdfObra());
+            if (obra.getPdfAvaliacao() == null) {
+                statement.setBytes(9, null);
+            } else {
+                statement.setBytes(9, obra.getPdfAvaliacao());
+            }
 	        statement.setLong(10, obra.getIDObra());
 	        statement.executeUpdate();
 
@@ -92,19 +119,31 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 obraVO.setGenero(rs.getString("genero"));
                 obraVO.setAno(rs.getDate("ano").toLocalDate());
                 obraVO.setStatus(rs.getString("status"));
-                obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                }
+                if (rs.getBytes("pdf_obra") != null) {
+                    obraVO.setPdfObra(rs.getBytes("pdf_obra"));
+                } else {
+                    obraVO.setPdfObra(null); //para chamar exception
+                }
+                if (rs.getBytes("pdf_avaliacao") != null) {
+                    obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
+                }
 
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
                 ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO, esse array só terá um valor
                 if (!autores.isEmpty()) {
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
                     autorVO.setNome(autores.get(0).getNome());
                     autorVO.setEndereco(autores.get(0).getEndereco());
                     autorVO.setCpf(autores.get(0).getCpf());
                     autorVO.setEmail(autores.get(0).getEmail());
                     autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo(autores.get(0).getTipo());
 
                     obraVO.setAutor(autorVO);
                 } else { //exception 
@@ -116,12 +155,14 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
                 ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
                 if (!avaliadores.isEmpty()) {
-                    autorVO.setNome(autores.get(0).getNome());
-                    autorVO.setEndereco(autores.get(0).getEndereco());
-                    autorVO.setCpf(autores.get(0).getCpf());
-                    autorVO.setEmail(autores.get(0).getEmail());
-                    autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo(autores.get(0).getTipo());
+                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                    avaliadorVO.setTipo("Avaliador");
+                    avaliadorVO.setNome(autores.get(0).getNome());
+                    avaliadorVO.setEndereco(autores.get(0).getEndereco());
+                    avaliadorVO.setCpf(autores.get(0).getCpf());
+                    avaliadorVO.setEmail(autores.get(0).getEmail());
+                    avaliadorVO.setSenha(autores.get(0).getSenha());
 
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
@@ -155,19 +196,31 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 obraVO.setGenero(rs.getString("genero"));
                 obraVO.setAno(rs.getDate("ano").toLocalDate());
                 obraVO.setStatus(rs.getString("status"));
-                obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                }
+                if (rs.getBytes("pdf_obra") != null) {
+                    obraVO.setPdfObra(rs.getBytes("pdf_obra"));
+                } else {
+                    obraVO.setPdfObra(null); //para chamar exception
+                }
+                if (rs.getBytes("pdf_avaliacao") != null) {
+                    obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
+                }
 
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
                 ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
                 if (!autores.isEmpty()) {
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
                     autorVO.setNome(autores.get(0).getNome());
                     autorVO.setEndereco(autores.get(0).getEndereco());
                     autorVO.setCpf(autores.get(0).getCpf());
                     autorVO.setEmail(autores.get(0).getEmail());
                     autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo(autores.get(0).getTipo());
 
                     obraVO.setAutor(autorVO);
                 } else {
@@ -179,12 +232,14 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
                 ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
                 if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                    avaliadorVO.setTipo("Avaliador");
                     avaliadorVO.setNome(avaliadores.get(0).getNome());
                     avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
                     avaliadorVO.setCpf(avaliadores.get(0).getCpf());
                     avaliadorVO.setEmail(avaliadores.get(0).getEmail());
                     avaliadorVO.setSenha(avaliadores.get(0).getSenha());
-                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
 
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
@@ -218,7 +273,17 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 obraVO.setGenero(rs.getString("genero"));
                 obraVO.setAno(rs.getDate("ano").toLocalDate());
                 obraVO.setStatus(rs.getString("status"));
-                obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                }
+                if (rs.getBytes("pdf_obra") != null) {
+                    obraVO.setPdfObra(rs.getBytes("pdf_obra"));
+                } else {
+                    obraVO.setPdfObra(null); //para chamar exception
+                }
+                if (rs.getBytes("pdf_avaliacao") != null) {
+                    obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
+                }
 
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
@@ -226,12 +291,13 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
                     autorVO.setNome(autores.get(0).getNome());
                     autorVO.setEndereco(autores.get(0).getEndereco());
                     autorVO.setCpf(autores.get(0).getCpf());
                     autorVO.setEmail(autores.get(0).getEmail());
                     autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo(autores.get(0).getTipo());
 
                     obraVO.setAutor(autorVO);
                 } else {
@@ -243,12 +309,14 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
                 ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
                 if (!avaliadores.isEmpty()) {
-                    autorVO.setNome(autores.get(0).getNome());
-                    autorVO.setEndereco(autores.get(0).getEndereco());
-                    autorVO.setCpf(autores.get(0).getCpf());
-                    autorVO.setEmail(autores.get(0).getEmail());
-                    autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo(autores.get(0).getTipo());
+                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                    avaliadorVO.setTipo("Avaliador");
+                    avaliadorVO.setNome(avaliadores.get(0).getNome());
+                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
 
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
@@ -282,7 +350,6 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 obraVO.setTitulo(rs.getString("titulo"));
                 obraVO.setGenero(rs.getString("genero"));
                 obraVO.setAno(rs.getDate("ano").toLocalDate());
-
                 if (rs.getDate("data_avaliacao") != null) {
                     obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
                 } else {
@@ -304,16 +371,17 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO);
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
                     autorVO.setNome(autores.get(0).getNome());
                     autorVO.setEndereco(autores.get(0).getEndereco());
                     autorVO.setCpf(autores.get(0).getCpf());
                     autorVO.setEmail(autores.get(0).getEmail());
                     autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo("Autor");
 
                     obraVO.setAutor(autorVO);
                 } else {
-                    obraVO.setAutor(null);
+                    obraVO.setAutor(null); //p ara acusar erro
                 }
 
                 AvaliadorVO avaliadorVO = new AvaliadorVO();
@@ -321,12 +389,14 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
                 ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
                 if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                    avaliadorVO.setTipo("Avaliador");
                     avaliadorVO.setNome(avaliadores.get(0).getNome());
                     avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
                     avaliadorVO.setCpf(avaliadores.get(0).getCpf());
                     avaliadorVO.setEmail(avaliadores.get(0).getEmail());
                     avaliadorVO.setSenha(avaliadores.get(0).getSenha());
-                    avaliadorVO.setTipo("Avaliador");
 
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
@@ -360,7 +430,17 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 obraVO.setGenero(rs.getString("genero"));
                 obraVO.setAno(rs.getDate("ano").toLocalDate());
                 obraVO.setStatus(rs.getString("status"));
-                obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                }
+                if (rs.getBytes("pdf_obra") != null) {
+                    obraVO.setPdfObra(rs.getBytes("pdf_obra"));
+                } else {
+                    obraVO.setPdfObra(null); //para chamar exception
+                }
+                if (rs.getBytes("pdf_avaliacao") != null) {
+                    obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
+                }
 
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
@@ -368,12 +448,13 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
                 if (!autores.isEmpty()) { 
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
                     autorVO.setNome(autores.get(0).getNome());
                     autorVO.setEndereco(autores.get(0).getEndereco());
                     autorVO.setCpf(autores.get(0).getCpf());
                     autorVO.setEmail(autores.get(0).getEmail());
                     autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo(autores.get(0).getTipo());
 
                     obraVO.setAutor(autorVO);
                 } else {
@@ -385,12 +466,14 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
                 ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
                 if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                    avaliadorVO.setTipo("Avaliador");
                     avaliadorVO.setNome(avaliadores.get(0).getNome());
                     avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
                     avaliadorVO.setCpf(avaliadores.get(0).getCpf());
                     avaliadorVO.setEmail(avaliadores.get(0).getEmail());
                     avaliadorVO.setSenha(avaliadores.get(0).getSenha());
-                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
 
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
@@ -424,7 +507,17 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 obraVO.setGenero(rs.getString("genero"));
                 obraVO.setAno(rs.getDate("ano").toLocalDate());
                 obraVO.setStatus(rs.getString("status"));
-                obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                }
+                if (rs.getBytes("pdf_obra") != null) {
+                    obraVO.setPdfObra(rs.getBytes("pdf_obra"));
+                } else {
+                    obraVO.setPdfObra(null); //para chamar exception
+                }
+                if (rs.getBytes("pdf_avaliacao") != null) {
+                    obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
+                }
 
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
@@ -432,12 +525,13 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
                     autorVO.setNome(autores.get(0).getNome());
                     autorVO.setEndereco(autores.get(0).getEndereco());
                     autorVO.setCpf(autores.get(0).getCpf());
                     autorVO.setEmail(autores.get(0).getEmail());
                     autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo(autores.get(0).getTipo());
 
                     obraVO.setAutor(autorVO);
                 } else {
@@ -449,12 +543,14 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
                 ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
                 if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                    avaliadorVO.setTipo("Avaliador");
                     avaliadorVO.setNome(avaliadores.get(0).getNome());
                     avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
                     avaliadorVO.setCpf(avaliadores.get(0).getCpf());
                     avaliadorVO.setEmail(avaliadores.get(0).getEmail());
                     avaliadorVO.setSenha(avaliadores.get(0).getSenha());
-                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
 
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
@@ -488,7 +584,17 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 obraVO.setGenero(rs.getString("genero"));
                 obraVO.setAno(rs.getDate("ano").toLocalDate());
                 obraVO.setStatus(rs.getString("status"));
-                obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                }
+                if (rs.getBytes("pdf_obra") != null) {
+                    obraVO.setPdfObra(rs.getBytes("pdf_obra"));
+                } else {
+                    obraVO.setPdfObra(null); //para chamar exception
+                }
+                if (rs.getBytes("pdf_avaliacao") != null) {
+                    obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
+                }
 
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
@@ -496,12 +602,13 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
                     autorVO.setNome(autores.get(0).getNome());
                     autorVO.setEndereco(autores.get(0).getEndereco());
                     autorVO.setCpf(autores.get(0).getCpf());
                     autorVO.setEmail(autores.get(0).getEmail());
                     autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo(autores.get(0).getTipo());
 
                     obraVO.setAutor(autorVO);
                 } else {
@@ -513,12 +620,14 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
                 ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
                 if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                    avaliadorVO.setTipo("Avaliador");
                     avaliadorVO.setNome(avaliadores.get(0).getNome());
                     avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
                     avaliadorVO.setCpf(avaliadores.get(0).getCpf());
                     avaliadorVO.setEmail(avaliadores.get(0).getEmail());
                     avaliadorVO.setSenha(avaliadores.get(0).getSenha());
-                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
 
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
@@ -570,12 +679,13 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
                     autorVO.setNome(autores.get(0).getNome());
                     autorVO.setEndereco(autores.get(0).getEndereco());
                     autorVO.setCpf(autores.get(0).getCpf());
                     autorVO.setEmail(autores.get(0).getEmail());
                     autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo(autores.get(0).getTipo());
 
                     obraVO.setAutor(autorVO);
                 } else {
@@ -587,12 +697,14 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
                 ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
                 if (!avaliadores.isEmpty()) {
+                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                    avaliadorVO.setTipo("Avaliador");
                     avaliadorVO.setNome(avaliadores.get(0).getNome());
                     avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
                     avaliadorVO.setCpf(avaliadores.get(0).getCpf());
                     avaliadorVO.setEmail(avaliadores.get(0).getEmail());
                     avaliadorVO.setSenha(avaliadores.get(0).getSenha());
-                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
 
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
