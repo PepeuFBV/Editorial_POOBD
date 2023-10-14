@@ -2,7 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
+import java.time.LocalDate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -24,23 +24,28 @@ public class GerarRelatorioController {
     private GerenteBO gerenteBO = new GerenteBO();
 
     public void baixar(ActionEvent event) {
-        int anoInicio = datainicio.getValue().getYear();
-        int anoFinal = datafinal.getValue().getYear();
+        LocalDate dataInicio = datainicio.getValue();
+        LocalDate dataFinal = datafinal.getValue();
 
-        try {
-            gerenteBO.baixarRelatorios(anoInicio, anoFinal);
+        if (dataInicio != null && dataFinal != null) {
+            java.sql.Date sqlDataInicio = java.sql.Date.valueOf(dataInicio);
+            java.sql.Date sqlDataFinal = java.sql.Date.valueOf(dataFinal);
 
-            mensagemLabel.setText("Relatórios baixados com sucesso.");
+            try {
+                gerenteBO.baixarRelatorios(sqlDataInicio, sqlDataFinal);
+             
+            } catch (IllegalArgumentException e) {
+                mensagemLabel.setText(e.getMessage());
+                mensagemLabel.setVisible(true);
+                e.printStackTrace();
+            } catch (IOException | SQLException e) {
+                mensagemLabel.setText("Erro ao baixar relatórios.");
+                mensagemLabel.setVisible(true);
+                e.printStackTrace();
+            }
+        } else {
+            mensagemLabel.setText("Selecione as datas de início e final.");
             mensagemLabel.setVisible(true);
-            System.out.println("Relatórios baixados com sucesso.");
-        } catch (IllegalArgumentException e) {
-            mensagemLabel.setText(e.getMessage());
-            mensagemLabel.setVisible(true);
-            e.printStackTrace();
-        } catch (IOException | SQLException e) {
-            mensagemLabel.setText("Erro ao baixar relatórios.");
-            mensagemLabel.setVisible(true);
-            e.printStackTrace();
         }
     }
 

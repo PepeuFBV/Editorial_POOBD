@@ -103,11 +103,7 @@ public class ObraVO {
     }
 
     public void setStatus(String status) {
-        if (status != null && !status.isEmpty()) {
-            this.status = status;
-        } else {
-            throw new IllegalArgumentException("Status da obra não pode ser nulo ou vazio.");
-        }
+        this.status = status;
     }
     
     public LocalDate getDataAvaliacao() {
@@ -115,11 +111,7 @@ public class ObraVO {
     }
 
     public void setDataAvaliacao(LocalDate data_avaliacao) {
-        if (data_avaliacao != null) {
-            this.data_avaliacao = data_avaliacao;
-        } else {
-            throw new IllegalArgumentException("Data de avaliação da obra não pode ser nula.");
-        }
+        this.data_avaliacao = data_avaliacao;
     }
 
     public AutorVO getAutor() {

@@ -264,7 +264,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         return arrayDeObras;
     }
 
-    public ArrayList<ObraVO> buscarPorAno(int anoInicio, int anoFinal) throws SQLException {
+    public ArrayList<ObraVO> buscarPorAno(Date anoInicio, Date anoFinal) throws SQLException {
         Connection con = null;
         ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
         try {
@@ -273,8 +273,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             ResultSet rs = null;
             String sql = "SELECT * FROM obras WHERE ano BETWEEN ? AND ?";
             statement = con.prepareStatement(sql);
-            statement.setInt(1, anoInicio);
-            statement.setInt(2, anoFinal);
+            statement.setDate(1, anoInicio);
+            statement.setDate(2, anoFinal);
             rs = statement.executeQuery();
             while (rs.next()) {
                 ObraVO obraVO = new ObraVO();
@@ -282,8 +282,18 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 obraVO.setTitulo(rs.getString("titulo"));
                 obraVO.setGenero(rs.getString("genero"));
                 obraVO.setAno(rs.getDate("ano").toLocalDate());
-                obraVO.setStatus(rs.getString("status"));
-                obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                } else {
+                    obraVO.setDataAvaliacao(null);
+                }
+
+                if (rs.getString("status") != null) {
+                    obraVO.setStatus(rs.getString("status"));
+                } else {
+                    obraVO.setStatus(null);
+                }
 
                 byte[] pdfAvaliacao = rs.getBytes("pdf_avaliacao");
                 obraVO.setPdfAvaliacao(pdfAvaliacao);
@@ -299,7 +309,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     autorVO.setCpf(autores.get(0).getCpf());
                     autorVO.setEmail(autores.get(0).getEmail());
                     autorVO.setSenha(autores.get(0).getSenha());
-                    autorVO.setTipo(autores.get(0).getTipo());
+                    autorVO.setTipo("Autor");
 
                     obraVO.setAutor(autorVO);
                 } else {
@@ -316,7 +326,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     avaliadorVO.setCpf(avaliadores.get(0).getCpf());
                     avaliadorVO.setEmail(avaliadores.get(0).getEmail());
                     avaliadorVO.setSenha(avaliadores.get(0).getSenha());
-                    avaliadorVO.setTipo(avaliadores.get(0).getTipo());
+                    avaliadorVO.setTipo("Avaliador");
 
                     obraVO.setAvaliador(avaliadorVO);
                 } else {
@@ -331,7 +341,6 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         }
         return arrayDeObras;
     }
-
 
     public ArrayList<ObraVO> buscarPorStatus(ObraVO obra) throws SQLException {
         Connection con = null;

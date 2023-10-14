@@ -143,10 +143,17 @@ public class Telas {
     }
     
     public static void telaEditarAutor() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("/viewVE/editar-autor-gerente.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/viewVE/editar-autor-gerente.fxml"));
+    	try {
+			Scene scene = new Scene(fx.load());
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Tela Editar Autor Gerente");
+			stage.show();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     public static void telaEditarObraGerente() throws Exception {
