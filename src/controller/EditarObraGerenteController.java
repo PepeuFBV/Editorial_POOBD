@@ -6,13 +6,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -49,7 +49,7 @@ public class EditarObraGerenteController {
     private TextField genero;
 
     @FXML
-    private TextField ano;
+    private DatePicker ano;
 
     @FXML
     private Label erroEditarObraGerente;
@@ -141,13 +141,13 @@ public class EditarObraGerenteController {
         if (obraEncontrada != null) {
             String tituloText = titulo.getText();
             String generoText = genero.getText();
-            String anoText = ano.getText();
+            LocalDate anoData = ano.getValue();
             String autorSelecionado = autor.getValue();
             String avaliadorSelecionado = avaliador.getValue();
             String statusSelecionado = stts.getValue();
             String obraSelecionada = showFileger.getText();
 
-            if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty() || autorSelecionado == null || avaliadorSelecionado == null || statusSelecionado == null || obraSelecionada.isEmpty()) {
+            if (tituloText.isEmpty() || generoText.isEmpty() || autorSelecionado == null || avaliadorSelecionado == null || statusSelecionado == null || obraSelecionada.isEmpty()) {
                 erroEditarObraGerente.setText("Por favor, preencha todos os campos.");
                 erroEditarObraGerente.setVisible(true);
                 return;
@@ -155,7 +155,7 @@ public class EditarObraGerenteController {
 
             obraEncontrada.setTitulo(tituloText);
             obraEncontrada.setGenero(generoText);
-            obraEncontrada.setAno(LocalDate.parse(anoText));
+            obraEncontrada.setAno(anoData);
             obraEncontrada.setStatus(statusSelecionado);
 
             long idAutor = autorParaIDMap.get(autorSelecionado);
