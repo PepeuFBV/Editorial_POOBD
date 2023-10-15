@@ -90,13 +90,13 @@ public class TelaPrincipalController {
     private ImageView fundoBotaoAvaliadoresD;
 
     @FXML
+    private ImageView fundoBotaoBaixar;
+
+    @FXML
     private ImageView fundoBotaoEditar;
 
     @FXML
-    private ImageView fundoBotaoEditar1;
-
-    @FXML
-    private ImageView fundoBotaoEditar11;
+    private ImageView fundoBotaoExcluir;
 
     @FXML
     private ImageView fundoBotaoObrasA;
@@ -139,6 +139,12 @@ public class TelaPrincipalController {
 
     @FXML
     private Text txtAvaliadoresD;
+
+    @FXML
+    private Text txtObrasA;
+
+    @FXML
+    private Text txtObrasD;
 
     @FXML
     private Text txtRelatorio;
@@ -352,7 +358,9 @@ public class TelaPrincipalController {
         
         if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) { //habilita as ações de gerente e visões de tabela de gerente
 
-
+            fundoBotaoObrasA.setVisible(true);
+            txtObrasA.setVisible(true);
+            fundoBotaoAvaliadoresD.setVisible(true);
 
             initializeTableView();
             
