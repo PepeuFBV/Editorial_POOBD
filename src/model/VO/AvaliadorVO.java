@@ -7,9 +7,9 @@ public class AvaliadorVO extends UsuarioVO {
     private Long IDAvaliador;
     private ArrayList<ObraVO> obras;
 
-    public AvaliadorVO(Long iDAvaliador, ArrayList<ObraVO> obras, Long iDUsuario, String nome, String endereco, String cpf, String email, String senha, String tipo) {
-        super(iDUsuario, nome, endereco, cpf, email, senha, tipo);
-        setIDAvaliador(iDAvaliador);;
+    public AvaliadorVO(Long IDAvaliador, ArrayList<ObraVO> obras, Long IDUsuario, String nome, String endereco, String cpf, String email, String senha, String tipo) {
+        super(IDUsuario, nome, endereco, cpf, email, senha, tipo);
+        setIDAvaliador(IDAvaliador);
         setObras(obras);
     }
     
@@ -20,9 +20,9 @@ public class AvaliadorVO extends UsuarioVO {
         return IDAvaliador;
     }
 
-    public void setIDAvaliador(Long iDAvaliador) {
-        if (iDAvaliador > 0) {
-            this.IDAvaliador = iDAvaliador;
+    public void setIDAvaliador(Long IDAvaliador) {
+        if (IDAvaliador > 0) {
+            this.IDAvaliador = IDAvaliador;
         } else {
             throw new IllegalArgumentException("ID do Avaliador deve ser maior que zero.");
         }

@@ -119,12 +119,12 @@
             </TableView>
             <TableView fx:id="mainTableViewAvaliadores" layoutX="-330.0" layoutY="-105.0" prefHeight="425.0" prefWidth="1140.0" style="-fx-padding: 35 0 0 0; -fx-border-width: 6; -fx-border-radius: 10; -fx-border-color: #01FFB3;" visible="false">
                <columns>
-                  <TableColumn fx:id="id_autor1" editable="false" prefWidth="53.86669921875" text="ID" />
-                  <TableColumn fx:id="nome_autor1" editable="false" prefWidth="271.2000427246094" text="Nome" />
-                  <TableColumn fx:id="cpf_autor1" editable="false" prefWidth="125.86669921875" text="CPF" />
-                  <TableColumn fx:id="endereco_autor1" editable="false" prefWidth="247.20013427734375" text="Endereço" />
-                  <TableColumn fx:id="email_autor1" editable="false" prefWidth="268.0" text="Email" />
-                  <TableColumn fx:id="senha_autor1" editable="false" prefWidth="154.4000244140625" text="Senha" />
+                  <TableColumn fx:id="id_avaliador" editable="false" prefWidth="53.86669921875" text="ID" />
+                  <TableColumn fx:id="nome_avaliador" editable="false" prefWidth="271.2000427246094" text="Nome" />
+                  <TableColumn fx:id="cpf_avaliador" editable="false" prefWidth="125.86669921875" text="CPF" />
+                  <TableColumn fx:id="endereco_avaliador" editable="false" prefWidth="247.20013427734375" text="Endereço" />
+                  <TableColumn fx:id="email_avaliador" editable="false" prefWidth="268.0" text="Email" />
+                  <TableColumn fx:id="senha_avaliador" editable="false" prefWidth="154.4000244140625" text="Senha" />
                </columns>
             </TableView>
          </children>
@@ -174,7 +174,7 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtAvaliadoresD" layoutX="5.0" layoutY="35.0" onMouseClicked="#paraAvaliadores" strokeType="OUTSIDE" strokeWidth="0.0" text="avaliadores" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
+            <Text fx:id="txtAvaliadoresD" layoutX="5.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="avaliadores" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
@@ -184,11 +184,16 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtAvaliadoresA" layoutX="5.0" layoutY="19.0" onMouseClicked="#paraAvaliadores" strokeType="OUTSIDE" strokeWidth="0.0" text="avaliadores" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
+            <Text fx:id="txtAvaliadoresA" layoutX="5.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="avaliadores" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
             </Text>
+            <Button fx:id="paraAvaliadoresBtn" layoutX="38.0" layoutY="-17.0" mnemonicParsing="false" onAction="#paraAvaliadores" prefHeight="58.0" prefWidth="174.0" style="-fx-background-color: transparent;" textAlignment="CENTER">
+               <font>
+                  <Font name="High Tower Text" size="29.0" />
+               </font>
+            </Button>
          </children>
       </Group>
       <Group fx:id="autores" layoutX="837.0" layoutY="258.0">
@@ -198,7 +203,7 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtAutoresD" layoutX="4.0" layoutY="35.0" onMouseClicked="#paraAutores" strokeType="OUTSIDE" strokeWidth="0.0" text="autores" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
+            <Text fx:id="txtAutoresD" layoutX="4.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="autores" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
@@ -208,11 +213,16 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtAutoresA" layoutY="19.0" onMouseClicked="#paraAutores" strokeType="OUTSIDE" strokeWidth="0.0" text="autores" textAlignment="CENTER" visible="false" wrappingWidth="244.22479248046875">
+            <Text fx:id="txtAutoresA" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="autores" textAlignment="CENTER" visible="false" wrappingWidth="244.22479248046875">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
             </Text>
+            <Button fx:id="paraAutoresBtn" layoutX="34.0" layoutY="-17.0" mnemonicParsing="false" onAction="#paraAutores" prefHeight="58.0" prefWidth="174.0" style="-fx-background-color: transparent;">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
          </children>
       </Group>
       <Group fx:id="obras" layoutX="351.0" layoutY="258.0">
@@ -222,7 +232,7 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtObrasD" layoutX="5.0" layoutY="35.0" onMouseClicked="#paraObras" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
+            <Text fx:id="txtObrasD" layoutX="5.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
@@ -232,11 +242,16 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtObrasA" layoutX="12.0" layoutY="19.0" onMouseClicked="#paraObras" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
+            <Text fx:id="txtObrasA" layoutX="12.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER" wrappingWidth="234.62481689453125">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
             </Text>
+            <Button fx:id="paraObrasBtn" layoutX="42.0" layoutY="-17.0" mnemonicParsing="false" onAction="#paraObras" prefHeight="58.0" prefWidth="174.0" style="-fx-background-color: transparent;">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
          </children>
       </Group>
    </children>

@@ -217,6 +217,15 @@ public class TelaPrincipalController {
     @FXML
     private TableColumn<ObraVO, String> avaliador_obra;
 
+    @FXML
+    private Button paraObrasBtn;
+
+    @FXML
+    private Button paraAutoresBtn;
+
+    @FXML
+    private Button paraAvaliadoresBtn;
+
     
     public static void setVisaoAtual(String visaoAtual) {
         if (visaoAtual != null) {
@@ -251,7 +260,7 @@ public class TelaPrincipalController {
         if (tipoUsuarioAtual.equals("Gerente")) {
 
             if (visaoAtual.equals("obras")) { //lista todas as obras
-                
+
                 ObraBO obraBO = new ObraBO();
                 ObservableList<ObraVO> dados = FXCollections.observableArrayList();
                 dados.addAll(obraBO.listar());
@@ -270,7 +279,7 @@ public class TelaPrincipalController {
                 System.out.println("Tabela de Obras");
 
             } else if (visaoAtual.equals("autores")) { //lista todos os autores
-                
+
                 AutorBO autorBO = new AutorBO();
                 ObservableList<AutorVO> dados = FXCollections.observableArrayList();
                 dados.addAll(autorBO.listar());
@@ -286,7 +295,7 @@ public class TelaPrincipalController {
                 mainTableViewAutores.setVisible(true);
 
                 System.out.println("Tabela de Autores");
-                
+
             } else if (visaoAtual.equals("avaliadores")) { //lista todos os avaliadores
 
                 AvaliadorBO avaliadorBO = new AvaliadorBO();
@@ -306,9 +315,9 @@ public class TelaPrincipalController {
                 System.out.println("Tabela de Avaliadores");
 
             }
-            
+
         } else if (tipoUsuarioAtual.equals("Autor")) { //lista todas as obras do autor logado
-            
+
             AutorBO autorBO = new AutorBO();
             AutorVO autorVO = autorBO.convertToAutorVO(Telas.getUsuarioVOAtual());
             ObservableList<ObraVO> dados = FXCollections.observableArrayList();
@@ -324,9 +333,9 @@ public class TelaPrincipalController {
 
             mainTableViewObras.setItems(dados);
             mainTableViewObras.setVisible(true);
-            
+
         } else if (tipoUsuarioAtual.equals("Avaliador")) { //lista todas as obras avaliadas pelo avaliador logado
-            
+
             AvaliadorBO avaliadorBO = new AvaliadorBO();
             AvaliadorVO avaliadorVO = avaliadorBO.convertToAvaliadorVO(Telas.getUsuarioVOAtual());
             ObservableList<ObraVO> dados = FXCollections.observableArrayList();
@@ -344,7 +353,68 @@ public class TelaPrincipalController {
             mainTableViewObras.setVisible(true);
 
         }
-          
+
+    }
+
+    @FXML
+    public void initializeButtons() {
+
+        //reseta tudo para inivísivel
+        RelatorioOption.setVisible(false);
+        fundoBotaoAutoresA.setVisible(false);
+        fundoBotaoAutoresD.setVisible(false);
+        txtAvaliadoresA.setVisible(false);
+        txtAvaliadoresD.setVisible(false);
+        fundoBotaoAvaliadoresA.setVisible(false);
+        fundoBotaoAvaliadoresD.setVisible(false);
+        txtAutoresA.setVisible(false);
+        txtAutoresD.setVisible(false);
+        fundoBotaoObrasA.setVisible(false);
+        fundoBotaoObrasD.setVisible(false);
+        txtObrasA.setVisible(false);
+        txtObrasD.setVisible(false);
+
+        if (tipoUsuarioAtual.equals("Gerente")) {
+
+            RelatorioOption.setVisible(true);
+            if (visaoAtual.equals("obras")) {
+                fundoBotaoAutoresD.setVisible(true);
+                txtAutoresD.setVisible(true);
+                fundoBotaoAvaliadoresD.setVisible(true);
+                txtAvaliadoresD.setVisible(true);
+                fundoBotaoObrasA.setVisible(true);
+                txtObrasA.setVisible(true);
+            } else if (visaoAtual.equals("autores")) {
+                fundoBotaoAutoresA.setVisible(true);
+                txtAutoresA.setVisible(true);
+                fundoBotaoAvaliadoresD.setVisible(true);
+                txtAvaliadoresD.setVisible(true);
+                fundoBotaoObrasD.setVisible(true);
+                txtObrasD.setVisible(true);
+            } else if (visaoAtual.equals("avaliadores")) {
+                fundoBotaoAutoresD.setVisible(true);
+                txtAutoresD.setVisible(true);
+                fundoBotaoAvaliadoresA.setVisible(true);
+                txtAvaliadoresA.setVisible(true);
+                fundoBotaoObrasD.setVisible(true);
+                txtObrasD.setVisible(true);
+            }
+
+        } else if (tipoUsuarioAtual.equals("Autor")) {
+
+            if (visaoAtual.equals("obras")) {
+                fundoBotaoObrasA.setVisible(true);
+                txtObrasA.setVisible(true);
+            }
+
+        } else if (tipoUsuarioAtual.equals("Avaliador")) {
+
+            if (visaoAtual.equals("obras")) {
+                fundoBotaoObrasA.setVisible(true);
+                txtObrasA.setVisible(true);
+            }
+        }
+
     }
 
     @FXML
@@ -355,28 +425,10 @@ public class TelaPrincipalController {
 
         nomeUser.setText(nomeUsuario);
         tipoUser.setText(TelaPrincipalController.tipoUsuarioAtual);
+
+        initializeButtons();
+        initializeTableView();
         
-        if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) { //habilita as ações de gerente e visões de tabela de gerente
-
-            fundoBotaoObrasA.setVisible(true);
-            txtObrasA.setVisible(true);
-            fundoBotaoAvaliadoresD.setVisible(true);
-
-            initializeTableView();
-            
-        } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) { //habilitar ações de autor e visões de tabela de autor
-            
-            RelatorioOption.setVisible(false);
-            
-            initializeTableView();
-            
-        } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Avaliador")) { //habilitar ações de avaliador e visões de tabela de avaliador
-            
-            RelatorioOption.setVisible(false);
-
-            initializeTableView();
-
-        }
     }
     
     @FXML
@@ -404,6 +456,7 @@ public class TelaPrincipalController {
     public void sair(ActionEvent event) throws Exception { //checar se método funciona
         try {
             Telas.telaLogin();
+            System.out.println("Saiu da conta");
         } catch (Exception e) {
             e.printStackTrace();
         }
