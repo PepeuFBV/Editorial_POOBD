@@ -61,31 +61,7 @@
                      <font>
                         <Font name="High Tower Text" size="29.0" />
                      </font>
-<<<<<<< Updated upstream
-                  </Text>
-                  <Button fx:id="botaoBaixar" layoutX="5.0" layoutY="-1.0" mnemonicParsing="false" onAction="#baixar" prefHeight="10.0" prefWidth="54.0" style="-fx-background-color: transparent;" />
-               </children>
-            </Group>
-            <Group fx:id="ExcluirOption" layoutX="152.0">
-               <children>
-                  <ImageView fx:id="fundoBotaoExcluir" fitHeight="22.0" fitWidth="71.0">
-                     <image>
-                        <Image url="@Botao-pequeno.png" />
-                     </image>
-                  </ImageView>
-                  <Text fx:id="txtExcluir" layoutX="14.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" excluir" wrappingWidth="42.10986328125">
-                     <font>
-                        <Font name="High Tower Text" size="12.0" />
-                     </font>
-                  </Text>
-<<<<<<< HEAD
-                  <Button fx:id="botaoExcluir" layoutY="-1.0" mnemonicParsing="false" onAction="#deletar" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: transparent;" />
-=======
                   </Button>
->>>>>>> Stashed changes
-=======
-                  <Button fx:id="botaoExcluir" layoutY="-1.0" mnemonicParsing="false" onAction="#excluir" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: transparent;" />
->>>>>>> parent of 2d82f34 (att controller)
                </children>
             </Group>
             <Group fx:id="EditarOption">
@@ -120,7 +96,7 @@
       </Group>
       <Group fx:id="Tabelas" layoutX="399.0" layoutY="409.0">
          <children>
-            <TableView fx:id="mainTableViewObras" layoutX="-329.0" layoutY="-102.0" prefHeight="411.0" prefWidth="1133.0" style="-fx-padding: 34 0 0 0; -fx-border-width: 6; -fx-border-radius: 10; -fx-border-color: #01FFB3;" visible="false">
+            <TableView fx:id="mainTableViewObras" layoutX="-329.0" layoutY="-102.0" prefHeight="425.0" prefWidth="1140.0" style="-fx-padding: 34 0 0 0; -fx-border-width: 6; -fx-border-radius: 10; -fx-border-color: #01FFB3;" visible="false">
                <columns>
                   <TableColumn fx:id="id_obra" editable="false" prefWidth="54.93336486816406" text="ID" />
                   <TableColumn fx:id="titulo_obra" editable="false" prefWidth="233.8666534423828" text="Título" />
@@ -131,24 +107,24 @@
                   <TableColumn fx:id="avaliador_obra" editable="false" minWidth="0.0" prefWidth="233.60003662109375" text="Avaliador" />
                </columns>
             </TableView>
-            <TableView fx:id="mainTableViewAutores" layoutX="206.0" layoutY="46.0" prefHeight="263.0" prefWidth="535.0" style="-fx-padding: 35 0 0 0; -fx-border-width: 6; -fx-border-radius: 10; -fx-border-color: #01FFB3;" visible="false">
+            <TableView fx:id="mainTableViewAutores" layoutX="-329.0" layoutY="-102.0" prefHeight="425.0" prefWidth="1140.0" style="-fx-padding: 35 0 0 0; -fx-border-width: 6; -fx-border-radius: 10; -fx-border-color: #01FFB3;" visible="false">
                <columns>
-                  <TableColumn fx:id="id_autor" editable="false" prefWidth="32.800018310546875" text="ID" />
-                  <TableColumn fx:id="nome_autor" editable="false" prefWidth="113.5999755859375" text="Nome" />
-                  <TableColumn fx:id="cpf_autor" editable="false" prefWidth="81.5999755859375" text="CPF" />
-                  <TableColumn fx:id="endereco_autor" editable="false" prefWidth="102.39996337890625" text="Endereço" />
-                  <TableColumn fx:id="email_autor" editable="false" prefWidth="107.99993896484375" text="Email" />
-                  <TableColumn fx:id="senha_autor" editable="false" prefWidth="84.0" text="Senha" />
+                  <TableColumn fx:id="id_autor" editable="false" prefWidth="53.86669921875" text="ID" />
+                  <TableColumn fx:id="nome_autor" editable="false" prefWidth="271.2000427246094" text="Nome" />
+                  <TableColumn fx:id="cpf_autor" editable="false" prefWidth="125.86669921875" text="CPF" />
+                  <TableColumn fx:id="endereco_autor" editable="false" prefWidth="247.20013427734375" text="Endereço" />
+                  <TableColumn fx:id="email_autor" editable="false" prefWidth="268.0" text="Email" />
+                  <TableColumn fx:id="senha_autor" editable="false" prefWidth="154.4000244140625" text="Senha" />
                </columns>
             </TableView>
-            <TableView fx:id="mainTableViewAvaliadores" prefHeight="263.0" prefWidth="535.0" style="-fx-padding: 35 0 0 0; -fx-border-width: 6; -fx-border-radius: 10; -fx-border-color: #01FFB3;" visible="false">
+            <TableView fx:id="mainTableViewAvaliadores" layoutX="-330.0" layoutY="-105.0" prefHeight="425.0" prefWidth="1140.0" style="-fx-padding: 35 0 0 0; -fx-border-width: 6; -fx-border-radius: 10; -fx-border-color: #01FFB3;" visible="false">
                <columns>
-                  <TableColumn fx:id="id_avaliador" editable="false" prefWidth="32.800018310546875" text="ID" />
-                  <TableColumn fx:id="nome_avaliador" editable="false" prefWidth="113.5999755859375" text="Nome" />
-                  <TableColumn fx:id="cpf_avaliador" editable="false" prefWidth="81.5999755859375" text="CPF" />
-                  <TableColumn fx:id="endereco_avaliador" editable="false" prefWidth="102.39996337890625" text="Endereço" />
-                  <TableColumn fx:id="email_avaliador" editable="false" prefWidth="107.99993896484375" text="Email" />
-                  <TableColumn fx:id="senha_avaliador" editable="false" prefWidth="84.0" text="Senha" />
+                  <TableColumn fx:id="id_autor1" editable="false" prefWidth="53.86669921875" text="ID" />
+                  <TableColumn fx:id="nome_autor1" editable="false" prefWidth="271.2000427246094" text="Nome" />
+                  <TableColumn fx:id="cpf_autor1" editable="false" prefWidth="125.86669921875" text="CPF" />
+                  <TableColumn fx:id="endereco_autor1" editable="false" prefWidth="247.20013427734375" text="Endereço" />
+                  <TableColumn fx:id="email_autor1" editable="false" prefWidth="268.0" text="Email" />
+                  <TableColumn fx:id="senha_autor1" editable="false" prefWidth="154.4000244140625" text="Senha" />
                </columns>
             </TableView>
          </children>
