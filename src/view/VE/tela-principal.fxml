@@ -63,7 +63,7 @@
                      </font>
 <<<<<<< Updated upstream
                   </Text>
-                  <Button fx:id="botaoBaixar" layoutX="5.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="54.0" style="-fx-background-color: transparent;" />
+                  <Button fx:id="botaoBaixar" layoutX="5.0" layoutY="-1.0" mnemonicParsing="false" onAction="#baixar" prefHeight="10.0" prefWidth="54.0" style="-fx-background-color: transparent;" />
                </children>
             </Group>
             <Group fx:id="ExcluirOption" layoutX="152.0">
@@ -78,10 +78,14 @@
                         <Font name="High Tower Text" size="12.0" />
                      </font>
                   </Text>
+<<<<<<< HEAD
                   <Button fx:id="botaoExcluir" layoutY="-1.0" mnemonicParsing="false" onAction="#deletar" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: transparent;" />
 =======
                   </Button>
 >>>>>>> Stashed changes
+=======
+                  <Button fx:id="botaoExcluir" layoutY="-1.0" mnemonicParsing="false" onAction="#excluir" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: transparent;" />
+>>>>>>> parent of 2d82f34 (att controller)
                </children>
             </Group>
             <Group fx:id="EditarOption">
