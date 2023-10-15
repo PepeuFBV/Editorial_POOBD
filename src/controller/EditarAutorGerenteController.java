@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.BO.AutorBO;
 import model.DAO.AutorDAO;
 import model.VO.AutorVO;
 
@@ -69,15 +71,15 @@ public class EditarAutorGerenteController {
             erroEditarAutorGerente.setText("Por favor, preencha todos os campos e selecione um autor.");
             erroEditarAutorGerente.setVisible(true);
         } else {
-            AutorDAO autorDAO = new AutorDAO();
+            AutorBO autorBO = new AutorBO();
             AutorVO autorVO = new AutorVO();
             autorVO.setEmail(emailSelecionado);
 
-            ArrayList<AutorVO> autores = autorDAO.buscarPorEmail(autorVO);
+            List<AutorVO> autores = autorBO.buscarPorEmail(autorVO);
 
             if (!autores.isEmpty()) {
                 AutorVO autorEncontrado = autores.get(0);
-
+                
                 autorEncontrado.setSenha(senhaText);
 	            autorEncontrado.setIDAutor(autores.get(0).getIDAutor());
 	            autorEncontrado.setTipo("Autor");
@@ -86,7 +88,7 @@ public class EditarAutorGerenteController {
 	            autorEncontrado.setNome(nomeText);
 	            autorEncontrado.setEndereco(enderecoText);
 
-                autorDAO.atualizar(autorEncontrado);
+	            autorBO.atualizar(autorEncontrado);
 
                 System.out.println("Edição bem-sucedida.");
                 erroEditarAutorGerente.setText("Edição bem-sucedida.");

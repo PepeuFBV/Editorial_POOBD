@@ -3,10 +3,9 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,9 +17,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.DAO.AutorDAO;
-import model.DAO.AvaliadorDAO;
-import model.DAO.ObraDAO;
+import model.BO.AutorBO;
+import model.BO.AvaliadorBO;
+import model.BO.ObraBO;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
@@ -79,8 +78,8 @@ public class NovaObraGerenteController {
         ObservableList<String> avaliadores = FXCollections.observableArrayList();
 
         try {
-            AutorDAO autorDAO = new AutorDAO();
-            ArrayList<AutorVO> autoresDoDB = autorDAO.listar();
+            AutorBO autorBO = new AutorBO();
+            List<AutorVO> autoresDoDB = autorBO.listar();
 
             if (!autoresDoDB.isEmpty()) {
                 for (AutorVO autor : autoresDoDB) {
@@ -96,8 +95,8 @@ public class NovaObraGerenteController {
         }
 
         try {
-            AvaliadorDAO avaDAO = new AvaliadorDAO();
-            ArrayList<AvaliadorVO> avaliadoresDoDB = avaDAO.listar();
+            AvaliadorBO avaliadorBO = new AvaliadorBO();            
+            List<AvaliadorVO> avaliadoresDoDB = avaliadorBO.listar();
 
             if (!avaliadoresDoDB.isEmpty()) {
                 for (AvaliadorVO avaliador : avaliadoresDoDB) {
@@ -165,8 +164,8 @@ public class NovaObraGerenteController {
             novaObra.setAutor(autorVO);
             novaObra.setAvaliador(avaliadorVO);
 
-            ObraDAO obraDAO = new ObraDAO();
-            obraDAO.inserir(novaObra);
+            ObraBO obraBO = new ObraBO();
+            obraBO.cadastrar(novaObra);
 
             System.out.println("Obra adicionada com sucesso.");
             erroNovaObraGerente.setText("Obra adicionada com sucesso.");

@@ -2,7 +2,6 @@ package model.BO;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import model.DAO.AvaliadorDAO;
 import model.DAO.ObraDAO;
 import model.VO.AvaliadorVO;
@@ -39,5 +38,17 @@ public class AvaliadorBO {
         
         return avaliadorVO;
     }
-
+    
+    public void excluir(AvaliadorVO avaliadorVO) {
+    	avaliadorDAO.excluir(avaliadorVO);
+    }
+    
+    public void atualizar(AvaliadorVO avaliadorVO) {
+    	avaliadorDAO.atualizar(avaliadorVO);
+    }
+    
+    public List<AvaliadorVO> buscarPorEmail (AvaliadorVO avaliadorVO) {
+    	ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorEmail(avaliadorVO);
+        return avaliadores;
+    }   
 }

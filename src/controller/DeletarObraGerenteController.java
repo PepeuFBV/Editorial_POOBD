@@ -1,7 +1,6 @@
 package controller;
 
-
-import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import model.DAO.ObraDAO;
+import model.BO.ObraBO;
 import model.VO.ObraVO;
 
 public class DeletarObraGerenteController {
@@ -20,14 +19,15 @@ public class DeletarObraGerenteController {
 	@FXML
 	private ChoiceBox<String> obra;
 	
+    ObraBO obraBO = new ObraBO();
+	
 	@FXML
 	private void initialize() {
 	    carregarObras();
 	}
 
 	private void carregarObras() {
-	    ObraDAO obraDAO = new ObraDAO();
-	    ArrayList<ObraVO> obras = obraDAO.listar(); 
+	    List<ObraVO> obras = obraBO.listar(); 
 
 	    ObservableList<String> obrasList = FXCollections.observableArrayList();
 	    for (ObraVO obra : obras) {
@@ -45,8 +45,7 @@ public class DeletarObraGerenteController {
 	        ObraVO obraExcluir = new ObraVO();
 	        obraExcluir.setTitulo(tituloObra);
 	        
-	        ObraDAO obraDAO = new ObraDAO();
-	        obraDAO.excluir(obraExcluir);
+	        obraBO.excluir(obraExcluir);
 	        
 	        carregarObras();
 
@@ -55,7 +54,6 @@ public class DeletarObraGerenteController {
 
 	    }
 	}
-
    
     @FXML
     private void voltar(ActionEvent event) {

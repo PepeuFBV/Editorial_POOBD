@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.BO.ObraBO;
 import model.DAO.AutorDAO;
 import model.DAO.AvaliadorDAO;
 import model.DAO.ObraDAO;
@@ -134,7 +135,7 @@ public class EditarObraGerenteController {
             return;
         }
 
-        ObraDAO obraDAO = new ObraDAO();
+        ObraBO obraBO = new ObraBO();
         ObraVO obraEncontrada = buscarObraPorTitulo(tituloSelecionado);
 
         if (obraEncontrada != null) {
@@ -161,14 +162,38 @@ public class EditarObraGerenteController {
             long idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
 
             AutorVO autorVO = new AutorVO();
-            autorVO.setIDAutor(idAutor); //tem que pegar todos os atributos de autor ou só preciso passar ele com id??
+            autorVO.setIDAutor(idAutor);
+            AutorDAO autorDAO = new AutorDAO();
+            ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO);
+            AutorVO primeiroAutor = autores.get(0);
+            
+            autorVO.setIDUsuario(primeiroAutor.getIDUsuario());
+            autorVO.setCpf(primeiroAutor.getCpf());
+            autorVO.setEmail(primeiroAutor.getEmail());
+            autorVO.setEndereco(primeiroAutor.getEndereco());
+            autorVO.setNome(primeiroAutor.getNome());
+            autorVO.setSenha(primeiroAutor.getSenha());
+            autorVO.setTipo("Autor");
+            
             obraEncontrada.setAutor(autorVO);
 
             AvaliadorVO avaliadorVO = new AvaliadorVO();
             avaliadorVO.setIDAvaliador(idAvaliador);
+            AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+            ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
+            AvaliadorVO primeiroAvaliador = avaliadores.get(0);
+            
+            avaliadorVO.setIDUsuario(primeiroAvaliador.getIDUsuario());
+            avaliadorVO.setCpf(primeiroAvaliador.getCpf());
+            avaliadorVO.setEmail(primeiroAvaliador.getEmail());
+            avaliadorVO.setEndereco(primeiroAvaliador.getEndereco());
+            avaliadorVO.setNome(primeiroAvaliador.getNome());
+            avaliadorVO.setSenha(primeiroAvaliador.getSenha());
+            avaliadorVO.setTipo("Avaliador");
+            
             obraEncontrada.setAvaliador(avaliadorVO);
 
-            obraDAO.atualizar(obraEncontrada);
+            obraBO.atualizar(obraEncontrada);
 
             System.out.println("Obra atualizada com sucesso.");
             erroEditarObraGerente.setText("Obra atualizada com sucesso.");

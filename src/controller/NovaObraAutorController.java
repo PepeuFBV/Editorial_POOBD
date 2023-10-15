@@ -3,8 +3,7 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.BO.AutorBO;
-import model.DAO.AutorDAO;
 import model.VO.AutorVO;
 import model.VO.UsuarioVO;
 import view.Telas;
@@ -49,8 +47,8 @@ public class NovaObraAutorController {
     public void setUsuarioVO(UsuarioVO usuarioVO) {
         autorVO = (AutorVO) usuarioVO;
         autorVO.setEmail(Telas.getUsuarioVOAtual().getEmail());
-        AutorDAO autorDAO = new AutorDAO();
-        ArrayList<AutorVO> autores = autorDAO.buscarPorEmail(autorVO);
+        AutorBO autorBO = new AutorBO();
+        List<AutorVO> autores = autorBO.buscarPorEmail(autorVO);
 
         if (!autores.isEmpty()) {
             AutorVO primeiroAutor = autores.get(0);

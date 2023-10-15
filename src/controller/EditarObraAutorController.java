@@ -3,8 +3,6 @@ package controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.sql.SQLException;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -78,7 +76,7 @@ public class EditarObraAutorController {
             for (ObraVO obra : obrasDoAutor) {
                 titulos.add(obra.getTitulo());
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return titulos;

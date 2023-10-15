@@ -1,7 +1,7 @@
 package controller;
 
-
 import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.BO.AvaliadorBO;
 import model.DAO.AvaliadorDAO;
 import model.VO.AvaliadorVO;
 
@@ -42,16 +43,16 @@ public class DeletarAvaliadorController {
 	    String emailSelecionado = email.getValue();
 
 	    if (emailSelecionado != null && !emailSelecionado.isEmpty()) {
-	        AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-	        AvaliadorVO avaliador = new AvaliadorVO();
-	        avaliador.setEmail(emailSelecionado);
+            AvaliadorBO avaliadorBO = new AvaliadorBO();
+            AvaliadorVO avaliador = new AvaliadorVO();
+            avaliador.setEmail(emailSelecionado);
 
-	        ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorEmail(avaliador);
+            List<AvaliadorVO> avaliadores = avaliadorBO.buscarPorEmail(avaliador);
 
 	        if (!avaliadores.isEmpty()) {
 	            AvaliadorVO avaliadorParaExcluir = avaliadores.get(0);
 	            
-	            avaliadorDAO.excluir(avaliadorParaExcluir);
+	            avaliadorBO.excluir(avaliadorParaExcluir);
 
 	            erroDeletarAvaliador.setText("Avaliador excluído com sucesso.");
 	            erroDeletarAvaliador.setVisible(true);

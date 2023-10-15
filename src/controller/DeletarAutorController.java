@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.BO.AutorBO;
 import model.DAO.AutorDAO;
 import model.VO.AutorVO;
 
@@ -41,16 +43,16 @@ public class DeletarAutorController {
         String emailSelecionado = email.getValue();
 
         if (emailSelecionado != null && !emailSelecionado.isEmpty()) {
-            AutorDAO autorDAO = new AutorDAO();
+            AutorBO autorBO = new AutorBO();
             AutorVO autor = new AutorVO();
             autor.setEmail(emailSelecionado);
 
-            ArrayList<AutorVO> autores = autorDAO.buscarPorEmail(autor);
+            List<AutorVO> autores = autorBO.buscarPorEmail(autor);
 
             if (!autores.isEmpty()) {
                 AutorVO autorParaExcluir = autores.get(0);
 
-                autorDAO.excluir(autorParaExcluir);
+                autorBO.excluir(autorParaExcluir);
 
                 erroDeletarAutor.setText("Autor excluído com sucesso.");
                 erroDeletarAutor.setVisible(true);

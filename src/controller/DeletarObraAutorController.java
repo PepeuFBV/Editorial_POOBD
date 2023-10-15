@@ -1,8 +1,8 @@
 package controller;
 
-
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import model.DAO.AutorDAO;
+import model.BO.AutorBO;
 import model.DAO.ObraDAO;
 import model.VO.AutorVO;
 import model.VO.ObraVO;
@@ -35,8 +35,8 @@ public class DeletarObraAutorController {
     public void setUsuarioVO(UsuarioVO usuarioVO) {
         autorVO = (AutorVO) usuarioVO;
         autorVO.setEmail(Telas.getUsuarioVOAtual().getEmail());
-        AutorDAO autorDAO = new AutorDAO();
-        ArrayList<AutorVO> autores = autorDAO.buscarPorEmail(autorVO);
+        AutorBO autorBO = new AutorBO();
+        List<AutorVO> autores = autorBO.buscarPorEmail(autorVO);
 
         if (!autores.isEmpty()) {
             AutorVO primeiroAutor = autores.get(0);
@@ -60,7 +60,7 @@ public class DeletarObraAutorController {
             for (ObraVO obra : obrasDoAutor) {
                 titulos.add(obra.getTitulo());
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return titulos;

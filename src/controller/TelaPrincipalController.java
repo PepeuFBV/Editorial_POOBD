@@ -19,7 +19,6 @@ import model.BO.ObraBO;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
-import model.entities.Avaliador;
 import view.Telas;
 
 public class TelaPrincipalController {

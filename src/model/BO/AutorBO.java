@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.DAO.AutorDAO;
 import model.DAO.ObraDAO;
-import model.DAO.UsuarioDAO;
 import model.VO.AutorVO;
 import model.VO.ObraVO;
 import model.VO.UsuarioVO;
@@ -93,4 +92,16 @@ public class AutorBO {
         return autorVO;
     }
     
+    public void excluir(AutorVO autorVO) {
+    	autorDAO.excluir(autorVO);
+    }
+    
+    public void atualizar(AutorVO autorVO) {
+    	autorDAO.atualizar(autorVO);
+    }
+    
+    public List<AutorVO> buscarPorEmail (AutorVO autorVO) {
+    	ArrayList<AutorVO> autores = autorDAO.buscarPorEmail(autorVO);
+        return autores;
+    }   
 }
