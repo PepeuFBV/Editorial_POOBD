@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
@@ -18,6 +19,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.BO.AvaliadorBO;
 import model.BO.ObraBO;
+import model.DAO.ObraDAO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
 import model.VO.UsuarioVO;
@@ -93,18 +95,45 @@ public class AvaliarObraController {
     public void enviar(ActionEvent event) {
         try {
             String caminhoArquivo = showFile.getText();
+            String tituloSelecionado = titulo.getValue();
+            ObraVO obraSelecionada = new ObraVO();
+            obraSelecionada.setTitulo(tituloSelecionado);
+            ObraDAO obraDAO = new ObraDAO();
+            try {
+                List<ObraVO> obrasEncontradas = obraDAO.buscarPorTitulo(obraSelecionada);
+                
+                if (!obrasEncontradas.isEmpty()) {
+                    ObraVO obraEncontrada = obrasEncontradas.get(0);
 
-            if (!caminhoArquivo.isEmpty()) {
-                byte[] pdfAvaliacao = LerPDF.lerConteudoPDF(caminhoArquivo);
-                obra.setPdfAvaliacao(pdfAvaliacao);
-
-                ObraBO obraBO = new ObraBO();
-                obraBO.atualizar(obra);
-                System.out.println("Caminho do arquivo salvo no banco de dados com sucesso.");
-            } else {
-                erroAut.setText("Você deve selecionar um arquivo antes de enviar.");
-                erroAut.setVisible(true);
+                    if (!caminhoArquivo.isEmpty()) {
+                        byte[] pdfAvaliacao = LerPDF.lerConteudoPDF(caminhoArquivo);
+                        
+                        obra.setPdfAvaliacao(pdfAvaliacao);
+                        obra.setAno(obraEncontrada.getAno());
+                        obra.setAutor(obraEncontrada.getAutor());
+                        obra.setAvaliador(obraEncontrada.getAvaliador());
+                        obra.setDataAvaliacao(obraEncontrada.getDataAvaliacao());
+                        obra.setGenero(obraEncontrada.getGenero());
+                        obra.setIDObra(obraEncontrada.getIDObra());
+                        obra.setPdfObra(obraEncontrada.getPdfObra());
+                        obra.setStatus(obraEncontrada.getStatus());
+                        obra.setTitulo(obraEncontrada.getTitulo());
+                        
+                        ObraBO obraBO = new ObraBO();
+                        obraBO.atualizar(obra);
+                        System.out.println("Caminho do arquivo salvo no banco de dados com sucesso.");
+                    } else {
+                        erroAut.setText("Você deve selecionar um arquivo antes de enviar.");
+                        erroAut.setVisible(true);
+                    }
+                    
+                } else {
+                    System.out.println("Nenhuma obra encontrada com o título: " + tituloSelecionado);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
             erroAut.setText("Erro ao ler o arquivo PDF.");
