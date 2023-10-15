@@ -527,12 +527,22 @@ public class TelaPrincipalController {
     }
 
     @FXML
-    public void editarObra(ActionEvent event) {
+    public void editar(ActionEvent event) {
         try {
-            if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
-                Telas.telaEditarObraGerente();
-            } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
-                Telas.telaEditarObraAutor(Telas.getUsuarioVOAtual());
+            if (TelaPrincipalController.visaoAtual.equals("obras")) {
+                if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
+                    Telas.telaEditarObraGerente();
+                } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
+                    Telas.telaEditarObraAutor(Telas.getUsuarioVOAtual());
+                }
+            } else if (TelaPrincipalController.visaoAtual.equals("autores")) {
+                if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
+                    Telas.telaEditarAutor();
+                }
+            } else if (TelaPrincipalController.visaoAtual.equals("avaliadores")) {
+                if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
+                    Telas.telaEditarAvaliador();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace(); //criar nova Exception para lidar com isso
@@ -540,25 +550,7 @@ public class TelaPrincipalController {
     }
 
     @FXML
-    public void editarAutor(ActionEvent event) { //apenas gerentes podem editar autores
-        try {
-            Telas.telaEditarAutor();
-        } catch (Exception e) {
-            e.printStackTrace(); //criar nova Exception para lidar com isso
-        }
-    }
-
-    @FXML
     public void adicionarNovoAvaliador(ActionEvent event) { //apenas gerentes podem adicionar avaliadores
-        try {
-            Telas.telaEditarAvaliador();
-        } catch (Exception e) {
-            e.printStackTrace(); //criar nova Exception para lidar com isso
-        }
-    }
-
-    @FXML
-    public void editarAvaliador(ActionEvent event) { //apenas gerentes podem editar avaliadores
         try {
             Telas.telaEditarAvaliador();
         } catch (Exception e) {
