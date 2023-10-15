@@ -27,18 +27,6 @@ public class TelaPrincipalController {
     private static String tipoUsuarioAtual; //variável para saber qual tipo de usuário está logado
 
     @FXML
-    private Group AutoresOption;
-
-    @FXML
-    private Group AvaliadoresOption;
-
-    @FXML
-    private Group BaixarOption;
-
-    @FXML
-    private Group BotoesAcimadaTabela;
-
-    @FXML
     private Group EditarOption;
 
     @FXML
@@ -54,9 +42,6 @@ public class TelaPrincipalController {
     private Group NovoOption;
 
     @FXML
-    private Group ObrasOption;
-
-    @FXML
     private Group RelatorioOption;
 
     @FXML
@@ -66,101 +51,97 @@ public class TelaPrincipalController {
     private Group Tabelas;
 
     @FXML
-    private Group TabelasButtons;
-    
+    private Group autores;
+
+    @FXML
+    private Group avaliadores;
+
     @FXML
     private ImageView background_logo;
-    
+
+    @FXML
+    private Button baixarBtn;
+
     @FXML
     private ImageView borders;
-    
-    @FXML
-    private Button botaoAdicionar;
-    
-    @FXML
-    private Button botaoAutores;
-    
-    @FXML
-    private Button botaoAvaliadores;
-    
-    @FXML
-    private Button botaoBaixar;
-    
-    @FXML
-    private Button botaoEditar;
 
-    @FXML
-    private Button botaoExcluir;
-    
-    @FXML
-    private Button botaoRelatorio;
-    
     @FXML
     private ImageView buscarBtn;
-    
-    @FXML
-    private ImageView fundoAdicionar;
-    
-    @FXML
-    private ImageView fundoBotaoAutores;
-    
-    @FXML
-    private ImageView fundoBotaoAvaliadores;
 
     @FXML
-    private ImageView fundoBotaoBaixar;
-    
+    private Button editarBtn;
+
+    @FXML
+    private Button excluirBtn;
+
+    @FXML
+    private ImageView fundoAdicionar;
+
+    @FXML
+    private ImageView fundoBotaoAutoresA;
+
+    @FXML
+    private ImageView fundoBotaoAutoresD;
+
+    @FXML
+    private ImageView fundoBotaoAvaliadoresA;
+
+    @FXML
+    private ImageView fundoBotaoAvaliadoresD;
+
     @FXML
     private ImageView fundoBotaoEditar;
-    
+
     @FXML
-    private ImageView fundoBotaoExcluir;
-    
+    private ImageView fundoBotaoEditar1;
+
     @FXML
-    private ImageView fundoBotaoObras;
-    
+    private ImageView fundoBotaoEditar11;
+
     @FXML
-    private ImageView fundoBotaoRelatorio;
-    
+    private ImageView fundoBotaoObrasA;
+
+    @FXML
+    private ImageView fundoBotaoObrasD;
+
+    @FXML
+    private ImageView fundoRelatorio;
+
     @FXML
     private ImageView logo;
-    
+
     @FXML
     private Label nomeUser;
-    
+
+    @FXML
+    private Group obras;
+
     @FXML
     private Button sair_btn;
 
     @FXML
     private TextField searchBar;
-    
+
     @FXML
     private Label tipoUser;
-    
+
     @FXML
     private Text txtAdicionar;
-    
+
     @FXML
-    private Text txtAutores;
-    
+    private Text txtAutoresA;
+
     @FXML
-    private Text txtAvaliadores;
-    
+    private Text txtAutoresD;
+
     @FXML
-    private Text txtBaixar;
-    
+    private Text txtAvaliadoresA;
+
     @FXML
-    private Text txtEditar;
-    
-    @FXML
-    private Text txtExcluir;
-    
-    @FXML
-    private Text txtObras;
-    
+    private Text txtAvaliadoresD;
+
     @FXML
     private Text txtRelatorio;
-    
 
     @FXML
     private TableView<AutorVO> mainTableViewAutores;
@@ -375,37 +356,13 @@ public class TelaPrincipalController {
             
         } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) { //habilitar ações de autor e visões de tabela de autor
             
-            botaoRelatorio.setVisible(false);
-            fundoBotaoRelatorio.visibleProperty().set(false);
-            txtRelatorio.visibleProperty().set(false);
-            
-            botaoAvaliadores.visibleProperty().set(false);
-            fundoBotaoAvaliadores.visibleProperty().set(false);
-            txtAvaliadores.visibleProperty().set(false);
-            
-            botaoAutores.visibleProperty().set(false);
-            fundoBotaoAutores.visibleProperty().set(false);
-            txtAutores.visibleProperty().set(false);
+            RelatorioOption.setVisible(false);
             
             initializeTableView();
             
         } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Avaliador")) { //habilitar ações de avaliador e visões de tabela de avaliador
             
-            botaoRelatorio.visibleProperty().set(false);
-            fundoBotaoRelatorio.visibleProperty().set(false);
-            txtRelatorio.visibleProperty().set(false);
-            
-            botaoAutores.visibleProperty().set(false);
-            fundoBotaoAutores.visibleProperty().set(false);
-            txtAutores.visibleProperty().set(false);
-            
-            botaoAvaliadores.visibleProperty().set(false);
-            fundoBotaoAvaliadores.visibleProperty().set(false);
-            txtAvaliadores.visibleProperty().set(false);
-
-            botaoAdicionar.visibleProperty().set(false);
-            fundoAdicionar.visibleProperty().set(false);
-            txtAdicionar.visibleProperty().set(false);
+            RelatorioOption.setVisible(false);
 
             initializeTableView();
 
