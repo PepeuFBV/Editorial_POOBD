@@ -8,14 +8,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="249.0" prefWidth="318.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeletarAvaliadorController">
    <children>
-      <Label layoutX="90.0" layoutY="35.0" prefHeight="32.0" prefWidth="141.0" text="Deletar Avaliador">
+      <Label fx:id="erroDeletarAvaliador" layoutX="90.0" layoutY="35.0" prefHeight="32.0" prefWidth="141.0" text="Deletar Avaliador">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <Button layoutX="173.0" layoutY="196.0" mnemonicParsing="false" onAction="#deletar" prefHeight="25.0" prefWidth="99.0" text="Excluir" textFill="#ff1a00" />
       <Button fx:id="btncancelar" layoutX="47.0" layoutY="196.0" mnemonicParsing="false" onAction="#voltar" prefHeight="21.0" prefWidth="99.0" text="Voltar" />
-      <Label fx:id="erroEditarObraGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="173.0" prefHeight="17.0" prefWidth="308.0" text="Label" visible="false" />
+      <Label fx:id="erroDeletarAvaliador" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="173.0" prefHeight="17.0" prefWidth="308.0" text="Label" visible="false" />
       <Label layoutX="39.0" layoutY="88.0" prefHeight="25.0" prefWidth="43.0" text="Email:">
          <font>
             <Font size="15.0" />

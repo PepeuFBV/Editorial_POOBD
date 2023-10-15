@@ -213,6 +213,24 @@ public class Telas {
 
         popupStage.show();
     }
+    
+    public static void telaBaixarObra(UsuarioVO usuarioVO) throws Exception {
+        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/baixar-obra-avaliador.fxml"));
+        Parent root = fx.load();
+        EditarObraAutorController controller = fx.getController();
+        controller.setUsuarioVO(usuarioVO);
+
+        Stage popupStage = new Stage();
+        Scene scene = new Scene(root);
+        popupStage.setScene(scene);
+
+        popupStage.setTitle("Tela Baixar Obra Avaliador");
+
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.initOwner(primaryStage); 
+
+        popupStage.show();
+    }
 
     public static void telaGerarRelatorio() throws Exception {
     	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/gerar-relatorio.fxml"));

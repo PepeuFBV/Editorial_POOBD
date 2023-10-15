@@ -532,5 +532,14 @@ public class TelaPrincipalController {
 			e.printStackTrace();
 		}
     }
+    
+    @FXML
+    public void baixarObra(ActionEvent event) { 
+    	try {
+			Telas.telaBaixarObra(Telas.getUsuarioVOAtual());;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
 }
