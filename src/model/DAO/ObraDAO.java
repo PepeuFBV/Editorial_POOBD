@@ -407,7 +407,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                         throw new Exception("Avaliador não encontrado");
                     }
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Não tem avaliador!");
+                    
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -489,7 +489,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                         throw new Exception("Avaliador não encontrado");
                     }
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Não tem avaliador!");
+                    
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -571,7 +571,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                         throw new Exception("Avaliador não encontrado");
                     }
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Não tem avaliador!");
+                    
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -583,7 +583,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         return arrayDeObras;
     }
 
-    public ArrayList<ObraVO> buscarPorAutor(AutorVO autor) throws SQLException {
+    public ArrayList<ObraVO> buscarPorAutor(AutorVO autor) {
         Connection con = null;
         ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
         try {
@@ -649,11 +649,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
 
                         obraVO.setAvaliador(avaliadorVO);
                     }
-                    else {
-                        throw new Exception("Avaliador não encontrado");
-                    }
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Não tem avaliador!");
+                    
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -665,7 +662,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         return arrayDeObras;
     }
     
-    public ArrayList<ObraVO> buscarPorAvaliador(AvaliadorVO avaliador) throws SQLException {
+    public ArrayList<ObraVO> buscarPorAvaliador(AvaliadorVO avaliador) {
         Connection con = null;
         ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
         try {
@@ -813,7 +810,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                         throw new Exception("Avaliador não encontrado");
                     }
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Não tem avaliador!");
+                    
                 }
                 arrayDeObras.add(obraVO);
             }

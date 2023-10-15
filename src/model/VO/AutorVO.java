@@ -35,5 +35,10 @@ public class AutorVO extends UsuarioVO {
     public void setObras(ArrayList<ObraVO> obras) {
         this.obras = obras;
     }
+
+    public String toString() {
+        return super.getNome();
+    }
+    
 }
 

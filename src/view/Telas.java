@@ -18,6 +18,15 @@ public class Telas {
     
     private static UsuarioVO usuarioVOAtual;
     private static Stage primaryStage;
+    private static Parent root;
+
+    public static Parent getRoot() {
+        return root;
+    }
+
+    public static void setRoot(Parent root) {
+        Telas.root = root;
+    }
 
     public static Stage getPrimaryStage() {
         return primaryStage;
@@ -51,6 +60,7 @@ public class Telas {
     public static void telaPrincipal(UsuarioVO usuarioVO) throws Exception { //recebe um UsuarioVO para definir como será a tela principal
         FXMLLoader loader = new FXMLLoader(Telas.class.getResource("/view/VE/tela-principal.fxml"));
         Parent root = loader.load();
+        Telas.setRoot(root);
         TelaPrincipalController controller = loader.getController();
         controller.setApropriateScreen();
         Scene scene = new Scene(root);
@@ -167,17 +177,10 @@ public class Telas {
     }
     
     public static void telaEditarAutor() throws Exception {
-    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/viewVE/editar-autor-gerente.fxml"));
-    	try {
-			Scene scene = new Scene(fx.load());
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			stage.setTitle("Tela Editar Autor Gerente");
-			stage.show();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        Parent root = FXMLLoader.load(Telas.class.getResource("/viewVE/editar-autor-gerente.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
     
     public static void telaEditarObraGerente() throws Exception {

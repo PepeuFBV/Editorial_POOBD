@@ -7,15 +7,19 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.List;
 import exceptions.InsertException;
+import model.DAO.GerenteDAO;
 import model.DAO.ObraDAO;
 import model.VO.AutorVO;
+import model.VO.GerenteVO;
 import model.VO.ObraVO;
 import model.VO.UsuarioVO;
 
 
 public class GerenteBO {
+
+    private GerenteDAO gerenteDAO = new GerenteDAO();
 
     public void adicionarAvaliador(String cpf, String nome, String endereco, String senha, String email) throws InsertException {
         if (cpf.isEmpty() || senha.isEmpty() || email.isEmpty() || nome.isEmpty() || endereco.isEmpty()) {
@@ -94,6 +98,9 @@ public class GerenteBO {
         }
     }
 
-    
-}
+    public List<GerenteVO> listar() {
+        List<GerenteVO> gerentes = gerenteDAO.listar();
+        return gerentes;
+    }
 
+}
