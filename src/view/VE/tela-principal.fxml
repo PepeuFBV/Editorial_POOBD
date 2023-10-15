@@ -52,12 +52,12 @@
          <children>
             <Group fx:id="ExcluirOption" layoutX="174.0" layoutY="-27.0">
                <children>
-                  <ImageView fx:id="fundoBotaoEditar1" fitHeight="55.0" fitWidth="179.0">
+                  <ImageView fx:id="fundoBotaoBaixar" fitHeight="55.0" fitWidth="179.0">
                      <image>
                         <Image url="@Botao-pequeno.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="baixarBtn" layoutX="5.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="170.0" style="-fx-background-color: transparent; -fx-text-fill: black;" text="baixar">
+                  <Button fx:id="baixarBtn" layoutX="5.0" mnemonicParsing="false" onAction="#baixar" prefHeight="0.0" prefWidth="170.0" style="-fx-background-color: transparent; -fx-text-fill: black;" text="baixar">
                      <font>
                         <Font name="High Tower Text" size="29.0" />
                      </font>
@@ -71,7 +71,7 @@
                         <Image url="@Botao-pequeno.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="editarBtn" layoutX="-89.0" layoutY="-27.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="170.0" style="-fx-background-color: transparent; -fx-text-fill: black;" text="editar">
+                  <Button fx:id="editarBtn" layoutX="-89.0" layoutY="-27.0" mnemonicParsing="false" onAction="#editar" prefHeight="0.0" prefWidth="170.0" style="-fx-background-color: transparent; -fx-text-fill: black;" text="editar">
                      <font>
                         <Font name="High Tower Text" size="29.0" />
                      </font>
@@ -80,12 +80,12 @@
             </Group>
             <Group fx:id="ExcluirOption" layoutX="258.0" layoutY="10.0">
                <children>
-                  <ImageView fx:id="fundoBotaoEditar11" fitHeight="55.0" fitWidth="179.0" layoutX="174.0" layoutY="-35.0">
+                  <ImageView fx:id="fundoBotaoExcluir" fitHeight="55.0" fitWidth="179.0" layoutX="174.0" layoutY="-35.0">
                      <image>
                         <Image url="@Botao-pequeno.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="excluirBtn" layoutX="178.0" layoutY="-35.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="170.0" style="-fx-background-color: transparent; -fx-text-fill: black;" text="excluir">
+                  <Button fx:id="excluirBtn" layoutX="178.0" layoutY="-35.0" mnemonicParsing="false" onAction="#excluir" prefHeight="0.0" prefWidth="170.0" style="-fx-background-color: transparent; -fx-text-fill: black;" text="excluir">
                      <font>
                         <Font name="High Tower Text" size="29.0" />
                      </font>
@@ -131,7 +131,7 @@
       </Group>
       <Group fx:id="SearchBar" layoutX="222.0" layoutY="315.0">
          <children>
-            <TextField fx:id="searchBar" layoutX="-100.0" onAction="#buscar" prefHeight="28.0" prefWidth="293.0" />
+            <TextField fx:id="searchBar" layoutX="-100.0" prefHeight="28.0" prefWidth="293.0" />
             <ImageView fx:id="buscarBtn" fitHeight="22.0" fitWidth="24.0" layoutX="167.0" layoutY="3.0" onMouseClicked="#buscar">
                <image>
                   <Image url="@Botao-search.png" />
@@ -146,7 +146,7 @@
                   <Image url="@Botao-pequeno.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtAdicionar" layoutX="8.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="adicionar novo" wrappingWidth="134.528564453125">
+            <Text fx:id="txtAdicionar" layoutX="8.0" layoutY="18.0" onMouseClicked="#adicionarNovo" strokeType="OUTSIDE" strokeWidth="0.0" text="adicionar novo" wrappingWidth="134.528564453125">
                <font>
                   <Font name="High Tower Text" size="21.0" />
                </font>
@@ -160,7 +160,7 @@
                   <Image url="@Botao-pequeno.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtRelatorio" layoutX="13.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="gerar relatório" wrappingWidth="132.1285400390625">
+            <Text fx:id="txtRelatorio" layoutX="13.0" layoutY="20.0" onMouseClicked="#gerarRelatorio" strokeType="OUTSIDE" strokeWidth="0.0" text="gerar relatório" wrappingWidth="132.1285400390625">
                <font>
                   <Font name="High Tower Text" size="21.0" />
                </font>
@@ -198,7 +198,7 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtAutoresD" layoutX="4.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="autores" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
+            <Text fx:id="txtAutoresD" layoutX="4.0" layoutY="35.0" onMouseClicked="#paraAutores" strokeType="OUTSIDE" strokeWidth="0.0" text="autores" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
@@ -208,7 +208,7 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtAutoresA" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="autores" textAlignment="CENTER" visible="false" wrappingWidth="244.22479248046875">
+            <Text fx:id="txtAutoresA" layoutY="19.0" onMouseClicked="#paraAutores" strokeType="OUTSIDE" strokeWidth="0.0" text="autores" textAlignment="CENTER" visible="false" wrappingWidth="244.22479248046875">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
@@ -222,7 +222,7 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtAutoresD" layoutX="5.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
+            <Text fx:id="txtObrasD" layoutX="5.0" layoutY="35.0" onMouseClicked="#paraObras" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
@@ -232,7 +232,7 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtAutoresA" layoutX="12.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
+            <Text fx:id="txtObrasA" layoutX="12.0" layoutY="19.0" onMouseClicked="#paraObras" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
