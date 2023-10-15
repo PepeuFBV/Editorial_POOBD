@@ -352,6 +352,8 @@ public class TelaPrincipalController {
         
         if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) { //habilita as ações de gerente e visões de tabela de gerente
 
+
+
             initializeTableView();
             
         } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) { //habilitar ações de autor e visões de tabela de autor
@@ -463,7 +465,7 @@ public class TelaPrincipalController {
     }
 
     @FXML
-    public void deletar(ActionEvent event) {
+    public void excluir(ActionEvent event) {
         try {
             if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
                 if (visaoAtual.equals("obras")) {
@@ -525,12 +527,18 @@ public class TelaPrincipalController {
     }
     
     @FXML
-    public void avaliarObra(ActionEvent event) { 
-    	try {
-			Telas.telaAvaliarObra(Telas.getUsuarioVOAtual());;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    public void avaliarObra(ActionEvent event) {
+        try {
+            Telas.telaAvaliarObra(Telas.getUsuarioVOAtual());
+            ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void baixar(ActionEvent event) {
+
     }
     
     @FXML
