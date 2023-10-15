@@ -112,7 +112,7 @@
                         <Font name="High Tower Text" size="12.0" />
                      </font>
                   </Text>
-                  <Button fx:id="botaoBaixar" layoutX="5.0" layoutY="-1.0" mnemonicParsing="false" onAction="#adicionarNovo" prefHeight="10.0" prefWidth="54.0" style="-fx-background-color: transparent;" />
+                  <Button fx:id="botaoBaixar" layoutX="5.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="54.0" style="-fx-background-color: transparent;" />
                </children>
             </Group>
             <Group fx:id="ExcluirOption" layoutX="152.0">
@@ -127,7 +127,7 @@
                         <Font name="High Tower Text" size="12.0" />
                      </font>
                   </Text>
-                  <Button fx:id="botaoExcluir" layoutY="-1.0" mnemonicParsing="false" onAction="#adicionarNovo" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: transparent;" />
+                  <Button fx:id="botaoExcluir" layoutY="-1.0" mnemonicParsing="false" onAction="#deletar" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: transparent;" />
                </children>
             </Group>
             <Group fx:id="EditarOption">
@@ -142,7 +142,7 @@
                         <Font name="High Tower Text" size="12.0" />
                      </font>
                   </Text>
-                  <Button fx:id="botaoEditar" layoutX="3.0" layoutY="-1.0" mnemonicParsing="false" onAction="#adicionarNovo" prefHeight="3.0" prefWidth="57.0" style="-fx-background-color: transparent;" />
+                  <Button fx:id="botaoEditar" layoutX="3.0" layoutY="-1.0" mnemonicParsing="false" onAction="#editarObra" prefHeight="3.0" prefWidth="57.0" style="-fx-background-color: transparent;" />
                </children>
             </Group>
          </children>

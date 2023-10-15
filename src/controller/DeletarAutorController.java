@@ -50,7 +50,9 @@ public class DeletarAutorController {
             List<AutorVO> autores = autorBO.buscarPorEmail(autor);
 
             if (!autores.isEmpty()) {
-                AutorVO autorParaExcluir = autores.get(0);
+                AutorVO primeiroAutor = autores.get(0);
+                AutorVO autorParaExcluir = new AutorVO();
+                autorParaExcluir.setIDAutor(primeiroAutor.getIDAutor());
 
                 autorBO.excluir(autorParaExcluir);
 

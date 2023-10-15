@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,12 +10,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.BO.ObraBO;
+import model.DAO.ObraDAO;
 import model.VO.ObraVO;
 
 public class DeletarObraGerenteController {
 	
 	@FXML
-	private Label erroDeletarObra;
+	private Label erroDeletarObraGerente;
 	
 	@FXML
 	private ChoiceBox<String> obra;
@@ -42,22 +44,29 @@ public class DeletarObraGerenteController {
 	    ObservableList<String> obrasList = obra.getItems();
 	    if (!obrasList.isEmpty()) {
 	        String tituloObra = obrasList.get(0);
-	        ObraVO obraExcluir = new ObraVO();
-	        obraExcluir.setTitulo(tituloObra);
-	        
-	        obraBO.excluir(obraExcluir);
+	        ObraVO obra = new ObraVO();
+	        obra.setTitulo(tituloObra);
+	        ObraDAO obraDAO = new ObraDAO();
+	        try {
+				List<ObraVO> obras = obraDAO.buscarPorTitulo(obra);
+				ObraVO primeiraObra = obras.get(0);
+				ObraVO obraExcluir = new ObraVO();
+				obraExcluir.setIDObra(primeiraObra.getIDObra());
+		        obraDAO.excluir(obraExcluir);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}       
 	        
 	        carregarObras();
 
-	        erroDeletarObra.setText("Obra excluída com sucesso.");
-	        erroDeletarObra.setVisible(true);
-
+	        erroDeletarObraGerente.setText("Obra excluída com sucesso.");
+	        erroDeletarObraGerente.setVisible(true);
 	    }
 	}
    
     @FXML
     private void voltar(ActionEvent event) {
-	    Stage stage = (Stage) erroDeletarObra.getScene().getWindow();
+	    Stage stage = (Stage) erroDeletarObraGerente.getScene().getWindow();
 	    stage.close();
     }
 }

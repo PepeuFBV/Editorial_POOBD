@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
@@ -34,7 +35,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 statement.setDate(7, Date.valueOf(obra.getDataAvaliacao()));
             }
             if (obra.getAvaliador() == null) {
-                statement.setLong(8, 0);
+                statement.setNull(8, Types.BIGINT);
             } else {
                 statement.setLong(8, obra.getAvaliador().getIDAvaliador());
             }
@@ -80,7 +81,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             }
             statement.setLong(6, obra.getAutor().getIDAutor());
             if (obra.getAvaliador() == null) {
-                statement.setLong(7, 0);
+            	statement.setNull(7, Types.BIGINT);
             } else {
                 statement.setLong(7, obra.getAvaliador().getIDAvaliador());
             }
@@ -227,24 +228,27 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     obraVO.setAutor(null);
                 }
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
-                avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
-                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
-                if (!avaliadores.isEmpty()) {
-                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
-                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
-                    avaliadorVO.setTipo("Avaliador");
-                    avaliadorVO.setNome(avaliadores.get(0).getNome());
-                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
-                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
-                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
-                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                AvaliadorVO avaliadorVO = new AvaliadorVO();
+             if (rs.getObject("id_avaliador") == null) {
+                 obraVO.setAvaliador(null);
+             } else {
+                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                 ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
 
-                    obraVO.setAvaliador(avaliadorVO);
-                } else {
-                    obraVO.setAvaliador(null);
-                }
+                 if (!avaliadores.isEmpty()) {
+                     avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                     avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                     avaliadorVO.setTipo("Avaliador");
+                     avaliadorVO.setNome(avaliadores.get(0).getNome());
+                     avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                     avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                     avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                     avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                 }
+
+                 obraVO.setAvaliador(avaliadorVO);
+             }
                 arrayDeObras.add(obraVO);
             }
             statement.close();

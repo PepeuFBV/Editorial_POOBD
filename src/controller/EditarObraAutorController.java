@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.BO.AutorBO;
 import model.DAO.AutorDAO;
@@ -22,6 +24,9 @@ import model.VO.UsuarioVO;
 import view.Telas;
 
 public class EditarObraAutorController {
+	
+    @FXML
+    private TextField showFileAutor;
     
     @FXML
     private ChoiceBox<String> obra; // títulos
@@ -42,6 +47,20 @@ public class EditarObraAutorController {
     private Button btncancelar;
 
     private AutorVO autorVO;
+    
+    @FXML
+    public void handleBtnOpenFile(ActionEvent event) {
+        final FileChooser fc = new FileChooser();
+        fc.setTitle("Seleção da Obra");
+        fc.setInitialDirectory(new File(System.getProperty("user.home")));
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.*"));
+        File file = fc.showOpenDialog(null);
+        if (file != null) {
+            showFileAutor.appendText(file.getAbsolutePath() + "\n");
+        } else {
+            System.out.println("Você deve selecionar um arquivo");
+        }
+    }
 
     @FXML
     private void initialize() {
@@ -83,21 +102,21 @@ public class EditarObraAutorController {
     }
 
     public void concluir(ActionEvent event) throws Exception {
+    	String obraSelecionada = showFileAutor.getText();
         String tituloText = titulo.getText();
         String generoText = genero.getText();
         LocalDate anoData = ano.getValue();
+        String obraChoiceBox = obra.getValue();
 
-        if (obra.getValue() == null || obra.getValue().isEmpty()) {
+        if (obraChoiceBox == null || obraChoiceBox.isEmpty()) {
             erroEditarObraAutor.setText("Por favor, selecione uma obra para editar.");
             erroEditarObraAutor.setVisible(true);
             
-        } else {
-        	throw new Exception();
         }
 
         try {
             AutorBO autorBO = new AutorBO();
-            autorBO.editarObra(obra.getValue(), tituloText, generoText, anoData, autorVO);
+            autorBO.editarObra(obraChoiceBox, tituloText, generoText, anoData, autorVO, obraSelecionada);
 
             System.out.println("Edição bem-sucedida.");
             erroEditarObraAutor.setText("Edição bem-sucedida.");
@@ -108,6 +127,11 @@ public class EditarObraAutorController {
             erroEditarObraAutor.setText("Erro ao editar a obra.");
             erroEditarObraAutor.setVisible(true);
         }
+		catch (Exception ex) {
+		    ex.printStackTrace();
+		    erroEditarObraAutor.setText("Erro ao editar a obra: " + ex.getMessage());
+		    erroEditarObraAutor.setVisible(true);
+		}
     }
 
     public void cancelar(ActionEvent event) {

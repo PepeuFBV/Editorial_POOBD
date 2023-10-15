@@ -50,8 +50,10 @@ public class DeletarAvaliadorController {
             List<AvaliadorVO> avaliadores = avaliadorBO.buscarPorEmail(avaliador);
 
 	        if (!avaliadores.isEmpty()) {
-	            AvaliadorVO avaliadorParaExcluir = avaliadores.get(0);
-	            
+	            AvaliadorVO primeiroAvaliador = avaliadores.get(0);
+	            AvaliadorVO avaliadorParaExcluir = new AvaliadorVO();
+	            avaliadorParaExcluir.setIDAvaliador(primeiroAvaliador.getIDAvaliador());
+	           
 	            avaliadorBO.excluir(avaliadorParaExcluir);
 
 	            erroDeletarAvaliador.setText("Avaliador excluído com sucesso.");
