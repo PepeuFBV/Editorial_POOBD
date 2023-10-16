@@ -547,17 +547,19 @@ public class TelaPrincipalController {
                     List<AutorVO> lista = autorBO.listarAutoresPelaBusca(busca);
                     defineAutoresTableView(lista);
                 } else if (visaoAtual.equals("avaliadores")) {
-                    //mostrar todos os avaliadores
+                    AvaliadorBO avaliadorBO = new AvaliadorBO();
+                    List<AvaliadorVO> lista = avaliadorBO.listarAvaliadoresPelaBusca(busca);
+                    defineAvaliadoresTableView(lista);
                 }
 
             } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
                 if (visaoAtual.equals("obras")) {
-                    //mostrar obras do próprio autor 
+                    ObraBO obraBO = new ObraBO(); //TODO
                 }
 
             } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Avaliador")) {
                 if (visaoAtual.equals("obras")) {
-                    //mostrar obras que o avaliador deve avaliar
+                    //TODO 
                 }
             }
 

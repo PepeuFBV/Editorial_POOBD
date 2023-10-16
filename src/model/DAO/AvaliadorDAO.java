@@ -140,6 +140,37 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
         }
         return avaliadores;
     }
+
+    public ArrayList<AvaliadorVO> buscarPorEmailIncompleto(AvaliadorVO avaliador) {
+        Connection con = null;
+        ArrayList<AvaliadorVO> avaliadores = new ArrayList<AvaliadorVO>();
+        try {
+            con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM avaliadores WHERE email LIKE ?";
+            statement = con.prepareStatement(sql);
+            statement.setString(1, "%" + avaliador.getEmail() + "%");
+            rs = statement.executeQuery();
+            while (rs.next()) { //deve retornar só 1
+                avaliador.setIDUsuario(rs.getLong("id_usuario"));
+                avaliador.setIDAvaliador(rs.getLong("id_avaliador"));
+                avaliador.setTipo("Avaliador");
+                avaliador.setNome(rs.getString("nome"));
+                avaliador.setEndereco(rs.getString("endereco"));
+                avaliador.setCpf(rs.getString("cpf"));
+                avaliador.setEmail(rs.getString("email"));
+                avaliador.setSenha(rs.getString("senha"));
+
+                avaliadores.add(avaliador);
+            }
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return avaliadores;
+    }
         
     public ArrayList<AvaliadorVO> buscarPorNome(AvaliadorVO avaliador) {
         Connection con = null;
