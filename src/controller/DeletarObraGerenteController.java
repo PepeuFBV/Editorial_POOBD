@@ -1,6 +1,5 @@
 package controller;
 
-import java.sql.SQLException;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,61 +13,56 @@ import model.DAO.ObraDAO;
 import model.VO.ObraVO;
 
 public class DeletarObraGerenteController {
-	
-	@FXML
-	private Label erroDeletarObraGerente;
-	
-	@FXML
-	private ChoiceBox<String> obra;
-	
+
+    @FXML
+    private Label erroDeletarObraGerente;
+
+    @FXML
+    private ChoiceBox<String> obra;
+
     ObraBO obraBO = new ObraBO();
-	
-	@FXML
-	private void initialize() {
-	    carregarObras();
-	}
 
-	private void carregarObras() {
-	    List<ObraVO> obras = obraBO.listar(); 
+    @FXML
+    private void initialize() {
+        carregarObras();
+    }
 
-	    ObservableList<String> obrasList = FXCollections.observableArrayList();
-	    for (ObraVO obra : obras) {
-	        obrasList.add(obra.getTitulo());
-	    }
+    private void carregarObras() {
+        List<ObraVO> obras = obraBO.listar();
 
-	    obra.setItems(obrasList);
-	}
-	
-	@FXML
-	private void deletar(ActionEvent event) {
-	    ObservableList<String> obrasList = obra.getItems();
-	    if (!obrasList.isEmpty()) {
-	        String tituloObra = obrasList.get(0);
-	        ObraVO obra = new ObraVO();
-	        obra.setTitulo(tituloObra);
-	        ObraDAO obraDAO = new ObraDAO();
-	        try {
-				List<ObraVO> obras = obraDAO.buscarPorTitulo(obra);
-				ObraVO primeiraObra = obras.get(0);
-				ObraVO obraExcluir = new ObraVO();
-				obraExcluir.setIDObra(primeiraObra.getIDObra());
-		        obraDAO.excluir(obraExcluir);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}       
-	        
-	        carregarObras();
+        ObservableList<String> obrasList = FXCollections.observableArrayList();
+        for (ObraVO obra : obras) {
+            obrasList.add(obra.getTitulo());
+        }
 
-	        erroDeletarObraGerente.setText("Obra excluída com sucesso.");
-	        erroDeletarObraGerente.setVisible(true);
-	    }
-	}
-   
+        obra.setItems(obrasList);
+    }
+
+    @FXML
+    private void deletar(ActionEvent event) {
+        ObservableList<String> obrasList = obra.getItems();
+        if (!obrasList.isEmpty()) {
+            String tituloObra = obrasList.get(0);
+            ObraVO obra = new ObraVO();
+            obra.setTitulo(tituloObra);
+            ObraDAO obraDAO = new ObraDAO();
+
+            List<ObraVO> obras = obraDAO.buscarPorTitulo(obra);
+            ObraVO primeiraObra = obras.get(0);
+            ObraVO obraExcluir = new ObraVO();
+            obraExcluir.setIDObra(primeiraObra.getIDObra());
+            obraDAO.excluir(obraExcluir);
+
+            carregarObras();
+
+            erroDeletarObraGerente.setText("Obra excluída com sucesso.");
+            erroDeletarObraGerente.setVisible(true);
+        }
+    }
+
     @FXML
     private void voltar(ActionEvent event) {
-	    Stage stage = (Stage) erroDeletarObraGerente.getScene().getWindow();
-	    stage.close();
+        Stage stage = (Stage) erroDeletarObraGerente.getScene().getWindow();
+        stage.close();
     }
 }
-
-

@@ -136,7 +136,40 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
 
                 autores.add(autorVO);
             }
-            
+
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return autores;
+    }
+    
+    public ArrayList<AutorVO> buscarPorEmailIncompleto(AutorVO autor) {
+        Connection con = null;
+        PreparedStatement statement = null;
+        ArrayList<AutorVO> autores = new ArrayList<AutorVO>();
+        try {
+            con = BaseDAOImpl.getConnection();
+            ResultSet rs = null;
+            String sql = "SELECT * FROM autores WHERE email ILIKE ?";
+            statement = con.prepareStatement(sql);
+            statement.setString(1, "%" + autor.getEmail() + "%");
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                AutorVO autorVO = new AutorVO(); //usado para salvar a cada linha do ResultSet
+                autorVO.setIDUsuario(rs.getLong("id_usuario"));
+                autorVO.setIDAutor(rs.getLong("id_autor"));
+                autorVO.setTipo("Autor");
+                autorVO.setNome(rs.getString("nome"));
+                autorVO.setEndereco(rs.getString("endereco"));
+                autorVO.setCpf(rs.getString("cpf"));
+                autorVO.setEmail(rs.getString("email"));
+                autorVO.setSenha(rs.getString("senha"));
+
+                autores.add(autorVO);
+            }
+
             statement.close();
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
@@ -202,6 +235,39 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
                 autorVO.setSenha(rs.getString("senha"));
 
                 autores.add(autorVO);
+            }
+
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return autores;
+    }
+
+    public ArrayList<AutorVO> buscarPorNomeIncompleto(AutorVO autorVO) {
+        Connection con = null;
+        ArrayList<AutorVO> autores = new ArrayList<AutorVO>();
+        try {
+            con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM autores WHERE nome ILIKE ?";
+            statement = con.prepareStatement(sql);
+            statement.setString(1, "%" + autorVO.getNome() + "%");
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                AutorVO autor = new AutorVO(); //usado para salvar a cada linha do ResultSet
+                autor.setIDUsuario(rs.getLong("id_usuario"));
+                autor.setIDAutor(rs.getLong("id_autor"));
+                autor.setTipo("Autor");
+                autor.setNome(rs.getString("nome"));
+                autor.setEndereco(rs.getString("endereco"));
+                autor.setCpf(rs.getString("cpf"));
+                autor.setEmail(rs.getString("email"));
+                autor.setSenha(rs.getString("senha"));
+
+                autores.add(autor);
             }
 
             statement.close();

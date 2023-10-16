@@ -3,10 +3,8 @@ package controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -78,36 +76,32 @@ public class BaixarObraAvaliadorController {
             ObraVO obra = new ObraVO();
             obra.setTitulo(tituloObra);
             ObraDAO obraDAO = new ObraDAO();
-            try {
-                List<ObraVO> obras = obraDAO.buscarPorTitulo(obra);
-                if (!obras.isEmpty()) {
-                    ObraVO primeiraObra = obras.get(0);
-                    byte[] pdfObraBytes = primeiraObra.getPdfObra();
-                    
-                    if (pdfObraBytes != null) {
-                        String nomeArquivoObra = "obra_" + primeiraObra.getIDObra() + ".pdf";
-                        String diretorioSalvar = "C:\\Obras"; 
-                        String caminhoArquivoObra = diretorioSalvar + nomeArquivoObra;
+            List<ObraVO> obras = obraDAO.buscarPorTitulo(obra);
+            if (!obras.isEmpty()) {
+                ObraVO primeiraObra = obras.get(0);
+                byte[] pdfObraBytes = primeiraObra.getPdfObra();
+                
+                if (pdfObraBytes != null) {
+                    String nomeArquivoObra = "obra_" + primeiraObra.getIDObra() + ".pdf";
+                    String diretorioSalvar = "C:\\Obras"; 
+                    String caminhoArquivoObra = diretorioSalvar + nomeArquivoObra;
 
-                        File diretorio = new File(diretorioSalvar);
-                        if (!diretorio.exists()) {
-                            diretorio.mkdirs();
-                        }
+                    File diretorio = new File(diretorioSalvar);
+                    if (!diretorio.exists()) {
+                        diretorio.mkdirs();
+                    }
 
-                        try (FileOutputStream outputStream = new FileOutputStream(caminhoArquivoObra)) {
-                            outputStream.write(pdfObraBytes);
-                            System.out.println("Obra baixada com sucesso.");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        System.out.println("A obra não possui um PDF associado.");
+                    try (FileOutputStream outputStream = new FileOutputStream(caminhoArquivoObra)) {
+                        outputStream.write(pdfObraBytes);
+                        System.out.println("Obra baixada com sucesso.");
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 } else {
-                    System.out.println("Obra não encontrada.");
+                    System.out.println("A obra não possui um PDF associado.");
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } else {
+                System.out.println("Obra não encontrada.");
             }
         }
     }

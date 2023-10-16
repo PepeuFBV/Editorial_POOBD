@@ -1,6 +1,9 @@
 package controller;
 
 import javafx.fxml.FXML;
+
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -233,6 +236,9 @@ public class TelaPrincipalController {
     @FXML
     private Button gerarRelatorioBtn;
 
+    @FXML
+    private Button buscarBtnPress;
+
     
     public static void setVisaoAtual(String visaoAtual) {
         if (visaoAtual != null) {
@@ -364,6 +370,60 @@ public class TelaPrincipalController {
     }
 
     @FXML
+    public void defineObrasTableView(List<ObraVO> obras) {
+
+        ObservableList<ObraVO> dados = FXCollections.observableArrayList();
+        dados.addAll(obras);
+
+        id_obra.setCellValueFactory(new PropertyValueFactory<>("IDObra"));
+        titulo_obra.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        genero_obra.setCellValueFactory(new PropertyValueFactory<>("genero"));
+        status_obra.setCellValueFactory(new PropertyValueFactory<>("status"));
+        ano_obra.setCellValueFactory(new PropertyValueFactory<>("ano"));
+        autor_obra.setCellValueFactory(new PropertyValueFactory<>("autor"));
+        avaliador_obra.setCellValueFactory(new PropertyValueFactory<>("avaliador"));
+
+        mainTableViewObras.setItems(dados);
+
+        System.out.println("Obras encontradas pela busca!");
+    }
+
+    @FXML
+    public void defineAvaliadoresTableView(List<AvaliadorVO> avaliadores) {
+
+        ObservableList<AvaliadorVO> dados = FXCollections.observableArrayList();
+        dados.addAll(avaliadores);
+
+        id_avaliador.setCellValueFactory(new PropertyValueFactory<>("IDAvaliador"));
+        nome_avaliador.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        cpf_avaliador.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        email_avaliador.setCellValueFactory(new PropertyValueFactory<>("email"));
+        senha_avaliador.setCellValueFactory(new PropertyValueFactory<>("senha"));
+        endereco_avaliador.setCellValueFactory(new PropertyValueFactory<>("endereco"));
+
+        mainTableViewAvaliadores.setItems(dados);
+
+        System.out.println("Avaliadores encontrados pela busca!");
+    }
+
+    public void defineAutoresTableView(List<AutorVO> autores) {
+
+        ObservableList<AutorVO> dados = FXCollections.observableArrayList();
+        dados.addAll(autores);
+
+        id_autor.setCellValueFactory(new PropertyValueFactory<>("IDAutor"));
+        nome_autor.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        cpf_autor.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        email_autor.setCellValueFactory(new PropertyValueFactory<>("email"));
+        senha_autor.setCellValueFactory(new PropertyValueFactory<>("senha"));
+        endereco_autor.setCellValueFactory(new PropertyValueFactory<>("endereco"));
+
+        mainTableViewAutores.setItems(dados);
+
+        System.out.println("Autores encontrados pela busca!");
+    }
+
+    @FXML
     public void initializeButtons() {
 
         //reseta tudo para inivísivel
@@ -476,12 +536,16 @@ public class TelaPrincipalController {
         if (busca == null || busca.isEmpty()) {
             //TODO pop-up de campo vazio
         } else {
-            //mudar a tabela para a das obras/autores/avaliadores que contém a string de busca (será recebido um ResultSet)
+            
             if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
                 if (visaoAtual.equals("obras")) {
-                    //mostrar todas as obras
+                    ObraBO obraBO = new ObraBO();
+                    List<ObraVO> lista = obraBO.listarObrasPelaBusca(busca);
+                    defineObrasTableView(lista);
                 } else if (visaoAtual.equals("autores")) {
-                    //mostrar todos os autores
+                    AutorBO autorBO = new AutorBO();
+                    List<AutorVO> lista = autorBO.listarAutoresPelaBusca(busca);
+                    defineAutoresTableView(lista);
                 } else if (visaoAtual.equals("avaliadores")) {
                     //mostrar todos os avaliadores
                 }

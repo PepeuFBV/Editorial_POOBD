@@ -16,7 +16,7 @@ import model.VO.ObraVO;
 
 public class ObraDAO extends BaseDAOImpl<ObraVO> {
 
-    public void inserir(ObraVO obra) { //apenas para a primeira inserção
+    public void inserir(ObraVO obra) { // apenas para a primeira inserção
         Connection con = null;
         try {
             con = BaseDAOImpl.getConnection();
@@ -44,24 +44,23 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             } else {
                 statement.setBytes(9, obra.getPdfAvaliacao());
             }
-            
 
-	        int affectedRows = statement.executeUpdate();
-	        if (affectedRows == 0) {
-	            throw new Exception("A inserção falhou. Nenhuma linha foi alterada.");
-	        }
-	        ResultSet generatedKeys = statement.getGeneratedKeys();
-	        if (generatedKeys.next()) {
-	            obra.setIDObra(generatedKeys.getLong(1));
-	        } else {
-	            throw new Exception("A inserção falhou. Nenhum id foi retornado.");
-	        }
-	        statement.close();
-	        BaseDAOImpl.closeConnection();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new Exception("A inserção falhou. Nenhuma linha foi alterada.");
+            }
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                obra.setIDObra(generatedKeys.getLong(1));
+            } else {
+                throw new Exception("A inserção falhou. Nenhum id foi retornado.");
+            }
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void atualizar(ObraVO obra) {
         Connection con = null;
@@ -76,12 +75,12 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             statement.setString(4, obra.getStatus());
             if (obra.getDataAvaliacao() == null) {
                 statement.setDate(5, null);
-            } else { //se a data de avaliação não for nula (se a obra foi avaliada)
+            } else { // se a data de avaliação não for nula (se a obra foi avaliada)
                 statement.setDate(5, Date.valueOf(obra.getDataAvaliacao()));
             }
             statement.setLong(6, obra.getAutor().getIDAutor());
             if (obra.getAvaliador() == null) {
-            	statement.setNull(7, Types.BIGINT);
+                statement.setNull(7, Types.BIGINT);
             } else {
                 statement.setLong(7, obra.getAvaliador().getIDAvaliador());
             }
@@ -91,16 +90,15 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             } else {
                 statement.setBytes(9, obra.getPdfAvaliacao());
             }
-	        statement.setLong(10, obra.getIDObra());
-	        statement.executeUpdate();
+            statement.setLong(10, obra.getIDObra());
+            statement.executeUpdate();
 
-	        statement.close();
-	        BaseDAOImpl.closeConnection();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public ArrayList<ObraVO> buscarPorId(ObraVO obra) {
         Connection con = null;
@@ -126,7 +124,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 if (rs.getBytes("pdf_obra") != null) {
                     obraVO.setPdfObra(rs.getBytes("pdf_obra"));
                 } else {
-                    obraVO.setPdfObra(null); //para chamar exception
+                    obraVO.setPdfObra(null); // para chamar exception
                 }
                 if (rs.getBytes("pdf_avaliacao") != null) {
                     obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
@@ -135,7 +133,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO, esse array só terá um valor
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no
+                                                                            // autorVO, esse array só terá um valor
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
                     autorVO.setIDUsuario(autores.get(0).getIDUsuario());
@@ -147,30 +146,38 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     autorVO.setSenha(autores.get(0).getSenha());
 
                     obraVO.setAutor(autorVO);
-                } else { //exception 
+                } else { // exception
                     throw new Exception("Autor não encontrado");
                 }
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
-                avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
-                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
-                if (!avaliadores.isEmpty()) {
-                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
-                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
-                    avaliadorVO.setTipo("Avaliador");
-                    avaliadorVO.setNome(autores.get(0).getNome());
-                    avaliadorVO.setEndereco(autores.get(0).getEndereco());
-                    avaliadorVO.setCpf(autores.get(0).getCpf());
-                    avaliadorVO.setEmail(autores.get(0).getEmail());
-                    avaliadorVO.setSenha(autores.get(0).getSenha());
+                try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o
+                                                                 // avaliador
+                    avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador
+                                                                                                // pelo id e colocar no
+                                                                                                // avaliadorVO
+                    if (!avaliadores.isEmpty()) {
+                        avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                        avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                        avaliadorVO.setTipo("Avaliador");
+                        avaliadorVO.setNome(autores.get(0).getNome());
+                        avaliadorVO.setEndereco(autores.get(0).getEndereco());
+                        avaliadorVO.setCpf(autores.get(0).getCpf());
+                        avaliadorVO.setEmail(autores.get(0).getEmail());
+                        avaliadorVO.setSenha(autores.get(0).getSenha());
 
-                    obraVO.setAvaliador(avaliadorVO);
-                } else {
-                    obraVO.setAvaliador(null);
+                        obraVO.setAvaliador(avaliadorVO);
+                    } else {
+                        obraVO.setAvaliador(null);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 arrayDeObras.add(obraVO);
             }
+
             statement.close();
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
@@ -179,7 +186,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         return arrayDeObras;
     }
 
-    public ArrayList<ObraVO> buscarPorTitulo(ObraVO obra) throws SQLException {
+    public ArrayList<ObraVO> buscarPorTitulo(ObraVO obra) {
         Connection con = null;
         ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
         try {
@@ -203,7 +210,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 if (rs.getBytes("pdf_obra") != null) {
                     obraVO.setPdfObra(rs.getBytes("pdf_obra"));
                 } else {
-                    obraVO.setPdfObra(null); //para chamar exception
+                    obraVO.setPdfObra(null); // para chamar exception
                 }
                 if (rs.getBytes("pdf_avaliacao") != null) {
                     obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
@@ -212,7 +219,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no
+                                                                            // autorVO
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
                     autorVO.setIDUsuario(autores.get(0).getIDUsuario());
@@ -228,27 +236,25 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     obraVO.setAutor(null);
                 }
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO();
-             if (rs.getObject("id_avaliador") == null) {
-                 obraVO.setAvaliador(null);
-             } else {
-                 avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
-                 AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                 ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
-
-                 if (!avaliadores.isEmpty()) {
-                     avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
-                     avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
-                     avaliadorVO.setTipo("Avaliador");
-                     avaliadorVO.setNome(avaliadores.get(0).getNome());
-                     avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
-                     avaliadorVO.setCpf(avaliadores.get(0).getCpf());
-                     avaliadorVO.setEmail(avaliadores.get(0).getEmail());
-                     avaliadorVO.setSenha(avaliadores.get(0).getSenha());
-                 }
-
-                 obraVO.setAvaliador(avaliadorVO);
-             }
+                try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO();
+                    avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
+                    if (!avaliadores.isEmpty()) {
+                        avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                        avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                        avaliadorVO.setTipo("Avaliador");
+                        avaliadorVO.setNome(avaliadores.get(0).getNome());
+                        avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                        avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                        avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                        avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                    }
+                    obraVO.setAvaliador(avaliadorVO);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 arrayDeObras.add(obraVO);
             }
             statement.close();
@@ -259,7 +265,87 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         return arrayDeObras;
     }
 
-    public ArrayList<ObraVO> buscarPorAno(ObraVO obra) throws SQLException {
+    public ArrayList<ObraVO> buscarPorTituloIncompleto(ObraVO obra) {
+        Connection con = null;
+        ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
+        try {
+            con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM obras WHERE titulo ILIKE ?";
+            statement = con.prepareStatement(sql);
+            statement.setString(1, "%" + obra.getTitulo() + "%");
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                ObraVO obraVO = new ObraVO();
+                obraVO.setIDObra(rs.getLong("id_obra"));
+                obraVO.setTitulo(rs.getString("titulo"));
+                obraVO.setGenero(rs.getString("genero"));
+                obraVO.setAno(rs.getDate("ano").toLocalDate());
+                obraVO.setStatus(rs.getString("status"));
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                }
+                if (rs.getBytes("pdf_obra") != null) {
+                    obraVO.setPdfObra(rs.getBytes("pdf_obra"));
+                } else {
+                    obraVO.setPdfObra(null); // para chamar exception
+                }
+                if (rs.getBytes("pdf_avaliacao") != null) {
+                    obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
+                }
+
+                AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
+                autorVO.setIDAutor(rs.getLong("id_autor"));
+                AutorDAO autorDAO = new AutorDAO();
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no
+                                                                            // autorVO
+                if (!autores.isEmpty()) {
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+
+                    obraVO.setAutor(autorVO);
+                } else {
+                    obraVO.setAutor(null);
+                }
+
+                try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO();
+                    avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
+                    if (!avaliadores.isEmpty()) {
+                        avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                        avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                        avaliadorVO.setTipo("Avaliador");
+                        avaliadorVO.setNome(avaliadores.get(0).getNome());
+                        avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                        avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                        avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                        avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+
+                        obraVO.setAvaliador(avaliadorVO);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                arrayDeObras.add(obraVO);
+            }
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arrayDeObras;
+    }
+
+    public ArrayList<ObraVO> buscarPorAno(ObraVO obra) {
         Connection con = null;
         ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
         try {
@@ -283,7 +369,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 if (rs.getBytes("pdf_obra") != null) {
                     obraVO.setPdfObra(rs.getBytes("pdf_obra"));
                 } else {
-                    obraVO.setPdfObra(null); //para chamar exception
+                    obraVO.setPdfObra(null); // para chamar exception
                 }
                 if (rs.getBytes("pdf_avaliacao") != null) {
                     obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
@@ -308,23 +394,27 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     obraVO.setAutor(null);
                 }
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
-                avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
-                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
-                if (!avaliadores.isEmpty()) {
-                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
-                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
-                    avaliadorVO.setTipo("Avaliador");
-                    avaliadorVO.setNome(avaliadores.get(0).getNome());
-                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
-                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
-                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
-                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
+                    avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                    if (!avaliadores.isEmpty()) {
+                        avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                        avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                        avaliadorVO.setTipo("Avaliador");
+                        avaliadorVO.setNome(avaliadores.get(0).getNome());
+                        avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                        avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                        avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                        avaliadorVO.setSenha(avaliadores.get(0).getSenha());
 
-                    obraVO.setAvaliador(avaliadorVO);
-                } else {
-                    obraVO.setAvaliador(null);
+                        obraVO.setAvaliador(avaliadorVO);
+                    } else {
+                        obraVO.setAvaliador(null);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -336,7 +426,87 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         return arrayDeObras;
     }
 
-    public ArrayList<ObraVO> buscarPorAno(Date anoInicio, Date anoFinal) throws SQLException {
+    public ArrayList<ObraVO> buscarPorAnoIncompleto(ObraVO obra) {
+        Connection con = null;
+        ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
+        try {
+            con = BaseDAOImpl.getConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM obras WHERE EXTRACT(YEAR FROM ano) >= ?";
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, obra.getAno().getYear());
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                ObraVO obraVO = new ObraVO();
+                obraVO.setIDObra(rs.getLong("id_obra"));
+                obraVO.setTitulo(rs.getString("titulo"));
+                obraVO.setGenero(rs.getString("genero"));
+                obraVO.setAno(rs.getDate("ano").toLocalDate());
+                obraVO.setStatus(rs.getString("status"));
+                if (rs.getDate("data_avaliacao") != null) {
+                    obraVO.setDataAvaliacao(rs.getDate("data_avaliacao").toLocalDate());
+                }
+                if (rs.getBytes("pdf_obra") != null) {
+                    obraVO.setPdfObra(rs.getBytes("pdf_obra"));
+                } else {
+                    obraVO.setPdfObra(null); // para chamar exception
+                }
+                if (rs.getBytes("pdf_avaliacao") != null) {
+                    obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
+                }
+
+                AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
+                autorVO.setIDAutor(rs.getLong("id_autor"));
+                AutorDAO autorDAO = new AutorDAO();
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                if (!autores.isEmpty()) {
+                    autorVO.setIDAutor(autores.get(0).getIDAutor());
+                    autorVO.setIDUsuario(autores.get(0).getIDUsuario());
+                    autorVO.setTipo("Autor");
+                    autorVO.setNome(autores.get(0).getNome());
+                    autorVO.setEndereco(autores.get(0).getEndereco());
+                    autorVO.setCpf(autores.get(0).getCpf());
+                    autorVO.setEmail(autores.get(0).getEmail());
+                    autorVO.setSenha(autores.get(0).getSenha());
+
+                    obraVO.setAutor(autorVO);
+                } else {
+                    obraVO.setAutor(null);
+                }
+                try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
+                    avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                    if (!avaliadores.isEmpty()) {
+                        avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                        avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                        avaliadorVO.setTipo("Avaliador");
+                        avaliadorVO.setNome(avaliadores.get(0).getNome());
+                        avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                        avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                        avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                        avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+
+                        obraVO.setAvaliador(avaliadorVO);
+                    } else {
+                        obraVO.setAvaliador(null);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                arrayDeObras.add(obraVO);
+            }
+            statement.close();
+            BaseDAOImpl.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arrayDeObras;
+    }
+
+    public ArrayList<ObraVO> buscarPorAno(Date anoInicio, Date anoFinal) {
         Connection con = null;
         ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
         try {
@@ -365,7 +535,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 } else {
                     obraVO.setStatus(null);
                 }
-                
+
                 if (rs.getBytes("pdf_obra") != null) {
                     obraVO.setPdfObra(rs.getBytes("pdf_obra"));
                 }
@@ -386,9 +556,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
 
                     obraVO.setAutor(autorVO);
                 } else {
-                    obraVO.setAutor(null); //p ara acusar erro
+                    obraVO.setAutor(null); // p ara acusar erro
                 }
-
 
                 try {
                     AvaliadorVO avaliadorVO = new AvaliadorVO();
@@ -407,11 +576,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
 
                         obraVO.setAvaliador(avaliadorVO);
                     }
-                    else {
-                        throw new Exception("Avaliador não encontrado");
-                    }
-                } catch (IllegalArgumentException e) {
-                    
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -423,7 +589,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         return arrayDeObras;
     }
 
-    public ArrayList<ObraVO> buscarPorStatus(ObraVO obra) throws SQLException {
+    public ArrayList<ObraVO> buscarPorStatus(ObraVO obra) {
         Connection con = null;
         ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
         try {
@@ -447,7 +613,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 if (rs.getBytes("pdf_obra") != null) {
                     obraVO.setPdfObra(rs.getBytes("pdf_obra"));
                 } else {
-                    obraVO.setPdfObra(null); //para chamar exception
+                    obraVO.setPdfObra(null); // para chamar exception
                 }
                 if (rs.getBytes("pdf_avaliacao") != null) {
                     obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
@@ -456,8 +622,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
-                if (!autores.isEmpty()) { 
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no  autorVO
+                if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
                     autorVO.setIDUsuario(autores.get(0).getIDUsuario());
                     autorVO.setTipo("Autor");
@@ -472,7 +638,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     obraVO.setAutor(null);
                 }
 
-               try {
+                try {
                     AvaliadorVO avaliadorVO = new AvaliadorVO();
                     avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
                     AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
@@ -489,11 +655,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
 
                         obraVO.setAvaliador(avaliadorVO);
                     }
-                    else {
-                        throw new Exception("Avaliador não encontrado");
-                    }
-                } catch (IllegalArgumentException e) {
-                    
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -529,7 +692,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 if (rs.getBytes("pdf_obra") != null) {
                     obraVO.setPdfObra(rs.getBytes("pdf_obra"));
                 } else {
-                    obraVO.setPdfObra(null); //para chamar exception
+                    obraVO.setPdfObra(null); // para chamar exception
                 }
                 if (rs.getBytes("pdf_avaliacao") != null) {
                     obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
@@ -538,7 +701,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no
+                                                                            // autorVO
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
                     autorVO.setIDUsuario(autores.get(0).getIDUsuario());
@@ -570,13 +734,12 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                         avaliadorVO.setSenha(avaliadores.get(0).getSenha());
 
                         obraVO.setAvaliador(avaliadorVO);
-                    }
-                    else {
+                    } else {
                         throw new Exception("Avaliador não encontrado");
                     }
-                } catch (IllegalArgumentException e) {
-                    
-                }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }                
                 arrayDeObras.add(obraVO);
             }
             BaseDAOImpl.closeConnection();
@@ -611,7 +774,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 if (rs.getBytes("pdf_obra") != null) {
                     obraVO.setPdfObra(rs.getBytes("pdf_obra"));
                 } else {
-                    obraVO.setPdfObra(null); //para chamar exception
+                    obraVO.setPdfObra(null); // para chamar exception
                 }
                 if (rs.getBytes("pdf_avaliacao") != null) {
                     obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
@@ -620,7 +783,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no
+                                                                            // autorVO
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
                     autorVO.setIDUsuario(autores.get(0).getIDUsuario());
@@ -653,8 +817,8 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
 
                         obraVO.setAvaliador(avaliadorVO);
                     }
-                } catch (IllegalArgumentException e) {
-                    
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -665,7 +829,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         }
         return arrayDeObras;
     }
-    
+
     public ArrayList<ObraVO> buscarPorAvaliador(AvaliadorVO avaliador) {
         Connection con = null;
         ArrayList<ObraVO> arrayDeObras = new ArrayList<ObraVO>();
@@ -690,7 +854,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 if (rs.getBytes("pdf_obra") != null) {
                     obraVO.setPdfObra(rs.getBytes("pdf_obra"));
                 } else {
-                    obraVO.setPdfObra(null); //para chamar exception
+                    obraVO.setPdfObra(null); // para chamar exception
                 }
                 if (rs.getBytes("pdf_avaliacao") != null) {
                     obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
@@ -715,23 +879,27 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                     obraVO.setAutor(null);
                 }
 
-                AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
-                avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
-                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
-                if (!avaliadores.isEmpty()) {
-                    avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
-                    avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
-                    avaliadorVO.setTipo("Avaliador");
-                    avaliadorVO.setNome(avaliadores.get(0).getNome());
-                    avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
-                    avaliadorVO.setCpf(avaliadores.get(0).getCpf());
-                    avaliadorVO.setEmail(avaliadores.get(0).getEmail());
-                    avaliadorVO.setSenha(avaliadores.get(0).getSenha());
+                try {
+                    AvaliadorVO avaliadorVO = new AvaliadorVO(); // cria AvaliadorVO para atribuir o Id e achar o avaliador
+                    avaliadorVO.setIDAvaliador(rs.getLong("id_avaliador"));
+                    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO); // buscar o avaliador pelo id e colocar no avaliadorVO
+                    if (!avaliadores.isEmpty()) {
+                        avaliadorVO.setIDAvaliador(avaliadores.get(0).getIDAvaliador());
+                        avaliadorVO.setIDUsuario(avaliadores.get(0).getIDUsuario());
+                        avaliadorVO.setTipo("Avaliador");
+                        avaliadorVO.setNome(avaliadores.get(0).getNome());
+                        avaliadorVO.setEndereco(avaliadores.get(0).getEndereco());
+                        avaliadorVO.setCpf(avaliadores.get(0).getCpf());
+                        avaliadorVO.setEmail(avaliadores.get(0).getEmail());
+                        avaliadorVO.setSenha(avaliadores.get(0).getSenha());
 
-                    obraVO.setAvaliador(avaliadorVO);
-                } else {
-                    obraVO.setAvaliador(null);
+                        obraVO.setAvaliador(avaliadorVO);
+                    } else {
+                        obraVO.setAvaliador(null);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 arrayDeObras.add(obraVO);
             }
@@ -742,7 +910,6 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
         }
         return arrayDeObras;
     }
-
 
     public ArrayList<ObraVO> listar() {
         Connection con = null;
@@ -767,17 +934,17 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                 if (rs.getBytes("pdf_obra") != null) {
                     obraVO.setPdfObra(rs.getBytes("pdf_obra"));
                 } else {
-                    obraVO.setPdfObra(null); //para chamar exception
+                    obraVO.setPdfObra(null); // para chamar exception
                 }
                 if (rs.getBytes("pdf_avaliacao") != null) {
                     obraVO.setPdfAvaliacao(rs.getBytes("pdf_avaliacao"));
                 }
 
-
                 AutorVO autorVO = new AutorVO(); // cria AutorVO para atribuir o Id e achar o autor
                 autorVO.setIDAutor(rs.getLong("id_autor"));
                 AutorDAO autorDAO = new AutorDAO();
-                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no autorVO
+                ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO); // buscar o autor pelo id e colocar no
+                                                                            // autorVO
                 if (!autores.isEmpty()) {
                     autorVO.setIDAutor(autores.get(0).getIDAutor());
                     autorVO.setIDUsuario(autores.get(0).getIDUsuario());
@@ -809,12 +976,11 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
                         avaliadorVO.setSenha(avaliadores.get(0).getSenha());
 
                         obraVO.setAvaliador(avaliadorVO);
-                    }
-                    else {
+                    } else {
                         throw new Exception("Avaliador não encontrado");
                     }
-                } catch (IllegalArgumentException e) {
-                    
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 arrayDeObras.add(obraVO);
             }

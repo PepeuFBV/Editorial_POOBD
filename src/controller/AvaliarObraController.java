@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
@@ -99,39 +98,35 @@ public class AvaliarObraController {
             ObraVO obraSelecionada = new ObraVO();
             obraSelecionada.setTitulo(tituloSelecionado);
             ObraDAO obraDAO = new ObraDAO();
-            try {
-                List<ObraVO> obrasEncontradas = obraDAO.buscarPorTitulo(obraSelecionada);
-                
-                if (!obrasEncontradas.isEmpty()) {
-                    ObraVO obraEncontrada = obrasEncontradas.get(0);
+            List<ObraVO> obrasEncontradas = obraDAO.buscarPorTitulo(obraSelecionada);
+            
+            if (!obrasEncontradas.isEmpty()) {
+                ObraVO obraEncontrada = obrasEncontradas.get(0);
 
-                    if (!caminhoArquivo.isEmpty()) {
-                        byte[] pdfAvaliacao = LerPDF.lerConteudoPDF(caminhoArquivo);
-                        
-                        obra.setPdfAvaliacao(pdfAvaliacao);
-                        obra.setAno(obraEncontrada.getAno());
-                        obra.setAutor(obraEncontrada.getAutor());
-                        obra.setAvaliador(obraEncontrada.getAvaliador());
-                        obra.setDataAvaliacao(obraEncontrada.getDataAvaliacao());
-                        obra.setGenero(obraEncontrada.getGenero());
-                        obra.setIDObra(obraEncontrada.getIDObra());
-                        obra.setPdfObra(obraEncontrada.getPdfObra());
-                        obra.setStatus(obraEncontrada.getStatus());
-                        obra.setTitulo(obraEncontrada.getTitulo());
-                        
-                        ObraBO obraBO = new ObraBO();
-                        obraBO.atualizar(obra);
-                        System.out.println("Caminho do arquivo salvo no banco de dados com sucesso.");
-                    } else {
-                        erroAut.setText("Você deve selecionar um arquivo antes de enviar.");
-                        erroAut.setVisible(true);
-                    }
+                if (!caminhoArquivo.isEmpty()) {
+                    byte[] pdfAvaliacao = LerPDF.lerConteudoPDF(caminhoArquivo);
                     
+                    obra.setPdfAvaliacao(pdfAvaliacao);
+                    obra.setAno(obraEncontrada.getAno());
+                    obra.setAutor(obraEncontrada.getAutor());
+                    obra.setAvaliador(obraEncontrada.getAvaliador());
+                    obra.setDataAvaliacao(obraEncontrada.getDataAvaliacao());
+                    obra.setGenero(obraEncontrada.getGenero());
+                    obra.setIDObra(obraEncontrada.getIDObra());
+                    obra.setPdfObra(obraEncontrada.getPdfObra());
+                    obra.setStatus(obraEncontrada.getStatus());
+                    obra.setTitulo(obraEncontrada.getTitulo());
+                    
+                    ObraBO obraBO = new ObraBO();
+                    obraBO.atualizar(obra);
+                    System.out.println("Caminho do arquivo salvo no banco de dados com sucesso.");
                 } else {
-                    System.out.println("Nenhuma obra encontrada com o título: " + tituloSelecionado);
+                    erroAut.setText("Você deve selecionar um arquivo antes de enviar.");
+                    erroAut.setVisible(true);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
+                
+            } else {
+                System.out.println("Nenhuma obra encontrada com o título: " + tituloSelecionado);
             }
 
         } catch (IOException e) {
