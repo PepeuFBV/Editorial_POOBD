@@ -1,12 +1,10 @@
 package controller;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -207,15 +205,11 @@ public class EditarObraGerenteController {
         ObraDAO obraDAO = new ObraDAO();
         obra.setTitulo(titulo);
 
-        try {
-
-            ArrayList<ObraVO> obrasEncontradas = obraDAO.buscarPorTitulo(obra);
-            if (!obrasEncontradas.isEmpty()) {
-                return obrasEncontradas.get(0);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        ArrayList<ObraVO> obrasEncontradas = obraDAO.buscarPorTitulo(obra);
+        if (!obrasEncontradas.isEmpty()) {
+            return obrasEncontradas.get(0);
         }
+
         return null;
     }
 

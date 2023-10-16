@@ -1,7 +1,6 @@
 package model.BO;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,11 +64,8 @@ public class AutorBO {
 	    obraVO.setTitulo(obraChoiceBox);
 
 	    List<ObraVO> obras = null;
-		try {
-			obras = obraDAO.buscarPorTitulo(obraVO);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		obras = obraDAO.buscarPorTitulo(obraVO);
+		
 	    if (!obras.isEmpty()) {
 	        ObraVO novaObra = obras.get(0);
 	        novaObra.setIDObra(obras.get(0).getIDObra());
@@ -91,6 +87,36 @@ public class AutorBO {
     public List<AutorVO> listar() {
         List<AutorVO> autores = autorDAO.listar();
         return autores;
+    }
+
+    public List<AutorVO> listarAutoresPelaBusca(String busca) { //buscando por nome ou email
+
+        AutorVO autorVO = new AutorVO();
+        List<AutorVO> list = new ArrayList<>();
+        
+        autorVO.setNome(busca);
+        List<AutorVO> listBuscaPorNome = autorDAO.buscarPorNomeIncompleto(autorVO);
+        for (int i = 0; i < listBuscaPorNome.size(); i++) { //retorna autores com esse nome no sistema
+            list.add(listBuscaPorNome.get(i));
+        }
+
+        autorVO.setEmail(busca);
+        List<AutorVO> listBuscaPorEmail = autorDAO.buscarPorEmailIncompleto(autorVO);
+        for (int i = 0; i < listBuscaPorEmail.size(); i++) { //retorna autores com esse email no sistema
+            list.add(listBuscaPorEmail.get(i));
+        }
+
+        //checa na própria lista e retira itens com id repetido
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i + 1; j < list.size(); j++) { //compara com os próximos
+                if (list.get(i).getIDAutor() == list.get(j).getIDAutor()) {
+                    list.remove(j);
+                    j--;
+                }
+            }
+        }
+        
+        return list;
     }
     
     public List<ObraVO> listarObrasProprias (AutorVO autorVO) {

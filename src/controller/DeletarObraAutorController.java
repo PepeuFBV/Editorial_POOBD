@@ -1,9 +1,7 @@
 package controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -75,15 +73,12 @@ public class DeletarObraAutorController {
 	        ObraVO obra = new ObraVO();
 	        obra.setTitulo(tituloObra);
 	        ObraDAO obraDAO = new ObraDAO();
-	        try {
-				List<ObraVO> obras = obraDAO.buscarPorTitulo(obra);
-				ObraVO primeiraObra = obras.get(0);
-				ObraVO obraExcluir = new ObraVO();
-				obraExcluir.setIDObra(primeiraObra.getIDObra());
-		        obraDAO.excluir(obraExcluir);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}       
+
+            List<ObraVO> obras = obraDAO.buscarPorTitulo(obra);
+            ObraVO primeiraObra = obras.get(0);
+            ObraVO obraExcluir = new ObraVO();
+            obraExcluir.setIDObra(primeiraObra.getIDObra());
+            obraDAO.excluir(obraExcluir);      
 	        
 	        carregarTitulosDasObrasDoAutor(autorVO);
 
