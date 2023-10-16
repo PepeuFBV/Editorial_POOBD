@@ -623,5 +623,14 @@ public class TelaPrincipalController {
 			e.printStackTrace();
 		}
     }
+    
+    @FXML
+    public void definirAvaliador(ActionEvent event) { 
+    	try {
+			Telas.telaDefinirAvaliador();;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
 }

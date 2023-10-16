@@ -315,6 +315,19 @@ public class Telas {
             e.printStackTrace();
         }
     }
+    
+    public static void telaDefinirAvaliador() throws Exception {
+        FXMLLoader fx = new FXMLLoader(LoginPageController.class.getResource("/view/VE/definir-avaliador.fxml"));
+        try {
+            Scene scene = new Scene(fx.load());
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Tela Definir Avaliador");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void telaDeletarAvaliacao() {
         

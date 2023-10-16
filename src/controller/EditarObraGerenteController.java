@@ -6,13 +6,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -29,6 +29,9 @@ public class EditarObraGerenteController {
 
     @FXML
     private TextField showFileger;
+    
+    @FXML
+    private DatePicker data;
     
     @FXML
     private ChoiceBox<String> obras;
@@ -49,7 +52,7 @@ public class EditarObraGerenteController {
     private TextField genero;
 
     @FXML
-    private TextField ano;
+    private DatePicker ano;
 
     @FXML
     private Label erroEditarObraGerente;
@@ -76,8 +79,32 @@ public class EditarObraGerenteController {
 
     @FXML
     private void initialize() {
+    	ObservableList<String> status = FXCollections.observableArrayList("Avaliador Pendente", "Em avaliação", "Aceita", "Rejeitada");
+    	stts.setValue("Avaliador Pendente");
+    	stts.setDisable(true);
+    	data.setDisable(true);
 
-        ObservableList<String> status = FXCollections.observableArrayList("Aceita", "Rejeitada", "Em avaliação", "Avaliador pendente");
+    	avaliador.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+    	    if (newValue != null) {
+    	        stts.setDisable(false);
+    	    } else {
+    	        stts.setValue("Avaliador Pendente");
+    	        stts.setDisable(true);
+    	        data.setValue(null);
+    	        data.setDisable(true);
+    	    }
+    	});
+
+    	stts.valueProperty().addListener((obs, oldValue, newValue) -> {
+    	    if (newValue != null && (newValue.equals("Em avaliação") || newValue.equals("Avaliador Pendente"))) {
+    	        data.setValue(null);
+    	        data.setDisable(true);
+    	    } else {
+    	        data.setDisable(false);
+    	    }
+    	});
+
+
         ObservableList<String> autores = FXCollections.observableArrayList();
         ObservableList<String> avaliadores = FXCollections.observableArrayList();
         ObservableList<String> obrasList = FXCollections.observableArrayList();
@@ -141,13 +168,19 @@ public class EditarObraGerenteController {
         if (obraEncontrada != null) {
             String tituloText = titulo.getText();
             String generoText = genero.getText();
-            String anoText = ano.getText();
+            LocalDate anoData = data.getValue();
             String autorSelecionado = autor.getValue();
             String avaliadorSelecionado = avaliador.getValue();
             String statusSelecionado = stts.getValue();
+            
+            if (statusSelecionado == null) {
+                statusSelecionado = "Avaliador Pendente";
+            }
+            
+            LocalDate dataSelecionada = data.getValue();
             String obraSelecionada = showFileger.getText();
 
-            if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty() || autorSelecionado == null || avaliadorSelecionado == null || statusSelecionado == null || obraSelecionada.isEmpty()) {
+            if (tituloText.isEmpty() || generoText.isEmpty() || autorSelecionado == null || obraSelecionada.isEmpty()) {
                 erroEditarObraGerente.setText("Por favor, preencha todos os campos.");
                 erroEditarObraGerente.setVisible(true);
                 return;
@@ -155,11 +188,32 @@ public class EditarObraGerenteController {
 
             obraEncontrada.setTitulo(tituloText);
             obraEncontrada.setGenero(generoText);
-            obraEncontrada.setAno(LocalDate.parse(anoText));
+            obraEncontrada.setAno(anoData);
             obraEncontrada.setStatus(statusSelecionado);
+            obraEncontrada.setDataAvaliacao(dataSelecionada);
 
             long idAutor = autorParaIDMap.get(autorSelecionado);
-            long idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
+            
+            if (avaliadorSelecionado == null) {
+            	obraEncontrada.setAvaliador(null);
+            } else {
+                long idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
+                AvaliadorVO avaliadorVO = new AvaliadorVO();
+                avaliadorVO.setIDAvaliador(idAvaliador);
+                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
+                AvaliadorVO primeiroAvaliador = avaliadores.get(0);
+                
+                avaliadorVO.setIDUsuario(primeiroAvaliador.getIDUsuario());
+                avaliadorVO.setCpf(primeiroAvaliador.getCpf());
+                avaliadorVO.setEmail(primeiroAvaliador.getEmail());
+                avaliadorVO.setEndereco(primeiroAvaliador.getEndereco());
+                avaliadorVO.setNome(primeiroAvaliador.getNome());
+                avaliadorVO.setSenha(primeiroAvaliador.getSenha());
+                avaliadorVO.setTipo("Avaliador");
+                
+                obraEncontrada.setAvaliador(avaliadorVO);
+            }
 
             AutorVO autorVO = new AutorVO();
             autorVO.setIDAutor(idAutor);
@@ -176,22 +230,6 @@ public class EditarObraGerenteController {
             autorVO.setTipo("Autor");
             
             obraEncontrada.setAutor(autorVO);
-
-            AvaliadorVO avaliadorVO = new AvaliadorVO();
-            avaliadorVO.setIDAvaliador(idAvaliador);
-            AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-            ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
-            AvaliadorVO primeiroAvaliador = avaliadores.get(0);
-            
-            avaliadorVO.setIDUsuario(primeiroAvaliador.getIDUsuario());
-            avaliadorVO.setCpf(primeiroAvaliador.getCpf());
-            avaliadorVO.setEmail(primeiroAvaliador.getEmail());
-            avaliadorVO.setEndereco(primeiroAvaliador.getEndereco());
-            avaliadorVO.setNome(primeiroAvaliador.getNome());
-            avaliadorVO.setSenha(primeiroAvaliador.getSenha());
-            avaliadorVO.setTipo("Avaliador");
-            
-            obraEncontrada.setAvaliador(avaliadorVO);
 
             obraBO.atualizar(obraEncontrada);
 
