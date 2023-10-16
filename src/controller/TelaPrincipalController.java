@@ -217,6 +217,7 @@ public class TelaPrincipalController {
     @FXML
     private TableColumn<ObraVO, String> avaliador_obra;
 
+
     @FXML
     private Button paraObrasBtn;
 
@@ -225,6 +226,12 @@ public class TelaPrincipalController {
 
     @FXML
     private Button paraAvaliadoresBtn;
+
+    @FXML
+    private Button novoBtn;
+
+    @FXML
+    private Button gerarRelatorioBtn;
 
     
     public static void setVisaoAtual(String visaoAtual) {
@@ -467,7 +474,7 @@ public class TelaPrincipalController {
         String busca = searchBar.getText();
 
         if (busca == null || busca.isEmpty()) {
-            //pop-up de campo vazio
+            //TODO pop-up de campo vazio
         } else {
             //mudar a tabela para a das obras/autores/avaliadores que contém a string de busca (será recebido um ResultSet)
             if (TelaPrincipalController.tipoUsuarioAtual.equals("Gerente")) {
@@ -519,6 +526,12 @@ public class TelaPrincipalController {
         } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
             try {
                 Telas.telaNovaObraAutor(Telas.getUsuarioVOAtual());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Avaliador")) {
+            try {
+                Telas.telaAvaliarObra(Telas.getUsuarioVOAtual());
             } catch (Exception e) {
                 e.printStackTrace();
             }

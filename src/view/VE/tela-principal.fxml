@@ -146,11 +146,12 @@
                   <Image url="@Botao-pequeno.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtAdicionar" layoutX="8.0" layoutY="18.0" onMouseClicked="#adicionarNovo" strokeType="OUTSIDE" strokeWidth="0.0" text="adicionar novo" wrappingWidth="134.528564453125">
+            <Text fx:id="txtAdicionar" layoutX="8.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="adicionar novo" wrappingWidth="134.528564453125">
                <font>
                   <Font name="High Tower Text" size="21.0" />
                </font>
             </Text>
+            <Button fx:id="adicionarBtn" layoutX="6.0" mnemonicParsing="false" onAction="#adicionarNovo" prefHeight="25.0" prefWidth="138.0" style="-fx-background-color: transparent;" />
          </children>
       </Group>
       <Group fx:id="RelatorioOption" layoutX="808.0" layoutY="318.0">
@@ -165,6 +166,7 @@
                   <Font name="High Tower Text" size="21.0" />
                </font>
             </Text>
+            <Button fx:id="relatorioBtn" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="25.0" prefWidth="148.0" style="-fx-background-color: transparent;" />
          </children>
       </Group>
       <Group fx:id="avaliadores" layoutX="595.0" layoutY="258.0">
