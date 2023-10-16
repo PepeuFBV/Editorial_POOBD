@@ -297,7 +297,6 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
     @Override
     public void excluir(AvaliadorVO avaliador) {
         Connection con = null;
-        usuarioDAO.excluir(avaliador);
 
         try {
             con = BaseDAOImpl.getConnection();
@@ -308,6 +307,7 @@ public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
             statement.executeUpdate();
 
             statement.close();
+            usuarioDAO.excluir(avaliador);
             BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();

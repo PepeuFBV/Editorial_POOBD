@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 
+import controller.AvaliarObraController;
 import controller.DeletarObraAutorController;
 import controller.EditarObraAutorController;
 import controller.LoginPageController;
@@ -72,7 +73,7 @@ public class Telas {
     public static void telaAvaliarObra(UsuarioVO usuarioVO) throws Exception { //mudar a classe
     	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/avaliar-obra.fxml"));
         Parent root = fx.load();
-        EditarObraAutorController controller = fx.getController();
+        AvaliarObraController controller = fx.getController();
         controller.setUsuarioVO(usuarioVO);
 
         Stage popupStage = new Stage();
@@ -175,12 +176,19 @@ public class Telas {
 			e.printStackTrace();
 		}
     }
-    
+
     public static void telaEditarAutor() throws Exception {
-        Parent root = FXMLLoader.load(Telas.class.getResource("/viewVE/editar-autor-gerente.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    	FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/editar-autor-gerente.fxml"));
+    	try {
+			Scene scene = new Scene(fx.load());
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Tela Editar Autor Gerente");
+			stage.show();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     public static void telaEditarObraGerente() throws Exception {

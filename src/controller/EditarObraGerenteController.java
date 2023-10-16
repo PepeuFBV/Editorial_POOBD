@@ -172,6 +172,12 @@ public class EditarObraGerenteController {
             String avaliadorSelecionado = avaliador.getValue();
             String statusSelecionado = stts.getValue();
             
+            if ("Avaliador Pendente".equals(statusSelecionado) && avaliadorSelecionado != null) {
+                erroEditarObraGerente.setText("Você não pode selecionar 'Avaliador Pendente' quando um avaliador está selecionado.");
+                erroEditarObraGerente.setVisible(true);
+                return;
+            }
+            
             if (statusSelecionado == null) {
                 statusSelecionado = "Avaliador Pendente";
             }else {
