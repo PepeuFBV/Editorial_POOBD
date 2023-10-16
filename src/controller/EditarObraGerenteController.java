@@ -78,16 +78,16 @@ public class EditarObraGerenteController {
 
     @FXML
     private void initialize() {
-    	ObservableList<String> status = FXCollections.observableArrayList("Avaliador Pendente", "Em avaliação", "Aceita", "Rejeitada");
     	stts.setValue("Avaliador Pendente");
     	stts.setDisable(true);
     	data.setDisable(true);
+    	ObservableList<String> status = FXCollections.observableArrayList("Avaliador Pendente", "Em avaliação", "Aceita", "Rejeitada");
 
     	avaliador.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
     	    if (newValue != null) {
     	        stts.setDisable(false);
     	    } else {
-    	        stts.setValue("Avaliador Pendente");
+    	    	stts.getItems().remove("Avaliador Pendente");
     	        stts.setDisable(true);
     	        data.setValue(null);
     	        data.setDisable(true);
@@ -102,7 +102,6 @@ public class EditarObraGerenteController {
     	        data.setDisable(false);
     	    }
     	});
-
 
         ObservableList<String> autores = FXCollections.observableArrayList();
         ObservableList<String> avaliadores = FXCollections.observableArrayList();
@@ -149,6 +148,7 @@ public class EditarObraGerenteController {
 
         autor.setItems(autores);
         avaliador.setItems(avaliadores);
+
         stts.setItems(status);
     }
 
@@ -167,13 +167,15 @@ public class EditarObraGerenteController {
         if (obraEncontrada != null) {
             String tituloText = titulo.getText();
             String generoText = genero.getText();
-            LocalDate anoData = data.getValue();
+            LocalDate anoData = ano.getValue();
             String autorSelecionado = autor.getValue();
             String avaliadorSelecionado = avaliador.getValue();
             String statusSelecionado = stts.getValue();
             
             if (statusSelecionado == null) {
                 statusSelecionado = "Avaliador Pendente";
+            }else {
+                obraEncontrada.setStatus(statusSelecionado);
             }
             
             LocalDate dataSelecionada = data.getValue();
@@ -188,8 +190,12 @@ public class EditarObraGerenteController {
             obraEncontrada.setTitulo(tituloText);
             obraEncontrada.setGenero(generoText);
             obraEncontrada.setAno(anoData);
-            obraEncontrada.setStatus(statusSelecionado);
-            obraEncontrada.setDataAvaliacao(dataSelecionada);
+            if(dataSelecionada == null) {
+            	obraEncontrada.setDataAvaliacao(null);
+            }else {
+                obraEncontrada.setDataAvaliacao(dataSelecionada);
+            }
+
 
             long idAutor = autorParaIDMap.get(autorSelecionado);
             

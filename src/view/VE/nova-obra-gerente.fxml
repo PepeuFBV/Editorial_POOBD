@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NovaObraGerenteController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="583.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NovaObraGerenteController">
    <children>
       <TextField fx:id="titulo" layoutX="175.0" layoutY="71.0" prefHeight="25.0" prefWidth="298.0" />
       <Label alignment="CENTER" layoutX="238.0" layoutY="17.0" prefHeight="17.0" prefWidth="113.0" text="Nova Obra">
@@ -46,16 +46,10 @@
          </font>
       </Label>
       <ChoiceBox fx:id="avaliador" layoutX="227.0" layoutY="229.0" prefHeight="25.0" prefWidth="245.0" />
-      <Label layoutX="106.0" layoutY="269.0" text="Status:">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="stts" layoutX="175.0" layoutY="267.0" prefHeight="25.0" prefWidth="298.0" />
-      <Label fx:id="erroNovaObraGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="116.0" layoutY="343.0" prefHeight="17.0" prefWidth="359.0" text="Label" visible="false" />
-      <Button fx:id="buttonarquivoger" alignment="CENTER" layoutX="101.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleBtnOpenFile" prefHeight="17.0" prefWidth="99.0" text="Abrir arquivo" />
-      <TextField fx:id="showFileger" layoutX="200.0" layoutY="310.0" prefHeight="25.0" prefWidth="273.0" />
-      <Button fx:id="btncancelar" layoutX="189.0" layoutY="372.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
-      <Button layoutX="302.0" layoutY="372.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="25.0" prefWidth="99.0" text="Adicionar" textFill="#008009" />
+      <Label fx:id="erroNovaObraGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="114.0" layoutY="297.0" prefHeight="17.0" prefWidth="359.0" text="Label" visible="false" />
+      <Button alignment="CENTER" layoutX="99.0" layoutY="264.0" mnemonicParsing="false" onAction="#handleBtnOpenFile" prefHeight="17.0" prefWidth="99.0" text="Abrir arquivo" />
+      <TextField fx:id="showFileger" layoutX="198.0" layoutY="264.0" prefHeight="25.0" prefWidth="273.0" />
+      <Button fx:id="btncancelar" layoutX="187.0" layoutY="326.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
+      <Button layoutX="300.0" layoutY="326.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="25.0" prefWidth="99.0" text="Adicionar" textFill="#008009" />
    </children>
 </Pane>

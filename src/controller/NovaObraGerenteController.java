@@ -37,9 +37,6 @@ public class NovaObraGerenteController {
     private ChoiceBox<String> avaliador;
 
     @FXML
-    private ChoiceBox<String> stts;
-
-    @FXML
     private TextField titulo;
 
     @FXML
@@ -73,7 +70,6 @@ public class NovaObraGerenteController {
 
     @FXML
     public void initialize() {
-        ObservableList<String> status = FXCollections.observableArrayList("Aceita", "Rejeitada", "Em avaliação", "Avaliador pendente");
         ObservableList<String> autores = FXCollections.observableArrayList();
         ObservableList<String> avaliadores = FXCollections.observableArrayList();
 
@@ -113,7 +109,6 @@ public class NovaObraGerenteController {
 
         autor.setItems(autores);
         avaliador.setItems(avaliadores);
-        stts.setItems(status);
     }
 
     public void adicionar(ActionEvent event) {
@@ -122,10 +117,9 @@ public class NovaObraGerenteController {
         LocalDate anoText = ano.getValue();
         String autorSelecionado = autor.getValue();
         String avaliadorSelecionado = avaliador.getValue();
-        String statusSelecionado = stts.getValue();
         String obraSelecionada = showFileger.getText();
 
-        if (obraSelecionada.isEmpty() || tituloText.isEmpty() || generoText.isEmpty() || autorSelecionado == null || avaliadorSelecionado == null || statusSelecionado == null) {
+        if (obraSelecionada.isEmpty() || tituloText.isEmpty() || generoText.isEmpty() || autorSelecionado == null) {
             erroNovaObraGerente.setText("Por favor, preencha todos os campos.");
             erroNovaObraGerente.setVisible(true);
             throw new IllegalArgumentException("Por favor, preencha todos os campos.");
@@ -154,15 +148,19 @@ public class NovaObraGerenteController {
             int idAutor = autorParaIDMap.get(autorSelecionado);
             AutorVO autorVO = new AutorVO();
             autorVO.setIDAutor((long) idAutor);
+            
+            if(avaliadorSelecionado == null) {
+            	novaObra.setAvaliador(null);
+            } else {
+                int idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
+                AvaliadorVO avaliadorVO = new AvaliadorVO();
+                avaliadorVO.setIDAvaliador((long) idAvaliador);
+                novaObra.setAvaliador(avaliadorVO);
+            }
 
-            int idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
-            AvaliadorVO avaliadorVO = new AvaliadorVO();
-            avaliadorVO.setIDAvaliador((long) idAvaliador);
-
-            novaObra.setStatus(statusSelecionado);
+            novaObra.setStatus(null);
             novaObra.setPdfObra(pdfObraBytes);
             novaObra.setAutor(autorVO);
-            novaObra.setAvaliador(avaliadorVO);
 
             ObraBO obraBO = new ObraBO();
             obraBO.cadastrar(novaObra);

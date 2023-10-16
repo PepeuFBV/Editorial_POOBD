@@ -1,6 +1,5 @@
 package controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +34,7 @@ public class DefinirAvaliadorController {
             for (ObraVO obra : obras) {
             	titulos.getItems().add(obra.getTitulo());
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -104,7 +103,7 @@ public class DefinirAvaliadorController {
                 } else {
                 	throw new NotFoundException();
                 }
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {

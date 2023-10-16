@@ -278,7 +278,7 @@ public class Telas {
     }
 
     public static void telaNovoAutorGerente() throws Exception {
-        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/editar-autor-gerente.fxml"));
+        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/novo-autor-gerente.fxml"));
         try {
             Scene scene = new Scene(fx.load());
             Stage stage = new Stage();
@@ -291,7 +291,7 @@ public class Telas {
     }
 
     public static void telaNovoAvaliadorGerente() throws Exception {
-        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/editar-avaliador-gerente.fxml"));
+        FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/novo-avaliador-gerente.fxml"));
         try {
             Scene scene = new Scene(fx.load());
             Stage stage = new Stage();
