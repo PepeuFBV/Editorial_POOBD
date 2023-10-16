@@ -21,6 +21,36 @@ public class AvaliadorBO {
         return avaliadores;
     }
 
+    public List<AvaliadorVO> listarAvaliadoresPelaBusca(String busca) {
+        
+        AvaliadorVO avaliadorVO= new AvaliadorVO();
+        List<AvaliadorVO> list = new ArrayList<>();
+
+        avaliadorVO.setNome(busca);
+        List<AvaliadorVO> listBuscaPorNome = avaliadorDAO.buscarPorNomeIncompleto(avaliadorVO);
+        for (int i = 0; i < listBuscaPorNome.size(); i++) { //retorna avaliadores com esse nome no sistema
+            list.add(listBuscaPorNome.get(i));
+        }
+
+        avaliadorVO.setEmail(busca);
+        List<AvaliadorVO> listBuscaPorEmail = avaliadorDAO.buscarPorEmailIncompleto(avaliadorVO);
+        for (int i = 0; i < listBuscaPorEmail.size(); i++) { //retorna avaliadores com esse email no sistema
+            list.add(listBuscaPorEmail.get(i));
+        }
+
+        //checa na própria lista e retira itens com id repetido
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i + 1; j < list.size(); j++) { //compara com os próximos
+                if (list.get(i).getIDAvaliador() == list.get(j).getIDAvaliador()) {
+                    list.remove(j);
+                    j--;
+                }
+            }
+        }
+
+        return list;
+    }
+
     public List<ObraVO> listarObrasAvaliadas(AvaliadorVO autorVO) {
         ObraDAO obraDAO = new ObraDAO();
         List<ObraVO> obras = obraDAO.buscarPorAvaliador(autorVO);
