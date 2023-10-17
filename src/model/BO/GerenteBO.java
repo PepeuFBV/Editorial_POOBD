@@ -63,6 +63,7 @@ public class GerenteBO {
     }
     
     public void baixarRelatorios(Date anoInicio, Date anoFinal) throws IOException, SQLException {
+    	System.out.println("entrada");
         LocalDate dataInicio = anoInicio.toLocalDate();
         LocalDate dataFinal = anoFinal.toLocalDate();
         if (dataInicio.isAfter(dataFinal)) {
@@ -74,6 +75,7 @@ public class GerenteBO {
         obras = obraDAO.buscarPorAno(anoInicio, anoFinal);
 
         if (!obras.isEmpty()) {
+
             String diretorioSalvar = "C:\\Avaliações";
             File diretorio = new File(diretorioSalvar);
             if (!diretorio.exists()) {
@@ -81,7 +83,9 @@ public class GerenteBO {
             }
 
             for (ObraVO obra : obras) {
+
                 if (obra.getPdfAvaliacao() != null) {
+
                     byte[] pdfAvaliacaoBytes = obra.getPdfAvaliacao();
                     String nomeArquivoAvaliacao = "avaliacao_" + obra.getIDObra() + ".pdf";
                     String caminhoArquivoAvaliacao = diretorioSalvar + nomeArquivoAvaliacao;
@@ -93,8 +97,12 @@ public class GerenteBO {
                         e.printStackTrace();
                         throw e;
                     }
+                } else {
+                	System.out.println("PDF(s) correspondente(s) vazio(s).");
                 }
             }
+        } else {
+        	System.out.println("Não há obras avaliadas entre as datas correspondentes.");
         }
     }
 

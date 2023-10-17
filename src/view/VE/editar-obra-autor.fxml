@@ -41,7 +41,7 @@
       <Button layoutX="299.0" layoutY="339.0" mnemonicParsing="false" onAction="#concluir" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
       <Button fx:id="btncancelar" layoutX="186.0" layoutY="339.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
       <ChoiceBox fx:id="obra" layoutX="173.0" layoutY="103.0" prefHeight="25.0" prefWidth="238.0" />
-      <Label fx:id="erroEditarObraAutor" layoutX="271.0" layoutY="268.0" text="Label" visible="false" />
+      <Label fx:id="erroEditarObraAutor" alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="310.0" prefHeight="17.0" prefWidth="454.0" text="Label" visible="false" />
       <DatePicker fx:id="ano" layoutX="174.0" layoutY="237.0" prefHeight="25.0" prefWidth="238.0" />
       <Button fx:id="buttonarquivoautor" alignment="CENTER" layoutX="98.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleBtnOpenFile" prefHeight="17.0" prefWidth="99.0" text="Abrir arquivo" />
       <TextField fx:id="showFileAutor" layoutX="197.0" layoutY="277.0" prefHeight="25.0" prefWidth="215.0" />

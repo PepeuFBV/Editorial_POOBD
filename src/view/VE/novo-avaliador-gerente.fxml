@@ -33,7 +33,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="erroNovoAutorGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="264.0" prefHeight="17.0" prefWidth="420.0" text="Label" visible="false" />
+      <Label fx:id="erroNovoAutorGerente" alignment="CENTER" contentDisplay="CENTER" layoutX="48.0" layoutY="264.0" prefHeight="17.0" prefWidth="457.0" text="Label" visible="false" />
       <TextField fx:id="email" layoutX="164.0" layoutY="206.0" prefHeight="25.0" prefWidth="298.0" />
       <Label alignment="CENTER" layoutX="79.0" layoutY="208.0" prefHeight="21.0" prefWidth="54.0" text="Email:">
          <font>
