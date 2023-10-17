@@ -9,6 +9,7 @@ import model.DAO.ObraDAO;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
+import view.Telas;
 
 
 public class ObraBO {
@@ -25,7 +26,7 @@ public class ObraBO {
     }
 
     public List<ObraVO> listarObrasPelaBusca(String busca) { //buscando por título, autor, avaliador ou ano 
-         
+
         ObraVO obraVO = new ObraVO();
         List<ObraVO> list = new ArrayList<>();
 
@@ -34,7 +35,7 @@ public class ObraBO {
         for (int i = 0; i < listBuscaPorTitulo.size(); i++) { //retorna obras com esse título no sistema
             list.add(listBuscaPorTitulo.get(i));
         }
-      
+
         AutorVO autorVO = new AutorVO();
         autorVO.setNome(busca);
         AutorDAO autorDAO = new AutorDAO();
@@ -72,14 +73,34 @@ public class ObraBO {
 
         //checa na própria lista e retira itens com id repetido
         for (int i = 0; i < list.size(); i++) {
-            for (int j = i+1; j < list.size(); j++) { //compara com os próximos
+            for (int j = i + 1; j < list.size(); j++) { //compara com os próximos
                 if (list.get(i).getIDObra() == list.get(j).getIDObra()) {
                     list.remove(j);
                     j--;
                 }
             }
         }
-        
+
+        return list;
+    }
+    
+    public List<ObraVO> filtrarParaAutorAtual(List<ObraVO> obras) {
+        List<ObraVO> list = new ArrayList<>();
+        for (int i = 0; i < obras.size(); i++) {
+            if (obras.get(i).getAutor().getEmail().equals(Telas.getUsuarioVOAtual().getEmail())) {
+                list.add(obras.get(i));
+            }
+        }
+        return list;
+    }
+
+    public List<ObraVO> filtrarParaAvaliadorAtual(List<ObraVO> obras) {
+        List<ObraVO> list = new ArrayList<>();
+        for (int i = 0; i < obras.size(); i++) {
+            if (obras.get(i).getAvaliador().getEmail().equals(Telas.getUsuarioVOAtual().getEmail())) {
+                list.add(obras.get(i));
+            }
+        }
         return list;
     }
 
