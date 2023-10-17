@@ -231,10 +231,10 @@ public class TelaPrincipalController {
     private Button paraAvaliadoresBtn;
 
     @FXML
-    private Button novoBtn;
+    private Button adicionarBtn;
 
     @FXML
-    private Button gerarRelatorioBtn;
+    private Button relatorioBtn;
 
     @FXML
     private Button buscarBtnPress;
@@ -428,43 +428,63 @@ public class TelaPrincipalController {
 
         //reseta tudo para inivísivel
         RelatorioOption.setVisible(false);
+        relatorioBtn.setVisible(false);
+
         fundoBotaoAutoresA.setVisible(false);
         fundoBotaoAutoresD.setVisible(false);
-        txtAvaliadoresA.setVisible(false);
-        txtAvaliadoresD.setVisible(false);
-        fundoBotaoAvaliadoresA.setVisible(false);
-        fundoBotaoAvaliadoresD.setVisible(false);
         txtAutoresA.setVisible(false);
         txtAutoresD.setVisible(false);
+        paraAutoresBtn.setVisible(false);
+
+        fundoBotaoAvaliadoresA.setVisible(false);
+        fundoBotaoAvaliadoresD.setVisible(false);
+        txtAvaliadoresA.setVisible(false);
+        txtAvaliadoresD.setVisible(false);
+        paraAvaliadoresBtn.setVisible(false);
+
         fundoBotaoObrasA.setVisible(false);
         fundoBotaoObrasD.setVisible(false);
         txtObrasA.setVisible(false);
         txtObrasD.setVisible(false);
+        paraObrasBtn.setVisible(false);
 
         if (tipoUsuarioAtual.equals("Gerente")) {
 
             RelatorioOption.setVisible(true);
+            relatorioBtn.setVisible(true);
             if (visaoAtual.equals("obras")) {
                 fundoBotaoAutoresD.setVisible(true);
                 txtAutoresD.setVisible(true);
+                paraAutoresBtn.setVisible(true);
+
                 fundoBotaoAvaliadoresD.setVisible(true);
                 txtAvaliadoresD.setVisible(true);
+                paraAvaliadoresBtn.setVisible(true);
+
                 fundoBotaoObrasA.setVisible(true);
                 txtObrasA.setVisible(true);
             } else if (visaoAtual.equals("autores")) {
                 fundoBotaoAutoresA.setVisible(true);
                 txtAutoresA.setVisible(true);
+
                 fundoBotaoAvaliadoresD.setVisible(true);
                 txtAvaliadoresD.setVisible(true);
+                paraAvaliadoresBtn.setVisible(true);
+
                 fundoBotaoObrasD.setVisible(true);
                 txtObrasD.setVisible(true);
+                paraObrasBtn.setVisible(true);
             } else if (visaoAtual.equals("avaliadores")) {
                 fundoBotaoAutoresD.setVisible(true);
                 txtAutoresD.setVisible(true);
+                paraAutoresBtn.setVisible(true);
+
                 fundoBotaoAvaliadoresA.setVisible(true);
                 txtAvaliadoresA.setVisible(true);
+
                 fundoBotaoObrasD.setVisible(true);
                 txtObrasD.setVisible(true);
+                paraObrasBtn.setVisible(true);
             }
 
         } else if (tipoUsuarioAtual.equals("Autor")) {
@@ -472,6 +492,7 @@ public class TelaPrincipalController {
             if (visaoAtual.equals("obras")) {
                 fundoBotaoObrasA.setVisible(true);
                 txtObrasA.setVisible(true);
+                paraObrasBtn.setVisible(true);
             }
 
         } else if (tipoUsuarioAtual.equals("Avaliador")) {
@@ -479,6 +500,7 @@ public class TelaPrincipalController {
             if (visaoAtual.equals("obras")) {
                 fundoBotaoObrasA.setVisible(true);
                 txtObrasA.setVisible(true);
+                paraObrasBtn.setVisible(true);
             }
         }
 
@@ -554,12 +576,16 @@ public class TelaPrincipalController {
 
             } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Autor")) {
                 if (visaoAtual.equals("obras")) {
-                    ObraBO obraBO = new ObraBO(); //TODO
+                    ObraBO obraBO = new ObraBO();
+                    List<ObraVO> obras = obraBO.filtrarParaAutorAtual(obraBO.listarObrasPelaBusca(busca));
+                    defineObrasTableView(obras);
                 }
 
             } else if (TelaPrincipalController.tipoUsuarioAtual.equals("Avaliador")) {
                 if (visaoAtual.equals("obras")) {
-                    //TODO 
+                    ObraBO obraBO = new ObraBO();
+                    List<ObraVO> obras = obraBO.filtrarParaAvaliadorAtual(obraBO.listarObrasPelaBusca(busca));
+                    defineObrasTableView(obras);
                 }
             }
 
