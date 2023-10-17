@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -553,6 +552,10 @@ public class TelaPrincipalController {
                 emEsperaBtn.setVisible(true);
                 emAvaliacaoBtn.setVisible(true);
                 avaliadasBtn.setVisible(true);
+
+                fundoBotaoEditar.setVisible(false);
+                editarBtn.setVisible(false);
+
             }
         }
 

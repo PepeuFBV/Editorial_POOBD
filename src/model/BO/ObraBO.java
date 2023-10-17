@@ -9,7 +9,6 @@ import model.DAO.ObraDAO;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
-import model.entities.Avaliador;
 import view.Telas;
 
 
