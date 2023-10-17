@@ -207,6 +207,7 @@ public class EditarObraGerenteController {
             
             if (avaliadorSelecionado == null) {
             	obraEncontrada.setAvaliador(null);
+            	obraEncontrada.setPdfAvaliacao(null);
             } else {
                 long idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
                 AvaliadorVO avaliadorVO = new AvaliadorVO();
