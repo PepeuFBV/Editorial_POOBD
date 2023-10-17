@@ -10,9 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -22,6 +24,7 @@ import model.BO.ObraBO;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
+import model.entities.Avaliador;
 import view.Telas;
 
 public class TelaPrincipalController {
@@ -239,6 +242,15 @@ public class TelaPrincipalController {
     @FXML
     private Button buscarBtnPress;
 
+    @FXML
+    private ToggleButton avaliadasBtn;
+
+    @FXML
+    private ToggleButton emAvaliacaoBtn;
+
+    @FXML
+    private ToggleButton emEsperaBtn;
+
     
     public static void setVisaoAtual(String visaoAtual) {
         if (visaoAtual != null) {
@@ -369,8 +381,32 @@ public class TelaPrincipalController {
 
     }
 
+    public List<ObraVO> getCurrentTable() {
+        //pega os dados da tabela obras atual
+        ObservableList<ObraVO> dados = mainTableViewObras.getItems();
+        List<ObraVO> obras = dados.subList(0, dados.size());
+        return obras;
+    }
+
+    @FXML
+    public void defineObrasTableView(ActionEvent event) {
+        initializeTableView();
+        defineObrasTableView(getCurrentTable());
+    }
+
     @FXML
     public void defineObrasTableView(List<ObraVO> obras) {
+
+        ObraBO obraBO = new ObraBO();
+        if (emEsperaBtn.isSelected()) {
+            obras = obraBO.filtrarSemAvaliador(obras);
+        }
+        if (avaliadasBtn.isSelected()) {
+            obras = obraBO.filtrarAvaliadas(obras);
+        }
+        if (emAvaliacaoBtn.isSelected()) {
+            obras = obraBO.filtrarEmEspera(obras);
+        }
 
         ObservableList<ObraVO> dados = FXCollections.observableArrayList();
         dados.addAll(obras);
@@ -406,6 +442,7 @@ public class TelaPrincipalController {
         System.out.println("Avaliadores encontrados pela busca!");
     }
 
+    @FXML
     public void defineAutoresTableView(List<AutorVO> autores) {
 
         ObservableList<AutorVO> dados = FXCollections.observableArrayList();
@@ -448,6 +485,10 @@ public class TelaPrincipalController {
         txtObrasD.setVisible(false);
         paraObrasBtn.setVisible(false);
 
+        emEsperaBtn.setVisible(false);
+        emAvaliacaoBtn.setVisible(false);
+        avaliadasBtn.setVisible(false);
+
         if (tipoUsuarioAtual.equals("Gerente")) {
 
             RelatorioOption.setVisible(true);
@@ -463,6 +504,10 @@ public class TelaPrincipalController {
 
                 fundoBotaoObrasA.setVisible(true);
                 txtObrasA.setVisible(true);
+
+                emEsperaBtn.setVisible(true);
+                emAvaliacaoBtn.setVisible(true);
+                avaliadasBtn.setVisible(true);
             } else if (visaoAtual.equals("autores")) {
                 fundoBotaoAutoresA.setVisible(true);
                 txtAutoresA.setVisible(true);
@@ -493,6 +538,10 @@ public class TelaPrincipalController {
                 fundoBotaoObrasA.setVisible(true);
                 txtObrasA.setVisible(true);
                 paraObrasBtn.setVisible(true);
+
+                emEsperaBtn.setVisible(true);
+                emAvaliacaoBtn.setVisible(true);
+                avaliadasBtn.setVisible(true);
             }
 
         } else if (tipoUsuarioAtual.equals("Avaliador")) {
@@ -501,6 +550,10 @@ public class TelaPrincipalController {
                 fundoBotaoObrasA.setVisible(true);
                 txtObrasA.setVisible(true);
                 paraObrasBtn.setVisible(true);
+
+                emEsperaBtn.setVisible(true);
+                emAvaliacaoBtn.setVisible(true);
+                avaliadasBtn.setVisible(true);
             }
         }
 

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -155,7 +156,7 @@
             <Button fx:id="adicionarBtn" layoutX="6.0" mnemonicParsing="false" onAction="#adicionarNovo" prefHeight="25.0" prefWidth="138.0" style="-fx-background-color: transparent;" />
          </children>
       </Group>
-      <Group fx:id="RelatorioOption" layoutX="808.0" layoutY="318.0">
+      <Group fx:id="RelatorioOption" layoutX="699.0" layoutY="318.0">
          <children>
             <ImageView fx:id="fundoRelatorio" fitHeight="26.0" fitWidth="151.0">
                <image>
@@ -192,7 +193,7 @@
                   <Font name="High Tower Text" size="31.0" />
                </font>
             </Text>
-            <Button fx:id="paraAvaliadoresBtn" layoutX="38.0" layoutY="-17.0" mnemonicParsing="false" onAction="#paraAvaliadores" prefHeight="58.0" prefWidth="174.0" style="-fx-background-color: transparent;" textAlignment="CENTER">
+            <Button fx:id="paraAvaliadoresBtn" layoutX="38.0" layoutY="-17.0" mnemonicParsing="false" onAction="#paraAvaliadores" prefHeight="58.0" prefWidth="174.0" style="-fx-background-color: transparent;" textAlignment="CENTER" visible="false">
                <font>
                   <Font name="High Tower Text" size="29.0" />
                </font>
@@ -221,7 +222,7 @@
                   <Font name="High Tower Text" size="31.0" />
                </font>
             </Text>
-            <Button fx:id="paraAutoresBtn" layoutX="34.0" layoutY="-17.0" mnemonicParsing="false" onAction="#paraAutores" prefHeight="58.0" prefWidth="174.0" style="-fx-background-color: transparent;">
+            <Button fx:id="paraAutoresBtn" layoutX="34.0" layoutY="-17.0" mnemonicParsing="false" onAction="#paraAutores" prefHeight="58.0" prefWidth="174.0" style="-fx-background-color: transparent;" visible="false">
                <font>
                   <Font size="29.0" />
                </font>
@@ -245,17 +246,20 @@
                   <Image url="@Opcao-nao-selecionada.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtObrasA" layoutX="12.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER" wrappingWidth="234.62481689453125">
+            <Text fx:id="txtObrasA" layoutX="12.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="obras" textAlignment="CENTER" visible="false" wrappingWidth="234.62481689453125">
                <font>
                   <Font name="High Tower Text" size="31.0" />
                </font>
             </Text>
-            <Button fx:id="paraObrasBtn" layoutX="42.0" layoutY="-17.0" mnemonicParsing="false" onAction="#paraObras" prefHeight="58.0" prefWidth="174.0" style="-fx-background-color: transparent;">
+            <Button fx:id="paraObrasBtn" layoutX="42.0" layoutY="-17.0" mnemonicParsing="false" onAction="#paraObras" prefHeight="58.0" prefWidth="174.0" style="-fx-background-color: transparent;" visible="false">
                <font>
                   <Font size="29.0" />
                </font>
             </Button>
          </children>
       </Group>
+      <ToggleButton fx:id="emEsperaBtn" layoutX="876.0" layoutY="319.0" mnemonicParsing="false" onAction="#defineObrasTableView" text="Em Espera" />
+      <ToggleButton fx:id="avaliadasBtn" layoutX="985.0" layoutY="319.0" mnemonicParsing="false" onAction="#defineObrasTableView" text="Avaliadas" />
+      <ToggleButton fx:id="emAvaliacaoBtn" layoutX="1086.0" layoutY="319.0" mnemonicParsing="false" onAction="#defineObrasTableView" text="Em Avaliação" />
    </children>
 </Pane>

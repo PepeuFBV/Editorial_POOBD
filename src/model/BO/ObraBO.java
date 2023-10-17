@@ -9,6 +9,7 @@ import model.DAO.ObraDAO;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
+import model.entities.Avaliador;
 import view.Telas;
 
 
@@ -98,6 +99,36 @@ public class ObraBO {
         List<ObraVO> list = new ArrayList<>();
         for (int i = 0; i < obras.size(); i++) {
             if (obras.get(i).getAvaliador().getEmail().equals(Telas.getUsuarioVOAtual().getEmail())) {
+                list.add(obras.get(i));
+            }
+        }
+        return list;
+    }
+
+    public List<ObraVO> filtrarSemAvaliador(List<ObraVO> obras) {
+        List<ObraVO> list = new ArrayList<>();
+        for (int i = 0; i < obras.size(); i++) {
+            if (obras.get(i).getStatus().isEmpty() || obras.get(i).getStatus() == null || obras.get(i).getStatus().equals("Avaliador Pendente")) {
+                list.add(obras.get(i));
+            }
+        }
+        return list;
+    }
+
+    public List<ObraVO> filtrarEmEspera(List<ObraVO> obras) {
+        List<ObraVO> list = new ArrayList<>();
+        for (int i = 0; i < obras.size(); i++) {
+            if (obras.get(i).getStatus().equals("Em Avaliação")) { //TODO checar
+                list.add(obras.get(i));
+            }
+        }
+        return list;
+    }
+
+    public List<ObraVO> filtrarAvaliadas(List<ObraVO> obras) {
+        List<ObraVO> list = new ArrayList<>();
+        for (int i = 0; i < obras.size(); i++) {
+            if (obras.get(i).getStatus().equals("Aceita") || obras.get(i).getStatus().equals("Rejeitada")) {
                 list.add(obras.get(i));
             }
         }
