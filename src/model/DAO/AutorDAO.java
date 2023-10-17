@@ -313,7 +313,7 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
     @Override
     public void excluir(AutorVO autor) {
         Connection con = null;
-        
+        usuarioDAO.excluir(autor);
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
@@ -323,7 +323,6 @@ public class AutorDAO extends BaseDAOImpl<AutorVO> {
             statement.executeUpdate();
             
             statement.close();
-            usuarioDAO.excluir(autor);
         	BaseDAOImpl.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
