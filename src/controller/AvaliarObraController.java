@@ -120,6 +120,9 @@ public class AvaliarObraController {
                         obra.setStatus("Aceita");
                     } else if (buttonrejeitada.isSelected()) {
                         obra.setStatus("Rejeitada");
+                    } else {
+                    	erroAut.setText("Você deve selecionar um status antes de enviar.");
+                        erroAut.setVisible(true);
                     }
 
                     obra.setTitulo(obraEncontrada.getTitulo());

@@ -72,7 +72,12 @@ public class BaixarObraAvaliadorController {
     public void baixar(ActionEvent event) {
         ObservableList<String> obrasList = titulo.getItems();
         if (!obrasList.isEmpty()) {
-            String tituloObra = obrasList.get(0);
+            String tituloObra = titulo.getValue();
+            if(tituloObra == null) {
+            	erroBaixarObra.setVisible(true);
+            	erroBaixarObra.setText("Você deve selecionar uma obra.");
+            	return;
+            } 
             ObraVO obra = new ObraVO();
             obra.setTitulo(tituloObra);
             ObraDAO obraDAO = new ObraDAO();
@@ -103,6 +108,9 @@ public class BaixarObraAvaliadorController {
             } else {
                 System.out.println("Obra não encontrada.");
             }
+        } else {
+        	erroBaixarObra.setVisible(true);
+        	erroBaixarObra.setText("Obra não encontrada.");
         }
     }
     
