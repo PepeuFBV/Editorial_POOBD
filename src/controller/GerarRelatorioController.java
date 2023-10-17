@@ -23,6 +23,7 @@ public class GerarRelatorioController {
 
     private GerenteBO gerenteBO = new GerenteBO();
 
+    @FXML
     public void baixar(ActionEvent event) {
         LocalDate dataInicio = datainicio.getValue();
         LocalDate dataFinal = datafinal.getValue();
@@ -30,7 +31,6 @@ public class GerarRelatorioController {
         if (dataInicio != null && dataFinal != null) {
             java.sql.Date sqlDataInicio = java.sql.Date.valueOf(dataInicio);
             java.sql.Date sqlDataFinal = java.sql.Date.valueOf(dataFinal);
-
             try {
                 gerenteBO.baixarRelatorios(sqlDataInicio, sqlDataFinal);
              
