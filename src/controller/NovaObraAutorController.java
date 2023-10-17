@@ -1,21 +1,26 @@
 package controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.BO.AutorBO;
+import model.VO.AutorVO;
+import model.VO.UsuarioVO;
+import view.Telas;
 
 public class NovaObraAutorController {
 	
-	ObservableList<String> obras = FXCollections.observableArrayList("As Crônicas de Nárnia");
-	
 	@FXML
-	private ChoiceBox<String> obra; //titulos
+	private TextField showFileautor;
 	
 	@FXML
 	private TextField titulo;
@@ -24,7 +29,7 @@ public class NovaObraAutorController {
 	private TextField genero;
 	
 	@FXML
-	private TextField ano;
+	private DatePicker ano;
 	
 	@FXML
 	private Label erroNovaObraAutor;
@@ -32,32 +37,70 @@ public class NovaObraAutorController {
 	@FXML
 	private Button btncancelar;
 	
+	private AutorVO autorVO;
+	
+    @FXML
+    public void initialize() {
+        setUsuarioVO(Telas.getUsuarioVOAtual());
+    }
+	
+    public void setUsuarioVO(UsuarioVO usuarioVO) {
+        autorVO = (AutorVO) usuarioVO;
+        autorVO.setEmail(Telas.getUsuarioVOAtual().getEmail());
+        AutorBO autorBO = new AutorBO();
+        List<AutorVO> autores = autorBO.buscarPorEmail(autorVO);
+
+        if (!autores.isEmpty()) {
+            AutorVO primeiroAutor = autores.get(0);
+
+            autorVO.setIDUsuario(primeiroAutor.getIDUsuario());
+            autorVO.setIDAutor(primeiroAutor.getIDAutor());
+            autorVO.setTipo("Autor");
+            autorVO.setNome(primeiroAutor.getNome());
+            autorVO.setEndereco(primeiroAutor.getEndereco());
+            autorVO.setCpf(primeiroAutor.getCpf());
+            autorVO.setSenha(primeiroAutor.getSenha());
+        }
+    }
+	
+	@FXML
+	public void handleBtnOpenFile(ActionEvent event) {
+		final FileChooser fc = new FileChooser();
+		fc.setTitle("Seleção da Obra");
+		fc.setInitialDirectory(new File(System.getProperty("user.home")));
+		fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.*"));
+		File file = fc.showOpenDialog(null);
+		if (file != null) {
+			showFileautor.appendText(file.getAbsolutePath() + "\n");
+		} else {
+			System.out.println("Você deve selecionar um pdf");
+		}
+	}
 	
 	public void adicionar(ActionEvent event) {
-		
-        String selecao = (String) obra.getValue(); 
-        if (selecao != null) {
-            // adicionar obra 
-        } else {
-        	erroNovaObraAutor.setText("Você deve selecionar uma obra.");
-        	erroNovaObraAutor.setVisible(true);
-            return;
-        }
-        
+	    String obraSelecionada = showFileautor.getText();
 	    String tituloText = titulo.getText();
 	    String generoText = genero.getText();
-	    String anoText = ano.getText();
-	    if (tituloText.isEmpty() || generoText.isEmpty() || anoText.isEmpty()) {
-	    	erroNovaObraAutor.setText("Por favor, preencha todos os campos.");
-	    	erroNovaObraAutor.setVisible(true);
-	        return;
-	    } else {
+	    LocalDate anoData = ano.getValue();
+
+	    try {
+	        AutorBO autorBO = new AutorBO();
+	        autorBO.adicionarObra(obraSelecionada, tituloText, generoText, anoData, autorVO);
+
 	        System.out.println("Obra adicionada com sucesso.");
 	        erroNovaObraAutor.setText("Obra adicionada com sucesso.");
 	        erroNovaObraAutor.setVisible(true);
 	        btncancelar.setText("Fechar");
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        erroNovaObraAutor.setText("Erro ao ler o arquivo PDF.");
+	        erroNovaObraAutor.setVisible(true);
+	    } catch (IllegalArgumentException e) {
+	        erroNovaObraAutor.setText(e.getMessage());
+	        erroNovaObraAutor.setVisible(true);
 	    }
 	}
+
 	
 	public void cancelar(ActionEvent event) {
 		Stage stage = (Stage) erroNovaObraAutor.getScene().getWindow();

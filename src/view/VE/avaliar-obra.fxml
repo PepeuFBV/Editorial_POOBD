@@ -3,43 +3,39 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="319.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AvaliarObraController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="281.0" prefWidth="441.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AvaliarObraController">
    <children>
-      <Label alignment="CENTER" layoutX="201.0" layoutY="39.0" text="Avaliar Obra">
+      <Label alignment="CENTER" layoutX="161.0" layoutY="22.0" text="Avaliar Obra">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label layoutX="95.0" layoutY="105.0" text="Relatório:">
+      <Label layoutX="63.0" layoutY="169.0" text="Selecione o status:">
          <font>
-            <Font size="15.0" />
+            <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="96.0" layoutY="149.0" text="Situação:">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="96.0" layoutY="192.0" text="Senha:">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <RadioButton fx:id="buttonaceita" layoutX="187.0" layoutY="151.0" mnemonicParsing="false" text="Aceita">
+      <RadioButton fx:id="buttonaceita" layoutX="194.0" layoutY="170.0" mnemonicParsing="false" text="Aceita">
          <toggleGroup>
             <ToggleGroup fx:id="radioavaliar" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="buttonrejeitada" layoutX="261.0" layoutY="151.0" mnemonicParsing="false" text="Rejeitada" toggleGroup="$radioavaliar" />
-      <ChoiceBox fx:id="choiceboxrelatorio" layoutX="166.0" layoutY="101.0" prefHeight="25.0" prefWidth="199.0" />
-      <PasswordField fx:id="senhaavaliarobra" layoutX="166.0" layoutY="190.0" prefHeight="25.0" prefWidth="199.0" />
-      <Button layoutX="164.0" layoutY="247.0" mnemonicParsing="false" onAction="#voltarTelaOBrasAvaliador" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
-      <Button layoutX="271.0" layoutY="247.0" mnemonicParsing="false" onAction="#enviar" prefHeight="25.0" prefWidth="99.0" text="Enviar" textFill="#008009" />
-      <Label fx:id="erroAut" layoutX="247.0" layoutY="126.0" text="Label" textFill="#d30000" visible="false" />
+      <RadioButton fx:id="buttonrejeitada" layoutX="263.0" layoutY="170.0" mnemonicParsing="false" text="Rejeitada" toggleGroup="$radioavaliar" />
+      <Button layoutX="125.0" layoutY="230.0" mnemonicParsing="false" onAction="#voltarTelaOBrasAvaliador" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
+      <Button layoutX="234.0" layoutY="230.0" mnemonicParsing="false" onAction="#enviar" prefHeight="25.0" prefWidth="99.0" text="Enviar" textFill="#008009" />
+      <Label fx:id="erroAut" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="203.0" prefHeight="17.0" prefWidth="395.0" text="Label" textFill="#d30000" visible="false" />
+      <Button fx:id="buttonarquivo" alignment="CENTER" layoutX="66.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleBtnOpenFile" prefHeight="17.0" prefWidth="99.0" text="Abrir arquivo" />
+      <TextField fx:id="showFile" layoutX="175.0" layoutY="116.0" prefHeight="25.0" prefWidth="201.0" />
+      <Label layoutX="66.0" layoutY="72.0" text="Obra:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="titulo" layoutX="120.0" layoutY="70.0" prefHeight="25.0" prefWidth="256.0" />
    </children>
 </Pane>

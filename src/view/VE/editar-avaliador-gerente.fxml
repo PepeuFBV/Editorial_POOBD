@@ -1,39 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditarAvaliadorGerenteController">
    <children>
-      <TextField fx:id="cpf" layoutX="175.0" layoutY="115.0" prefHeight="25.0" prefWidth="298.0" />
-      <Label alignment="CENTER" layoutX="206.0" layoutY="44.0" prefHeight="32.0" prefWidth="189.0" text="Editar Avaliador">
+      <ChoiceBox fx:id="avaliador" layoutX="176.0" layoutY="92.0" prefHeight="25.0" prefWidth="298.0" />
+      <TextField fx:id="cpf" layoutX="177.0" layoutY="145.0" prefHeight="25.0" prefWidth="298.0" />
+      <Label alignment="CENTER" layoutX="206.0" layoutY="26.0" prefHeight="32.0" prefWidth="189.0" text="Editar Avaliador">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="nome" layoutX="175.0" layoutY="175.0" prefHeight="25.0" prefWidth="298.0" />
-      <TextField fx:id="endereco" layoutX="175.0" layoutY="239.0" prefHeight="25.0" prefWidth="298.0" />
+      <TextField fx:id="nome" layoutX="177.0" layoutY="181.0" prefHeight="25.0" prefWidth="298.0" />
+      <TextField fx:id="endereco" layoutX="177.0" layoutY="220.0" prefHeight="25.0" prefWidth="298.0" />
       <Label />
-      <Label layoutX="94.0" layoutY="115.0" prefHeight="25.0" prefWidth="45.0" text="CPF:">
+      <Label layoutX="97.0" layoutY="145.0" prefHeight="25.0" prefWidth="72.0" text="Novo CPF:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="94.0" layoutY="177.0" prefHeight="21.0" prefWidth="58.0" text="Nome:">
+      <Label layoutX="84.0" layoutY="183.0" prefHeight="21.0" prefWidth="85.0" text="Novo nome:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="90.0" layoutY="241.0" prefHeight="21.0" prefWidth="66.0" text="Endereço:">
+      <Label alignment="CENTER" layoutX="54.0" layoutY="222.0" prefHeight="21.0" prefWidth="115.0" text="Novo endereço:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="324.0" layoutY="314.0" mnemonicParsing="false" onAction="#concluir" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
-      <Button fx:id="btncancelar" layoutX="175.0" layoutY="314.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
-      <Label fx:id="erroEditarAvaliadorGerente" layoutX="286.0" layoutY="277.0" text="Label" visible="false" />
+      <Button layoutX="323.0" layoutY="354.0" mnemonicParsing="false" onAction="#concluir" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
+      <Button fx:id="btncancelar" layoutX="173.0" layoutY="354.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
+      <Label fx:id="erroEditarAvaliadorGerente" layoutX="288.0" layoutY="258.0" text="Label" visible="false" />
+      <Label layoutX="97.0" layoutY="92.0" prefHeight="25.0" prefWidth="72.0" text="Avaliador:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="email" layoutX="176.0" layoutY="258.0" prefHeight="25.0" prefWidth="298.0" />
+      <Label alignment="CENTER" layoutX="78.0" layoutY="260.0" prefHeight="21.0" prefWidth="85.0" text="Novo email:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="179.0" layoutY="117.0" prefHeight="17.0" prefWidth="195.0" text="Selecione aqui o email do avaliador." />
+      <Label alignment="CENTER" layoutX="63.0" layoutY="295.0" prefHeight="21.0" prefWidth="115.0" text="Nova senha:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="senha" layoutX="177.0" layoutY="293.0" prefHeight="25.0" prefWidth="298.0" />
    </children>
 </Pane>

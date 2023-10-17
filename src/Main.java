@@ -1,10 +1,12 @@
 import view.Telas;
+
 import javafx.application.Application;
-import javafx.stage.*;
+import javafx.stage.Stage;
 
 public class Main extends Application {
     public static void main(String[] args) {
         System.out.println("Hello World");
+
         launch();
     }
     
@@ -13,5 +15,5 @@ public class Main extends Application {
         Telas.setPrimaryStage(primaryStage);
         Telas.telaLogin();
     }
-    
+
 }
