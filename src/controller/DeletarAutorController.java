@@ -53,6 +53,7 @@ public class DeletarAutorController {
                 AutorVO primeiroAutor = autores.get(0);
                 AutorVO autorParaExcluir = new AutorVO();
                 autorParaExcluir.setIDAutor(primeiroAutor.getIDAutor());
+                autorParaExcluir.setIDUsuario(primeiroAutor.getIDUsuario());
 
                 autorBO.excluir(autorParaExcluir);
 

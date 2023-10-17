@@ -53,6 +53,7 @@ public class DeletarAvaliadorController {
 	            AvaliadorVO primeiroAvaliador = avaliadores.get(0);
 	            AvaliadorVO avaliadorParaExcluir = new AvaliadorVO();
 	            avaliadorParaExcluir.setIDAvaliador(primeiroAvaliador.getIDAvaliador());
+	            avaliadorParaExcluir.setIDUsuario(primeiroAvaliador.getIDUsuario());
 	           
 	            avaliadorBO.excluir(avaliadorParaExcluir);
 

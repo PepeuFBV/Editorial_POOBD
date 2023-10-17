@@ -197,7 +197,6 @@ public class UsuarioDAO extends BaseDAOImpl<UsuarioVO> {
 	@Override
     public void excluir(UsuarioVO user) {
         Connection con = null;
-        
         try {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
