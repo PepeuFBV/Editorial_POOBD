@@ -249,6 +249,9 @@ public class TelaPrincipalController {
     @FXML
     private ToggleButton emEsperaBtn;
 
+    @FXML
+    private Button definirAvaliadorBtn;
+
     
     public static void setVisaoAtual(String visaoAtual) {
         if (visaoAtual != null) {

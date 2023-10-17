@@ -18,6 +18,7 @@ SELECT * FROM avaliadores;
 SELECT * FROM obras;
 SELECT * FROM gerentes;
 
+
 CREATE TABLE usuarios (
     id_usuario SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
