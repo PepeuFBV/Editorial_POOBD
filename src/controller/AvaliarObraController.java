@@ -91,6 +91,7 @@ public class AvaliarObraController {
     }
 
 
+    @FXML
     public void enviar(ActionEvent event) {
         try {
             String caminhoArquivo = showFile.getText();
@@ -114,7 +115,13 @@ public class AvaliarObraController {
                     obra.setGenero(obraEncontrada.getGenero());
                     obra.setIDObra(obraEncontrada.getIDObra());
                     obra.setPdfObra(obraEncontrada.getPdfObra());
-                    obra.setStatus(obraEncontrada.getStatus());
+
+                    if (buttonaceita.isSelected()) {
+                        obra.setStatus("Aceita");
+                    } else if (buttonrejeitada.isSelected()) {
+                        obra.setStatus("Rejeitada");
+                    }
+
                     obra.setTitulo(obraEncontrada.getTitulo());
                     
                     ObraBO obraBO = new ObraBO();
@@ -135,6 +142,7 @@ public class AvaliarObraController {
             erroAut.setVisible(true);
         }
     }
+
 
     public void voltarTelaOBrasAvaliador(ActionEvent event) {
         Stage stage = (Stage) showFile.getScene().getWindow();

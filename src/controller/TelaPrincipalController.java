@@ -675,14 +675,9 @@ public class TelaPrincipalController {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    public void baixar(ActionEvent event) {
-
-    }
     
     @FXML
-    public void baixarObra(ActionEvent event) { 
+    public void baixar(ActionEvent event) { 
     	try {
 			Telas.telaBaixarObra(Telas.getUsuarioVOAtual());;
 		} catch (Exception e) {

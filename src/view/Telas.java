@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 
 import controller.AvaliarObraController;
+import controller.BaixarObraAvaliadorController;
 import controller.DeletarObraAutorController;
 import controller.EditarObraAutorController;
 import controller.LoginPageController;
@@ -225,7 +226,7 @@ public class Telas {
     public static void telaBaixarObra(UsuarioVO usuarioVO) throws Exception {
         FXMLLoader fx = new FXMLLoader(TelaPrincipalController.class.getResource("/view/VE/baixar-obra-avaliador.fxml"));
         Parent root = fx.load();
-        EditarObraAutorController controller = fx.getController();
+        BaixarObraAvaliadorController controller = fx.getController();
         controller.setUsuarioVO(usuarioVO);
 
         Stage popupStage = new Stage();
