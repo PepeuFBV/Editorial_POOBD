@@ -2,8 +2,10 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -111,7 +113,8 @@ public class AvaliarObraController {
                     obra.setAno(obraEncontrada.getAno());
                     obra.setAutor(obraEncontrada.getAutor());
                     obra.setAvaliador(obraEncontrada.getAvaliador());
-                    obra.setDataAvaliacao(obraEncontrada.getDataAvaliacao());
+                    LocalDate dataAvaliacao = LocalDate.now();
+                    obra.setDataAvaliacao(dataAvaliacao);
                     obra.setGenero(obraEncontrada.getGenero());
                     obra.setIDObra(obraEncontrada.getIDObra());
                     obra.setPdfObra(obraEncontrada.getPdfObra());
