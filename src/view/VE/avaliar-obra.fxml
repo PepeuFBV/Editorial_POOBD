@@ -28,7 +28,7 @@
       <RadioButton fx:id="buttonrejeitada" layoutX="263.0" layoutY="170.0" mnemonicParsing="false" text="Rejeitada" toggleGroup="$radioavaliar" />
       <Button layoutX="125.0" layoutY="230.0" mnemonicParsing="false" onAction="#voltarTelaOBrasAvaliador" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
       <Button layoutX="234.0" layoutY="230.0" mnemonicParsing="false" onAction="#enviar" prefHeight="25.0" prefWidth="99.0" text="Enviar" textFill="#008009" />
-      <Label fx:id="erroAut" layoutX="207.0" layoutY="203.0" text="Label" textFill="#d30000" visible="false" />
+      <Label fx:id="erroAut" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="203.0" prefHeight="17.0" prefWidth="395.0" text="Label" textFill="#d30000" visible="false" />
       <Button fx:id="buttonarquivo" alignment="CENTER" layoutX="66.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleBtnOpenFile" prefHeight="17.0" prefWidth="99.0" text="Abrir arquivo" />
       <TextField fx:id="showFile" layoutX="175.0" layoutY="116.0" prefHeight="25.0" prefWidth="201.0" />
       <Label layoutX="66.0" layoutY="72.0" text="Obra:">
