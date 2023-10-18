@@ -261,5 +261,15 @@
       <ToggleButton fx:id="emEsperaBtn" layoutX="876.0" layoutY="319.0" mnemonicParsing="false" onAction="#defineObrasTableView" text="Em Espera" />
       <ToggleButton fx:id="avaliadasBtn" layoutX="985.0" layoutY="319.0" mnemonicParsing="false" onAction="#defineObrasTableView" text="Avaliadas" />
       <ToggleButton fx:id="emAvaliacaoBtn" layoutX="1086.0" layoutY="319.0" mnemonicParsing="false" onAction="#defineObrasTableView" text="Em Avaliação" />
+      <ImageView fx:id="fundoDefinirAvaliador" fitHeight="55.0" fitWidth="253.0" layoutX="483.0" layoutY="172.0">
+         <image>
+            <Image url="@Botao-pequeno.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="definirAvaliadorBtn" layoutX="487.0" layoutY="172.0" mnemonicParsing="false" onAction="#definirAvaliador" prefHeight="54.0" prefWidth="244.0" style="-fx-background-color: transparent; -fx-text-fill: black;" text="definir avaliador">
+         <font>
+            <Font name="High Tower Text" size="29.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

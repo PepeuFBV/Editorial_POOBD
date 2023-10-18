@@ -18,6 +18,7 @@ SELECT * FROM avaliadores;
 SELECT * FROM obras;
 SELECT * FROM gerentes;
 
+
 CREATE TABLE usuarios (
     id_usuario SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -71,12 +72,20 @@ CREATE TABLE obras (
 
 
 
-CREATE VIEW avaliadores_e_suas_obras AS
-SELECT a.id_avaliador, a.nome AS nome_avaliador, o.id_obra, o.titulo AS titulo_obra
-FROM avaliadores a
-LEFT JOIN obras o ON a.id_avaliador = o.id_avaliador;
+CREATE VIEW view_obras AS
+SELECT
+    o.id_obra,
+    o.titulo AS titulo_da_obra,
+    o.genero AS genero_da_obra,
+    o.ano AS ano_da_obra,
+    o.status AS status_da_obra,
+    a.nome AS autor_da_obra,
+    av.nome AS avaliador_da_obra
+FROM obras o
+LEFT JOIN autores a ON o.id_autor = a.id_autor
+LEFT JOIN avaliadores av ON o.id_avaliador = av.id_avaliador;
 
-SELECT * FROM avaliadores_e_suas_obras;
+SELECT * FROM view_obras;
 
 
 

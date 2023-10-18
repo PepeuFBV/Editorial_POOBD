@@ -249,6 +249,12 @@ public class TelaPrincipalController {
     @FXML
     private ToggleButton emEsperaBtn;
 
+    @FXML
+    private Button definirAvaliadorBtn;
+
+    @FXML
+    private ImageView fundoDefinirAvaliador;
+
     
     public static void setVisaoAtual(String visaoAtual) {
         if (visaoAtual != null) {
@@ -487,10 +493,17 @@ public class TelaPrincipalController {
         emAvaliacaoBtn.setVisible(false);
         avaliadasBtn.setVisible(false);
 
+        fundoBotaoBaixar.setVisible(false);
+        baixarBtn.setVisible(false);
+
+        fundoDefinirAvaliador.setVisible(false);
+        definirAvaliadorBtn.setVisible(false);
+
         if (tipoUsuarioAtual.equals("Gerente")) {
 
             RelatorioOption.setVisible(true);
             relatorioBtn.setVisible(true);
+
             if (visaoAtual.equals("obras")) {
                 fundoBotaoAutoresD.setVisible(true);
                 txtAutoresD.setVisible(true);
@@ -506,6 +519,10 @@ public class TelaPrincipalController {
                 emEsperaBtn.setVisible(true);
                 emAvaliacaoBtn.setVisible(true);
                 avaliadasBtn.setVisible(true);
+
+                fundoDefinirAvaliador.setVisible(true);
+                definirAvaliadorBtn.setVisible(true);
+
             } else if (visaoAtual.equals("autores")) {
                 fundoBotaoAutoresA.setVisible(true);
                 txtAutoresA.setVisible(true);
@@ -555,6 +572,9 @@ public class TelaPrincipalController {
 
                 fundoBotaoEditar.setVisible(false);
                 editarBtn.setVisible(false);
+
+                fundoBotaoBaixar.setVisible(true);
+                baixarBtn.setVisible(true);
 
             }
         }

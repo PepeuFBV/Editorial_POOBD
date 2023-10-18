@@ -9,6 +9,7 @@ import model.VO.ObraVO;
 import model.VO.UsuarioVO;
 
 public class AvaliadorDAO extends BaseDAOImpl<AvaliadorVO> {
+    
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     @Override
