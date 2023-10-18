@@ -6,12 +6,13 @@
 ---
 ### Para o desenvolvimento do projeto
 - JDK 17 ou superior
-- VSCode na versão mais recente
+- VSCode ou Eclipse na versão mais recente
 - SceneBuilder na versão mais recente
 - PostgreSQL versão 15 para Windows
 - Driver do JavaFX e Postgres
 - DIA Diagram Editor v0.97.2
 - Maven for Java v0.42.0 ou superior
+- Bibliotecas javax.mail-1.6.2.jar e activation.jar
 
 ---
 ## Para contribuir no projeto
