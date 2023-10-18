@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +19,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.BO.AvaliadorBO;
 import model.BO.ObraBO;
-import model.DAO.ObraDAO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
 import model.VO.UsuarioVO;
@@ -100,8 +98,8 @@ public class AvaliarObraController {
             String tituloSelecionado = titulo.getValue();
             ObraVO obraSelecionada = new ObraVO();
             obraSelecionada.setTitulo(tituloSelecionado);
-            ObraDAO obraDAO = new ObraDAO();
-            List<ObraVO> obrasEncontradas = obraDAO.buscarPorTitulo(obraSelecionada);
+            ObraBO obraBO = new ObraBO();
+            List<ObraVO> obrasEncontradas = obraBO.buscarPorTitulo(obraSelecionada);
             
             if (!obrasEncontradas.isEmpty()) {
                 ObraVO obraEncontrada = obrasEncontradas.get(0);
@@ -130,7 +128,6 @@ public class AvaliarObraController {
 
                     obra.setTitulo(obraEncontrada.getTitulo());
                     
-                    ObraBO obraBO = new ObraBO();
                     obraBO.atualizar(obra);
                     System.out.println("Caminho do arquivo salvo no banco de dados com sucesso.");
                 } else {

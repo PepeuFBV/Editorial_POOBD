@@ -513,7 +513,7 @@ public class ObraDAO extends BaseDAOImpl<ObraVO> {
             con = BaseDAOImpl.getConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM obras WHERE ano BETWEEN ? AND ?";
+            String sql = "SELECT * FROM obras WHERE data_avaliacao BETWEEN ? AND ?";
             statement = con.prepareStatement(sql);
             statement.setDate(1, anoInicio);
             statement.setDate(2, anoFinal);

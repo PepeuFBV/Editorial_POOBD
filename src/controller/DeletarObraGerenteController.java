@@ -9,7 +9,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.BO.ObraBO;
-import model.DAO.ObraDAO;
 import model.VO.ObraVO;
 
 public class DeletarObraGerenteController {
@@ -40,18 +39,17 @@ public class DeletarObraGerenteController {
 
     @FXML
     private void deletar(ActionEvent event) {
-        ObservableList<String> obrasList = obra.getItems();
-        if (!obrasList.isEmpty()) {
-            String tituloObra = obrasList.get(0);
+        String tituloText = obra.getValue();
+        if (!tituloText.isEmpty()) {
+            String tituloObra = tituloText;
             ObraVO obra = new ObraVO();
             obra.setTitulo(tituloObra);
-            ObraDAO obraDAO = new ObraDAO();
 
-            List<ObraVO> obras = obraDAO.buscarPorTitulo(obra);
+            List<ObraVO> obras = obraBO.buscarPorTitulo(obra);
             ObraVO primeiraObra = obras.get(0);
             ObraVO obraExcluir = new ObraVO();
             obraExcluir.setIDObra(primeiraObra.getIDObra());
-            obraDAO.excluir(obraExcluir);
+            obraBO.excluir(obraExcluir);
 
             carregarObras();
 

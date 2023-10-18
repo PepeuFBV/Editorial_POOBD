@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,10 +17,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.BO.AutorBO;
+import model.BO.AvaliadorBO;
 import model.BO.ObraBO;
-import model.DAO.AutorDAO;
-import model.DAO.AvaliadorDAO;
-import model.DAO.ObraDAO;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
@@ -58,6 +58,12 @@ public class EditarObraGerenteController {
 
     @FXML
     private Button btncancelar;
+    
+    ObraBO obraBO = new ObraBO();
+    
+    AutorBO autorBO = new AutorBO();
+    
+    AvaliadorBO avaliadorBO = new AvaliadorBO();
 
     private Map<String, Long> autorParaIDMap = new HashMap<>();
     private Map<String, Long> avaliadorParaIDMap = new HashMap<>();
@@ -67,7 +73,7 @@ public class EditarObraGerenteController {
         final FileChooser fc = new FileChooser();
         fc.setTitle("Seleção da Obra");
         fc.setInitialDirectory(new File(System.getProperty("user.home")));
-        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.*"));
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf*"));
         File file = fc.showOpenDialog(null);
         if (file != null) {
             showFileger.appendText(file.getAbsolutePath() + "\n");
@@ -107,9 +113,8 @@ public class EditarObraGerenteController {
         ObservableList<String> avaliadores = FXCollections.observableArrayList();
         ObservableList<String> obrasList = FXCollections.observableArrayList();
         
-        ObraDAO obraDAO = new ObraDAO();
         try {
-            ArrayList<ObraVO> obrasDoDB = obraDAO.listar(); 
+            List<ObraVO> obrasDoDB = obraBO.listar(); 
             for (ObraVO obraVO : obrasDoDB) {
                 String tituloObra = obraVO.getTitulo();
                 obrasList.add(tituloObra);
@@ -120,9 +125,8 @@ public class EditarObraGerenteController {
 
         obras.setItems(obrasList);
 
-        AutorDAO autorDAO = new AutorDAO();
         try {
-            ArrayList<AutorVO> autoresDoDB = autorDAO.listar();
+            List<AutorVO> autoresDoDB = autorBO.listar();
             for (AutorVO autorVO : autoresDoDB) {
                 String nomeAutor = autorVO.getNome();
                 Long autorID = autorVO.getIDAutor();
@@ -133,9 +137,8 @@ public class EditarObraGerenteController {
             e.printStackTrace();
         }
 
-        AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
         try {
-            ArrayList<AvaliadorVO> avaliadoresDoDB = avaliadorDAO.listar();
+            List<AvaliadorVO> avaliadoresDoDB = avaliadorBO.listar();
             for (AvaliadorVO avaliadorVO : avaliadoresDoDB) {
                 String nomeAvaliador = avaliadorVO.getNome();
                 Long avaliadorID = avaliadorVO.getIDAvaliador();
@@ -161,7 +164,6 @@ public class EditarObraGerenteController {
             return;
         }
 
-        ObraBO obraBO = new ObraBO();
         ObraVO obraEncontrada = buscarObraPorTitulo(tituloSelecionado);
 
         if (obraEncontrada != null) {
@@ -171,6 +173,7 @@ public class EditarObraGerenteController {
             String autorSelecionado = autor.getValue();
             String avaliadorSelecionado = avaliador.getValue();
             String statusSelecionado = stts.getValue();
+            LocalDate dataSelecionada = data.getValue();
             
             if ("Avaliador Pendente".equals(statusSelecionado) && avaliadorSelecionado != null) {
                 erroEditarObraGerente.setText("Você não pode selecionar 'Avaliador Pendente' quando um avaliador está selecionado.");
@@ -182,12 +185,21 @@ public class EditarObraGerenteController {
                 statusSelecionado = "Avaliador Pendente";
             }else {
                 obraEncontrada.setStatus(statusSelecionado);
+                
+                if ("Aceita".equals(statusSelecionado) || "Rejeitada".equals(statusSelecionado)) {
+                    if (dataSelecionada == null) {
+                        erroEditarObraGerente.setText("Você deve inserir uma data.");
+                        erroEditarObraGerente.setVisible(true);
+                        return;
+                    }
+                } else {
+                    obraEncontrada.setDataAvaliacao(null);
+                }
             }
             
-            LocalDate dataSelecionada = data.getValue();
             String obraSelecionada = showFileger.getText();
 
-            if (tituloText.isEmpty() || generoText.isEmpty() || autorSelecionado == null || obraSelecionada.isEmpty()) {
+            if (tituloText.isEmpty() || generoText.isEmpty() || autorSelecionado == null || obraSelecionada.isEmpty()|| anoData == null) {
                 erroEditarObraGerente.setText("Por favor, preencha todos os campos.");
                 erroEditarObraGerente.setVisible(true);
                 return;
@@ -196,12 +208,6 @@ public class EditarObraGerenteController {
             obraEncontrada.setTitulo(tituloText);
             obraEncontrada.setGenero(generoText);
             obraEncontrada.setAno(anoData);
-            if(dataSelecionada == null) {
-            	obraEncontrada.setDataAvaliacao(null);
-            }else {
-                obraEncontrada.setDataAvaliacao(dataSelecionada);
-            }
-
 
             long idAutor = autorParaIDMap.get(autorSelecionado);
             
@@ -212,8 +218,7 @@ public class EditarObraGerenteController {
                 long idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
                 AvaliadorVO avaliadorVO = new AvaliadorVO();
                 avaliadorVO.setIDAvaliador(idAvaliador);
-                AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-                ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
+                List<AvaliadorVO> avaliadores = avaliadorBO.buscarPorId(avaliadorVO);
                 AvaliadorVO primeiroAvaliador = avaliadores.get(0);
                 
                 avaliadorVO.setIDUsuario(primeiroAvaliador.getIDUsuario());
@@ -229,8 +234,7 @@ public class EditarObraGerenteController {
 
             AutorVO autorVO = new AutorVO();
             autorVO.setIDAutor(idAutor);
-            AutorDAO autorDAO = new AutorDAO();
-            ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO);
+            List<AutorVO> autores = autorBO.buscarPorId(autorVO);
             AutorVO primeiroAutor = autores.get(0);
             
             autorVO.setIDUsuario(primeiroAutor.getIDUsuario());
@@ -254,10 +258,9 @@ public class EditarObraGerenteController {
 
     private ObraVO buscarObraPorTitulo(String titulo) {
         ObraVO obra = new ObraVO();
-        ObraDAO obraDAO = new ObraDAO();
         obra.setTitulo(titulo);
 
-        ArrayList<ObraVO> obrasEncontradas = obraDAO.buscarPorTitulo(obra);
+        ArrayList<ObraVO> obrasEncontradas = obraBO.buscarPorTitulo(obra);
         if (!obrasEncontradas.isEmpty()) {
             return obrasEncontradas.get(0);
         }

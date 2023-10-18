@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +12,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.BO.AutorBO;
-import model.DAO.AutorDAO;
 import model.VO.AutorVO;
 
 public class EditarAutorGerenteController {
@@ -42,14 +40,15 @@ public class EditarAutorGerenteController {
     @FXML
     private Button btncancelar;
 
+    AutorBO autorBO = new AutorBO();
+    
     @FXML
     private void initialize() {
         carregarAutoresEmail();
     }
 
     private void carregarAutoresEmail() {
-        AutorDAO autorDAO = new AutorDAO();
-        ArrayList<AutorVO> autores = autorDAO.listar();
+        List<AutorVO> autores = autorBO.listar();
 
         ObservableList<String> emailList = FXCollections.observableArrayList();
         for (AutorVO autor : autores) {
@@ -71,7 +70,6 @@ public class EditarAutorGerenteController {
             erroEditarAutorGerente.setText("Por favor, preencha todos os campos e selecione um autor.");
             erroEditarAutorGerente.setVisible(true);
         } else {
-            AutorBO autorBO = new AutorBO();
             AutorVO autorVO = new AutorVO();
             autorVO.setEmail(emailSelecionado);
 

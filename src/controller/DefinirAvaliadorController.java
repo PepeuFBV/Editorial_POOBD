@@ -1,15 +1,19 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import exceptions.NotFoundException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import model.BO.AvaliadorBO;
+import model.BO.ObraBO;
 import model.DAO.AvaliadorDAO;
 import model.DAO.ObraDAO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
-import exceptions.NotFoundException;
 
 public class DefinirAvaliadorController {
 
@@ -25,12 +29,12 @@ public class DefinirAvaliadorController {
     }
     
     private void carregarObrasAvaliadorPendente() {
-        ObraDAO obraDAO = new ObraDAO();
+        ObraBO obraBO = new ObraBO();
         ObraVO obraVO = new ObraVO();
         obraVO.setStatus("Avaliador Pendente");
 
         try {
-            ArrayList<ObraVO> obras = obraDAO.buscarPorStatus(obraVO);
+            ArrayList<ObraVO> obras = obraBO.buscarPorStatus(obraVO);
             for (ObraVO obra : obras) {
             	titulos.getItems().add(obra.getTitulo());
             }
@@ -40,10 +44,10 @@ public class DefinirAvaliadorController {
     }
     
     private void carregarEmailsAvaliadores() {
-        AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+        AvaliadorBO avaliadorBO = new AvaliadorBO();
 
         try {
-            ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.listar();
+            List<AvaliadorVO> avaliadores = avaliadorBO.listar();
             for (AvaliadorVO avaliador : avaliadores) {
             	avaliadorBox.getItems().add(avaliador.getEmail());
             }

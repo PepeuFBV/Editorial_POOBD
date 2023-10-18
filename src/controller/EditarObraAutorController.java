@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,8 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.BO.AutorBO;
-import model.DAO.AutorDAO;
-import model.DAO.ObraDAO;
+import model.BO.ObraBO;
 import model.VO.AutorVO;
 import model.VO.ObraVO;
 import model.VO.UsuarioVO;
@@ -48,12 +49,14 @@ public class EditarObraAutorController {
 
     private AutorVO autorVO;
     
+    AutorBO autorBO = new AutorBO();
+    
     @FXML
     public void handleBtnOpenFile(ActionEvent event) {
         final FileChooser fc = new FileChooser();
         fc.setTitle("Seleção da Obra");
         fc.setInitialDirectory(new File(System.getProperty("user.home")));
-        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.*"));
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf*"));
         File file = fc.showOpenDialog(null);
         if (file != null) {
             showFileAutor.appendText(file.getAbsolutePath() + "\n");
@@ -70,8 +73,7 @@ public class EditarObraAutorController {
     public void setUsuarioVO(UsuarioVO usuarioVO) {
         autorVO = (AutorVO) usuarioVO;
         autorVO.setEmail(Telas.getUsuarioVOAtual().getEmail());
-        AutorDAO autorDAO = new AutorDAO();
-        ArrayList<AutorVO> autores = autorDAO.buscarPorEmail(autorVO);
+        List<AutorVO> autores = autorBO.buscarPorEmail(autorVO);
 
         if (!autores.isEmpty()) {
             AutorVO primeiroAutor = autores.get(0);
@@ -90,8 +92,8 @@ public class EditarObraAutorController {
     public ObservableList<String> carregarTitulosDasObrasDoAutor(AutorVO autorVO) {
         ObservableList<String> titulos = FXCollections.observableArrayList();
         try {
-            ObraDAO obraDAO = new ObraDAO();
-            ArrayList<ObraVO> obrasDoAutor = obraDAO.buscarPorAutor(autorVO);
+            ObraBO obraBO = new ObraBO();
+            ArrayList<ObraVO> obrasDoAutor = obraBO.buscarPorAutor(autorVO);
             for (ObraVO obra : obrasDoAutor) {
                 titulos.add(obra.getTitulo());
             }
@@ -115,7 +117,6 @@ public class EditarObraAutorController {
         }
 
         try {
-            AutorBO autorBO = new AutorBO();
             autorBO.editarObra(obraChoiceBox, tituloText, generoText, anoData, autorVO, obraSelecionada);
 
             System.out.println("Edição bem-sucedida.");

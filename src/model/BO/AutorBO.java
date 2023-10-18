@@ -149,4 +149,9 @@ public class AutorBO {
     	ArrayList<AutorVO> autores = autorDAO.buscarPorEmail(autorVO);
         return autores;
     }   
+    
+    public List<AutorVO> buscarPorId (AutorVO autorVO) {
+    	ArrayList<AutorVO> autores = autorDAO.buscarPorId(autorVO);
+        return autores;
+    }   
 }

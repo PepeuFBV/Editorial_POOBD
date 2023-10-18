@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +12,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.BO.AvaliadorBO;
-import model.DAO.AvaliadorDAO;
 import model.VO.AvaliadorVO;
 
 public class EditarAvaliadorGerenteController {
@@ -42,14 +40,15 @@ public class EditarAvaliadorGerenteController {
 	@FXML
 	private Button btncancelar;
 	
+    AvaliadorBO avaliadorBO = new AvaliadorBO();
+	
 	@FXML
 	private void initialize() {
 		carregarAvaliadoresEmails();
 	}
 
 	private void carregarAvaliadoresEmails() {
-	    AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
-	    ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.listar();
+	    List<AvaliadorVO> avaliadores = avaliadorBO.listar();
 
 	    ObservableList<String> emailList = FXCollections.observableArrayList();
 	    for (AvaliadorVO avaliador : avaliadores) {
@@ -71,7 +70,6 @@ public class EditarAvaliadorGerenteController {
 	        erroEditarAvaliadorGerente.setText("Por favor, preencha todos os campos e selecione um avaliador.");
 	        erroEditarAvaliadorGerente.setVisible(true);
 	    } else {
-	        AvaliadorBO avaliadorBO = new AvaliadorBO();
 	        AvaliadorVO avaliadorVO = new AvaliadorVO();
 	        avaliadorVO.setEmail(emailSelecionado);
 

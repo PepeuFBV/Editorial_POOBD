@@ -13,7 +13,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.BO.AvaliadorBO;
-import model.DAO.ObraDAO;
+import model.BO.ObraBO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
 import model.VO.UsuarioVO;
@@ -57,8 +57,8 @@ public class BaixarObraAvaliadorController {
     public ObservableList<String> carregarTitulosDasObrasDoAutor(AvaliadorVO avaliadorVO) {
         ObservableList<String> titulos = FXCollections.observableArrayList();
         try {
-            ObraDAO obraDAO = new ObraDAO();
-            ArrayList<ObraVO> obrasDoAutor = obraDAO.buscarPorAvaliador(avaliadorVO);
+            ObraBO obraBO = new ObraBO();
+            ArrayList<ObraVO> obrasDoAutor = obraBO.buscarPorAvaliador(avaliadorVO);
             for (ObraVO obra : obrasDoAutor) {
                 titulos.add(obra.getTitulo());
             }
@@ -80,8 +80,8 @@ public class BaixarObraAvaliadorController {
             } 
             ObraVO obra = new ObraVO();
             obra.setTitulo(tituloObra);
-            ObraDAO obraDAO = new ObraDAO();
-            List<ObraVO> obras = obraDAO.buscarPorTitulo(obra);
+            ObraBO obraBO = new ObraBO();
+            List<ObraVO> obras = obraBO.buscarPorTitulo(obra);
             if (!obras.isEmpty()) {
                 ObraVO primeiraObra = obras.get(0);
                 byte[] pdfObraBytes = primeiraObra.getPdfObra();

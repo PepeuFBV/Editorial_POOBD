@@ -141,5 +141,25 @@ public class ObraBO {
     public void excluir(ObraVO obraVO) {
         obraDAO.excluir(obraVO);
     }
+    
+    public ArrayList<ObraVO> buscarPorTitulo(ObraVO obraVO) {
+    	ArrayList<ObraVO> obrasEncontradas = obraDAO.buscarPorTitulo(obraVO);
+		return obrasEncontradas;
+    }
+    
+    public ArrayList<ObraVO> buscarPorAvaliador(AvaliadorVO avaliadorVO) {
+    	ArrayList<ObraVO> obrasDoAutor = obraDAO.buscarPorAvaliador(avaliadorVO);
+		return obrasDoAutor;
+    }
+    
+    public ArrayList<ObraVO> buscarPorStatus(ObraVO obraVO) {
+    	ArrayList<ObraVO> obras = obraDAO.buscarPorStatus(obraVO);
+		return obras;
+    }
+    
+    public ArrayList<ObraVO> buscarPorAutor(AutorVO autorVO) {
+    	ArrayList<ObraVO> obrasDoAutor = obraDAO.buscarPorAutor(autorVO);
+		return obrasDoAutor;
+    }
 }
 	        

@@ -94,12 +94,13 @@ public class UsuarioVO {
     }
 
     public void setEmail(String email) {
-        if (email != null && email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) { //simplificado
+        if (email != null && email.matches("^[A-Za-z0-9+_.-]+@gmail\\.com$")) {
             this.email = email;
         } else {
             throw new IllegalArgumentException("E-mail não é válido.");
         }
     }
+
 
     public String getSenha() {
         return senha;
