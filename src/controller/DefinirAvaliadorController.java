@@ -1,17 +1,27 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import exceptions.NotFoundException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import model.DAO.AvaliadorDAO;
-import model.DAO.ObraDAO;
+import model.BO.AvaliadorBO;
+import model.BO.ObraBO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
-import exceptions.NotFoundException;
 
 public class DefinirAvaliadorController {
+	
+	@FXML
+	private Button botaoDefinirAvaliador;
+	
+	@FXML
+	private Label labelDefinirAvaliador;
 
 	@FXML
 	private ChoiceBox<String> titulos;
@@ -25,12 +35,12 @@ public class DefinirAvaliadorController {
     }
     
     private void carregarObrasAvaliadorPendente() {
-        ObraDAO obraDAO = new ObraDAO();
+        ObraBO obraBO = new ObraBO();
         ObraVO obraVO = new ObraVO();
         obraVO.setStatus("Avaliador Pendente");
 
         try {
-            ArrayList<ObraVO> obras = obraDAO.buscarPorStatus(obraVO);
+            ArrayList<ObraVO> obras = obraBO.buscarPorStatus(obraVO);
             for (ObraVO obra : obras) {
             	titulos.getItems().add(obra.getTitulo());
             }
@@ -40,10 +50,10 @@ public class DefinirAvaliadorController {
     }
     
     private void carregarEmailsAvaliadores() {
-        AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+        AvaliadorBO avaliadorBO = new AvaliadorBO();
 
         try {
-            ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.listar();
+            List<AvaliadorVO> avaliadores = avaliadorBO.listar();
             for (AvaliadorVO avaliador : avaliadores) {
             	avaliadorBox.getItems().add(avaliador.getEmail());
             }
@@ -58,17 +68,17 @@ public class DefinirAvaliadorController {
         String obraSelecionada = titulos.getValue();
 
         if (emailSelecionado != null && !emailSelecionado.isEmpty() || obraSelecionada != null && !obraSelecionada.isEmpty()) {
-            AvaliadorDAO avaliadorDAO = new AvaliadorDAO();
+            AvaliadorBO avaliadorBO = new AvaliadorBO();
             AvaliadorVO avaliadorBuscado = new AvaliadorVO();
             avaliadorBuscado.setEmail(emailSelecionado);
             
-            ObraDAO obraDAO = new ObraDAO();
+            ObraBO obraBO = new ObraBO();
             ObraVO obraBuscada = new ObraVO();
             obraBuscada.setTitulo(obraSelecionada);
 
             try {
-                ArrayList<AvaliadorVO> avaliadoresEncontrados = avaliadorDAO.buscarPorEmail(avaliadorBuscado);
-                ArrayList<ObraVO> obrasEncontradas = obraDAO.buscarPorTitulo(obraBuscada);
+                List<AvaliadorVO> avaliadoresEncontrados = avaliadorBO.buscarPorEmail(avaliadorBuscado);
+                ArrayList<ObraVO> obrasEncontradas = obraBO.buscarPorTitulo(obraBuscada);
 
                 if (!avaliadoresEncontrados.isEmpty() || !obrasEncontradas.isEmpty()) {
 
@@ -91,14 +101,20 @@ public class DefinirAvaliadorController {
                     
                     obraDefinida.setAno(obraEscolhida.getAno());
                     obraDefinida.setAutor(obraEscolhida.getAutor());
-                    obraDefinida.setAvaliador(obraEscolhida.getAvaliador());
+                    obraDefinida.setAvaliador(avaliadorDefinido);
                     obraDefinida.setDataAvaliacao(obraEscolhida.getDataAvaliacao());
                     obraDefinida.setGenero(obraEscolhida.getGenero());
                     obraDefinida.setIDObra(obraEscolhida.getIDObra());
                     obraDefinida.setPdfAvaliacao(obraEscolhida.getPdfAvaliacao());
                     obraDefinida.setPdfObra(obraEscolhida.getPdfObra());
-                    obraDefinida.setStatus(obraEscolhida.getStatus());
+                    obraDefinida.setStatus("Em avaliação");
                     obraDefinida.setTitulo(obraSelecionada);
+                    
+                    obraBO.atualizar(obraDefinida);
+                    labelDefinirAvaliador.setVisible(true);
+                    labelDefinirAvaliador.setText("Avaliador definido com sucesso.");
+                    botaoDefinirAvaliador.setText("Fechar");
+                    
                     
                 } else {
                 	throw new NotFoundException();
@@ -108,6 +124,8 @@ public class DefinirAvaliadorController {
             }
         } else {
             System.out.println("Você precisa selecionar os items.");
+            labelDefinirAvaliador.setVisible(true);
+            labelDefinirAvaliador.setText("Você precisa selecionar os items.");
         }
     }
 

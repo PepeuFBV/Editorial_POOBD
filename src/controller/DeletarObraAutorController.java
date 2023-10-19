@@ -10,7 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.BO.AutorBO;
-import model.DAO.ObraDAO;
+import model.BO.ObraBO;
 import model.VO.AutorVO;
 import model.VO.ObraVO;
 import model.VO.UsuarioVO;
@@ -54,8 +54,8 @@ public class DeletarObraAutorController {
     public ObservableList<String> carregarTitulosDasObrasDoAutor(AutorVO autorVO) {
         ObservableList<String> titulos = FXCollections.observableArrayList();
         try {
-            ObraDAO obraDAO = new ObraDAO();
-            ArrayList<ObraVO> obrasDoAutor = obraDAO.buscarPorAutor(autorVO);
+            ObraBO obraBO = new ObraBO();
+            ArrayList<ObraVO> obrasDoAutor = obraBO.buscarPorAutor(autorVO);
             for (ObraVO obra : obrasDoAutor) {
                 titulos.add(obra.getTitulo());
             }
@@ -67,18 +67,18 @@ public class DeletarObraAutorController {
 	
 	@FXML
 	private void deletar(ActionEvent event) {
-	    ObservableList<String> obrasList = obra.getItems();
-	    if (!obrasList.isEmpty()) {
-	        String tituloObra = obrasList.get(0);
+	    String tituloText = obra.getValue();
+	    if (!tituloText.isEmpty()) {
+	        String tituloObra = tituloText;
 	        ObraVO obra = new ObraVO();
 	        obra.setTitulo(tituloObra);
-	        ObraDAO obraDAO = new ObraDAO();
+	        ObraBO obraBO = new ObraBO();
 
-            List<ObraVO> obras = obraDAO.buscarPorTitulo(obra);
+            List<ObraVO> obras = obraBO.buscarPorTitulo(obra);
             ObraVO primeiraObra = obras.get(0);
             ObraVO obraExcluir = new ObraVO();
             obraExcluir.setIDObra(primeiraObra.getIDObra());
-            obraDAO.excluir(obraExcluir);      
+            obraBO.excluir(obraExcluir);      
 	        
 	        carregarTitulosDasObrasDoAutor(autorVO);
 

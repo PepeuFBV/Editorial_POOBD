@@ -13,8 +13,8 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <Button layoutX="120.0" layoutY="167.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
-      <Button layoutX="229.0" layoutY="167.0" mnemonicParsing="false" onAction="#concluir" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
+      <Button fx:id="botaoDefinirAvaliador" layoutX="118.0" layoutY="177.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="21.0" prefWidth="99.0" text="Cancelar" />
+      <Button layoutX="227.0" layoutY="177.0" mnemonicParsing="false" onAction="#concluir" prefHeight="25.0" prefWidth="99.0" text="Concluir" textFill="#008009" />
       <Label layoutX="66.0" layoutY="72.0" text="Obra:">
          <font>
             <Font size="15.0" />
@@ -27,5 +27,6 @@
          </font>
       </Label>
       <ChoiceBox fx:id="avaliadorBox" layoutX="119.0" layoutY="116.0" prefHeight="25.0" prefWidth="256.0" />
+      <Label fx:id="labelDefinirAvaliador" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="149.0" prefHeight="17.0" prefWidth="411.0" text="Label" visible="false" />
    </children>
 </Pane>

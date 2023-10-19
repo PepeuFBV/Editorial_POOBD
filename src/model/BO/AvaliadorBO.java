@@ -81,4 +81,9 @@ public class AvaliadorBO {
     	ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorEmail(avaliadorVO);
         return avaliadores;
     }   
+    
+    public List<AvaliadorVO> buscarPorId (AvaliadorVO avaliadorVO) {
+    	ArrayList<AvaliadorVO> avaliadores = avaliadorDAO.buscarPorId(avaliadorVO);
+        return avaliadores;
+    }
 }

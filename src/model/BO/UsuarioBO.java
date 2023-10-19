@@ -13,6 +13,7 @@ import model.VO.AvaliadorVO;
 import model.VO.GerenteVO;
 import model.VO.UsuarioVO;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioBO<VO extends UsuarioVO> {
 
@@ -232,5 +233,10 @@ public class UsuarioBO<VO extends UsuarioVO> {
             e.printStackTrace();
         }
     }
+    
+    public List<UsuarioVO> buscarPorEmail (UsuarioVO usuarioVO) {
+    	ArrayList<UsuarioVO> usuarios = usuarioDAO.buscarPorEmail(usuarioVO);
+        return usuarios;
+    }  
 
 }

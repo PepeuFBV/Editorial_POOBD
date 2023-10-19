@@ -39,6 +39,8 @@ public class NovaObraAutorController {
 	
 	private AutorVO autorVO;
 	
+    AutorBO autorBO = new AutorBO();
+	
     @FXML
     public void initialize() {
         setUsuarioVO(Telas.getUsuarioVOAtual());
@@ -47,7 +49,6 @@ public class NovaObraAutorController {
     public void setUsuarioVO(UsuarioVO usuarioVO) {
         autorVO = (AutorVO) usuarioVO;
         autorVO.setEmail(Telas.getUsuarioVOAtual().getEmail());
-        AutorBO autorBO = new AutorBO();
         List<AutorVO> autores = autorBO.buscarPorEmail(autorVO);
 
         if (!autores.isEmpty()) {
@@ -63,19 +64,19 @@ public class NovaObraAutorController {
         }
     }
 	
-	@FXML
-	public void handleBtnOpenFile(ActionEvent event) {
-		final FileChooser fc = new FileChooser();
-		fc.setTitle("Seleção da Obra");
-		fc.setInitialDirectory(new File(System.getProperty("user.home")));
-		fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.*"));
-		File file = fc.showOpenDialog(null);
-		if (file != null) {
-			showFileautor.appendText(file.getAbsolutePath() + "\n");
-		} else {
-			System.out.println("Você deve selecionar um pdf");
-		}
-	}
+    @FXML
+    public void handleBtnOpenFile(ActionEvent event) {
+        final FileChooser fc = new FileChooser();
+        fc.setTitle("Seleção da Obra");
+        fc.setInitialDirectory(new File(System.getProperty("user.home")));
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf"));
+        File file = fc.showOpenDialog(null);
+        if (file != null) {
+        	showFileautor.appendText(file.getAbsolutePath() + "\n");
+        } else {
+            System.out.println("Você deve selecionar um arquivo");
+        }
+    }
 	
 	public void adicionar(ActionEvent event) {
 	    String obraSelecionada = showFileautor.getText();
@@ -84,7 +85,6 @@ public class NovaObraAutorController {
 	    LocalDate anoData = ano.getValue();
 
 	    try {
-	        AutorBO autorBO = new AutorBO();
 	        autorBO.adicionarObra(obraSelecionada, tituloText, generoText, anoData, autorVO);
 
 	        System.out.println("Obra adicionada com sucesso.");

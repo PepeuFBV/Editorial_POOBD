@@ -63,7 +63,7 @@ public class GerenteBO {
     }
     
     public void baixarRelatorios(Date anoInicio, Date anoFinal) throws IOException, SQLException {
-    	System.out.println("entrada");
+        System.out.println("entrada");
         LocalDate dataInicio = anoInicio.toLocalDate();
         LocalDate dataFinal = anoFinal.toLocalDate();
         if (dataInicio.isAfter(dataFinal)) {
@@ -75,36 +75,35 @@ public class GerenteBO {
         obras = obraDAO.buscarPorAno(anoInicio, anoFinal);
 
         if (!obras.isEmpty()) {
-
             String diretorioSalvar = "C:\\Avaliações";
             File diretorio = new File(diretorioSalvar);
             if (!diretorio.exists()) {
                 diretorio.mkdirs();
             }
 
+            int contador = 0;
             for (ObraVO obra : obras) {
+                obra.setPdfAvaliacao(obras.get(contador).getPdfAvaliacao());
+                obra.setIDObra(obras.get(contador).getIDObra());
+                contador++;
 
-                if (obra.getPdfAvaliacao() != null) {
+                byte[] pdfAvaliacaoBytes = obra.getPdfAvaliacao();
+                String nomeArquivoAvaliacao = "avaliacao_" + obra.getIDObra() + ".pdf";
+                String caminhoArquivoAvaliacao = diretorioSalvar + nomeArquivoAvaliacao;
 
-                    byte[] pdfAvaliacaoBytes = obra.getPdfAvaliacao();
-                    String nomeArquivoAvaliacao = "avaliacao_" + obra.getIDObra() + ".pdf";
-                    String caminhoArquivoAvaliacao = diretorioSalvar + nomeArquivoAvaliacao;
-
-                    try (FileOutputStream outputStream = new FileOutputStream(caminhoArquivoAvaliacao)) {
-                        outputStream.write(pdfAvaliacaoBytes);
-                        System.out.println("Relatório(s) baixado(s) com sucesso.");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        throw e;
-                    }
-                } else {
-                	System.out.println("PDF(s) correspondente(s) vazio(s).");
+                try (FileOutputStream outputStream = new FileOutputStream(caminhoArquivoAvaliacao)) {
+                    outputStream.write(pdfAvaliacaoBytes);
+                    System.out.println("Relatório(s) baixado(s) com sucesso.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw e;
                 }
             }
         } else {
-        	System.out.println("Não há obras avaliadas entre as datas correspondentes.");
+            System.out.println("Não há obras avaliadas entre as datas correspondentes.");
         }
     }
+
 
     public List<GerenteVO> listar() {
         List<GerenteVO> gerentes = gerenteDAO.listar();

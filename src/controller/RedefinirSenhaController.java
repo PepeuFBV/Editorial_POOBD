@@ -1,5 +1,5 @@
 package controller;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.DAO.UsuarioDAO;
+import model.BO.UsuarioBO;
 import model.VO.UsuarioVO;
 
 public class RedefinirSenhaController {
@@ -32,6 +32,7 @@ public class RedefinirSenhaController {
 	@FXML
 	private Label label1;
 	
+	
 	@FXML
 	private Label label2;
 	
@@ -41,70 +42,72 @@ public class RedefinirSenhaController {
 	@FXML
 	private Button botao;
 	
-	@FXML
-	private void enviar(ActionEvent event) {
-	    String email = emailrecuperacao.getText();
+    private void enviarEmail(String email, String senha) throws MessagingException {
+        String host = "smtp.gmail.com";
+        String username = "email do sr paulao";
+        String password = "senha de acesso";
+        int port = 465;
 
-	    if (email.isEmpty()) {
-	        emailrecuperacao.setPromptText("Preencha o campo de e-mail.");
-	    } else {
-	        UsuarioVO usuarioVO = new UsuarioVO();
-	        usuarioVO.setEmail(email);
-	        UsuarioDAO userDAO = new UsuarioDAO();
+        Properties props = new Properties();
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", port);
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.ssl.enable", "true");
 
-	        try {
-	            ArrayList<UsuarioVO> users = userDAO.buscarPorEmail(usuarioVO);
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
 
-	            if (!users.isEmpty()) {
-	                UsuarioVO user = users.get(0); // pega o primeiro usuário da lista
-	                String senha = user.getSenha(); // pega a senha do primeiro usuário
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(username));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+        message.setSubject("Sua senha");
+        message.setText("Sua senha é: " + senha); 
 
+        Transport.send(message);
+    }
 
-	                String host = "smtp.gmail.com";
-	                String username = "srpaulaoeditora@gmail.com";
-	                String password = "hhjr ntgv jzek weva";
-	                int port = 465;
+    @FXML
+    private void enviar(ActionEvent event) {
+        String email = emailrecuperacao.getText();
 
-	                Properties props = new Properties();
-	                props.put("mail.smtp.host", host);
-	                props.put("mail.smtp.port", port);
-	                props.put("mail.smtp.auth", "true");
-	                props.put("mail.smtp.ssl.enable", "true");
+        if (email.isEmpty()) {
+            emailrecuperacao.setPromptText("Preencha o campo de e-mail.");
+        } else {
+            UsuarioVO usuarioVO = new UsuarioVO();
+            usuarioVO.setEmail(email);
+            UsuarioBO<UsuarioVO> usuarioBO = new UsuarioBO<UsuarioVO>();
 
-	                Session session = Session.getInstance(props, new Authenticator() {
-	                    protected PasswordAuthentication getPasswordAuthentication() {
-	                        return new PasswordAuthentication(username, password);
-	                    }
-	                });
+            try {
+                List<UsuarioVO> users = usuarioBO.buscarPorEmail(usuarioVO);
 
-	                Message message = new MimeMessage(session);
-	                message.setFrom(new InternetAddress(username));
-	                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-	                message.setSubject("Sua senha");
-	                message.setText("Sua senha é: " + senha); 
+                if (!users.isEmpty()) {
+                    UsuarioVO user = users.get(0); // pega o primeiro usuário da lista
+                    String senha = user.getSenha(); // pega a senha do primeiro usuário
 
-	                Transport.send(message);
+                    enviarEmail(email, senha);
 
-	    	        label1.setVisible(false);
-	    	        label2.setVisible(false);
-	    	        label3.setVisible(false);
-	    	        botao.setVisible(false);
-	    	        emailrecuperacao.setVisible(false);
-	    	        mensagemLabel.setText("E-mail enviado com sucesso.");
-	    	        mensagemLabel.setVisible(true);
-	    	        
-	            } else {
-	            	throw new NotFoundException();
-	            }
-	        } catch (MessagingException | NotFoundException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	}
-    
+                    label1.setVisible(false);
+                    label2.setVisible(false);
+                    label3.setVisible(false);
+                    botao.setVisible(false);
+                    emailrecuperacao.setVisible(false);
+                    mensagemLabel.setText("E-mail enviado com sucesso.");
+                    mensagemLabel.setVisible(true);
+                } else {
+                    throw new NotFoundException();
+                }
+            } catch (MessagingException | NotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @FXML
     private void voltar(ActionEvent event) {
-    	Stage stage = (Stage) emailrecuperacao.getScene().getWindow();
-	    stage.close();
+        Stage stage = (Stage) emailrecuperacao.getScene().getWindow();
+        stage.close();
     }
 }

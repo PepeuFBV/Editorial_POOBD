@@ -158,7 +158,7 @@ public class NovaObraGerenteController {
                 novaObra.setAvaliador(avaliadorVO);
             }
 
-            novaObra.setStatus(null);
+            novaObra.setStatus("Avaliador Pendente");
             novaObra.setPdfObra(pdfObraBytes);
             novaObra.setAutor(autorVO);
 
