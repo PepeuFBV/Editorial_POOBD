@@ -109,6 +109,8 @@ public class ObraBO {
         for (int i = 0; i < obras.size(); i++) {
             if (obras.get(i).getStatus().isEmpty() || obras.get(i).getStatus() == null || obras.get(i).getStatus().equals("Avaliador Pendente")) {
                 list.add(obras.get(i));
+            } else if (obras.get(i).getStatus().equals("Avaliador pendente")) {
+                list.add(obras.get(i));
             }
         }
         return list;
@@ -117,7 +119,9 @@ public class ObraBO {
     public List<ObraVO> filtrarEmEspera(List<ObraVO> obras) {
         List<ObraVO> list = new ArrayList<>();
         for (int i = 0; i < obras.size(); i++) {
-            if (obras.get(i).getStatus().equals("Em Avaliação")) { //TODO checar
+            if (obras.get(i).getStatus().equals("Em Avaliação")) {
+                list.add(obras.get(i));
+            } else if (obras.get(i).getStatus().equals("Em avaliação")) {
                 list.add(obras.get(i));
             }
         }
