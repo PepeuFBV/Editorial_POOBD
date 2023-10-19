@@ -34,7 +34,7 @@ CREATE TABLE gerentes (
 	nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
-    id_usuario INT UNIQUE REFERENCES usuarios (id_usuario) ON DELETE CASCADE
+    id_usuario INT UNIQUE 
 );
 
 CREATE TABLE autores (
@@ -44,7 +44,7 @@ CREATE TABLE autores (
     endereco VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
-    id_usuario INT UNIQUE REFERENCES usuarios (id_usuario) ON DELETE CASCADE
+    id_usuario INT UNIQUE 
 );
 
 CREATE TABLE avaliadores (
@@ -54,12 +54,12 @@ CREATE TABLE avaliadores (
     endereco VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
-    id_usuario INT UNIQUE REFERENCES usuarios (id_usuario) ON DELETE CASCADE
+    id_usuario INT UNIQUE 
 );
 
 CREATE TABLE obras (
     id_obra SERIAL PRIMARY KEY,
-    titulo VARCHAR(255) NOT NULL,
+    titulo VARCHAR(255) UNIQUE NOT NULL,
     genero VARCHAR(255) NOT NULL,
     ano DATE NOT NULL,
     status VARCHAR(255),
@@ -107,6 +107,7 @@ AFTER DELETE
 ON avaliadores
 FOR EACH ROW
 EXECUTE FUNCTION on_avaliador_delete();
+
 ALTER TABLE obras
 ADD CONSTRAINT check_status
 CHECK (status IN ('Em avaliação', 'Avaliador Pendente', 'Aceita', 'Rejeitada'));
