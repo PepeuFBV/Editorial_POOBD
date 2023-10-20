@@ -11,14 +11,6 @@ DROP TABLE avaliadores;
 DROP TABLE autores;
 DROP TABLE usuarios;
 
-
-SELECT * FROM usuarios;
-SELECT * FROM autores;
-SELECT * FROM avaliadores;
-SELECT * FROM obras;
-SELECT * FROM gerentes;
-
-
 CREATE TABLE usuarios (
     id_usuario SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -64,8 +56,8 @@ CREATE TABLE obras (
     ano DATE NOT NULL,
     status VARCHAR(255),
     data_avaliacao DATE,
-    id_autor INT REFERENCES autores (id_autor) ON DELETE CASCADE,
-    id_avaliador INT REFERENCES avaliadores (id_avaliador),
+    id_autor INT,
+    id_avaliador INT,
     pdf_obra BYTEA NOT NULL,
     pdf_avaliacao BYTEA
 );
@@ -99,8 +91,6 @@ BEGIN
     RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
-
-
 
 CREATE TRIGGER trigger_on_avaliador_delete
 AFTER DELETE
