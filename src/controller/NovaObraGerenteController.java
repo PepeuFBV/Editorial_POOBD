@@ -151,14 +151,15 @@ public class NovaObraGerenteController {
             
             if(avaliadorSelecionado == null) {
             	novaObra.setAvaliador(null);
+            	novaObra.setStatus("Avaliador Pendente");
             } else {
                 int idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
                 AvaliadorVO avaliadorVO = new AvaliadorVO();
                 avaliadorVO.setIDAvaliador((long) idAvaliador);
                 novaObra.setAvaliador(avaliadorVO);
+                novaObra.setStatus("Em avaliação");
             }
 
-            novaObra.setStatus("Avaliador Pendente");
             novaObra.setPdfObra(pdfObraBytes);
             novaObra.setAutor(autorVO);
 

@@ -1,11 +1,13 @@
 package controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,11 +25,15 @@ import model.BO.ObraBO;
 import model.VO.AutorVO;
 import model.VO.AvaliadorVO;
 import model.VO.ObraVO;
+import util.LerPDF;
 
 public class EditarObraGerenteController {
 
     @FXML
     private TextField showFileger;
+    
+    @FXML
+    private TextField showFileger2;
     
     @FXML
     private DatePicker data;
@@ -77,6 +83,20 @@ public class EditarObraGerenteController {
         File file = fc.showOpenDialog(null);
         if (file != null) {
             showFileger.appendText(file.getAbsolutePath() + "\n");
+        } else {
+            System.out.println("Você deve selecionar um arquivo");
+        }
+    }
+    
+    @FXML
+    public void handleBtnOpenFile2(ActionEvent event) {
+        final FileChooser fc = new FileChooser();
+        fc.setTitle("Seleção da Obra");
+        fc.setInitialDirectory(new File(System.getProperty("user.home")));
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf*"));
+        File file = fc.showOpenDialog(null);
+        if (file != null) {
+            showFileger2.appendText(file.getAbsolutePath() + "\n");
         } else {
             System.out.println("Você deve selecionar um arquivo");
         }
@@ -174,6 +194,8 @@ public class EditarObraGerenteController {
             String avaliadorSelecionado = avaliador.getValue();
             String statusSelecionado = stts.getValue();
             LocalDate dataSelecionada = data.getValue();
+            String obraSelecionada = showFileger.getText();
+            String avaliacaoSelecionada = showFileger2.getText();
             
             if ("Avaliador Pendente".equals(statusSelecionado) && avaliadorSelecionado != null) {
                 erroEditarObraGerente.setText("Você não pode selecionar 'Avaliador Pendente' quando um avaliador está selecionado.");
@@ -192,28 +214,67 @@ public class EditarObraGerenteController {
                         erroEditarObraGerente.setVisible(true);
                         return;
                     }
+                    
+                    if (avaliacaoSelecionada.isEmpty()) {
+                        erroEditarObraGerente.setText("Você deve selecionar um arquivo de avaliação.");
+                        erroEditarObraGerente.setVisible(true);
+                        return;
+                    }
+                    
                 } else {
                     obraEncontrada.setDataAvaliacao(null);
                 }
             }
             
-            String obraSelecionada = showFileger.getText();
-
-            if (tituloText.isEmpty() || generoText.isEmpty() || autorSelecionado == null || obraSelecionada.isEmpty()|| anoData == null) {
-                erroEditarObraGerente.setText("Por favor, preencha todos os campos.");
-                erroEditarObraGerente.setVisible(true);
-                return;
+            if (!obraSelecionada.isEmpty()) {
+                try {
+                    byte[] pdfConteudo = LerPDF.lerConteudoPDF(obraSelecionada);
+                    obraEncontrada.setPdfObra(pdfConteudo);
+                } catch (IOException e) {
+                    erroEditarObraGerente.setText("Erro ao ler o arquivo PDF.");
+                    erroEditarObraGerente.setVisible(true);
+                    return;
+                }
+            } else {
+            	obraEncontrada.setPdfObra(obraEncontrada.getPdfObra());
+            }
+            
+            if (!avaliacaoSelecionada.isEmpty()) {
+                try {
+                    byte[] pdfConteudo = LerPDF.lerConteudoPDF(avaliacaoSelecionada);
+                    obraEncontrada.setPdfAvaliacao(pdfConteudo);
+                } catch (IOException e) {
+                    erroEditarObraGerente.setText("Erro ao ler o arquivo PDF.");
+                    erroEditarObraGerente.setVisible(true);
+                    return;
+                }
+            } else {
+            	obraEncontrada.setPdfAvaliacao(obraEncontrada.getPdfAvaliacao());
             }
 
-            obraEncontrada.setTitulo(tituloText);
-            obraEncontrada.setGenero(generoText);
-            obraEncontrada.setAno(anoData);
-
-            long idAutor = autorParaIDMap.get(autorSelecionado);
+            if(tituloText.isEmpty()) {
+            	obraEncontrada.setTitulo(obraEncontrada.getTitulo());
+            } else {
+            	obraEncontrada.setTitulo(tituloText);
+            }
             
-            if (avaliadorSelecionado == null) {
-            	obraEncontrada.setAvaliador(null);
-            	obraEncontrada.setPdfAvaliacao(null);
+            if(generoText.isEmpty()) {
+            	obraEncontrada.setGenero(obraEncontrada.getGenero());
+            } else {
+            	obraEncontrada.setGenero(generoText);
+            }
+
+            if(anoData == null) {
+            	obraEncontrada.setAno(obraEncontrada.getAno());
+            } else {
+                obraEncontrada.setAno(anoData);
+            }
+            
+            if (avaliadorSelecionado == null || avaliadorSelecionado.isEmpty()) {
+            	obraEncontrada.setAvaliador(obraEncontrada.getAvaliador());
+            	obraEncontrada.setStatus(obraEncontrada.getStatus());
+            	obraEncontrada.setDataAvaliacao(obraEncontrada.getDataAvaliacao());
+            	obraEncontrada.setPdfAvaliacao(obraEncontrada.getPdfAvaliacao());
             } else {
                 long idAvaliador = avaliadorParaIDMap.get(avaliadorSelecionado);
                 AvaliadorVO avaliadorVO = new AvaliadorVO();
@@ -231,21 +292,26 @@ public class EditarObraGerenteController {
                 
                 obraEncontrada.setAvaliador(avaliadorVO);
             }
-
-            AutorVO autorVO = new AutorVO();
-            autorVO.setIDAutor(idAutor);
-            List<AutorVO> autores = autorBO.buscarPorId(autorVO);
-            AutorVO primeiroAutor = autores.get(0);
             
-            autorVO.setIDUsuario(primeiroAutor.getIDUsuario());
-            autorVO.setCpf(primeiroAutor.getCpf());
-            autorVO.setEmail(primeiroAutor.getEmail());
-            autorVO.setEndereco(primeiroAutor.getEndereco());
-            autorVO.setNome(primeiroAutor.getNome());
-            autorVO.setSenha(primeiroAutor.getSenha());
-            autorVO.setTipo("Autor");
-            
-            obraEncontrada.setAutor(autorVO);
+            if(autorSelecionado == null || autorSelecionado.isEmpty()) {
+            	obraEncontrada.setAutor(obraEncontrada.getAutor());
+            } else {
+                long idAutor = autorParaIDMap.get(autorSelecionado);
+                AutorVO autorVO = new AutorVO();
+                autorVO.setIDAutor(idAutor);
+                List<AutorVO> autores = autorBO.buscarPorId(autorVO);
+                AutorVO primeiroAutor = autores.get(0);
+                
+                autorVO.setIDUsuario(primeiroAutor.getIDUsuario());
+                autorVO.setCpf(primeiroAutor.getCpf());
+                autorVO.setEmail(primeiroAutor.getEmail());
+                autorVO.setEndereco(primeiroAutor.getEndereco());
+                autorVO.setNome(primeiroAutor.getNome());
+                autorVO.setSenha(primeiroAutor.getSenha());
+                autorVO.setTipo("Autor");
+                
+                obraEncontrada.setAutor(autorVO);
+            }
 
             obraBO.atualizar(obraEncontrada);
 
